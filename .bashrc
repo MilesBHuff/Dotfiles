@@ -17,49 +17,50 @@ source "$HOME/.aliasrc"
 
 ## OPTIONS
 shopt -s                \
-    autocd              \
-    cdable_vars         \
-    checkhash           \
-    checkwinsize        \
-    cmdhist             \
-    expand_aliases      \
-    extglob             \
-    extquote            \
-    force_fignore       \
-    globstar            \
-    gnu_errfmt          \
-    histappend          \
-    histreedit          \
-    histverify          \
-    hostcomplete        \
-    interactive_comments\
-    nullglob            \
-    progcomp            \
-    promptvars          \
-    sourcepath          \
-    xpg_echo
+	autocd              \
+	cdable_vars         \
+	checkhash           \
+	checkwinsize        \
+	cmdhist             \
+	expand_aliases      \
+	extglob             \
+	extquote            \
+	force_fignore       \
+	globstar            \
+	gnu_errfmt          \
+	histappend          \
+	histreedit          \
+	histverify          \
+	hostcomplete        \
+	interactive_comments\
+	nullglob            \
+	progcomp            \
+	promptvars          \
+	sourcepath          \
+	xpg_echo
 shopt -u                   \
-    cdspell                \
-    checkjobs              \
-    dirspell               \
-    dotglob                \
-    execfail               \
-    extdebug               \
-    failglob               \
-    huponexit              \
-    lithist                \
-    mailwarn               \
-    no_empty_cmd_completion\
-    nocaseglob             \
-    shift_verbose
+	cdspell                \
+	checkjobs              \
+	dirspell               \
+	dotglob                \
+	execfail               \
+	extdebug               \
+	failglob               \
+	huponexit              \
+	lithist                \
+	mailwarn               \
+	no_empty_cmd_completion\
+	nocaseglob             \
+	shift_verbose
 
 ## FINALIZATION
 clear && echo
 ## If the user has another home directory in the same directory with a name
 ## equivalent to the user's username, except that the first letter is
 ## capitalized;  then cd that directory to avoid ls spam.
-CAPS_USERNAME="$(tr '[:lower:]' '[:upper:]' <<< ${NORMAL_USERNAME:0:1})${NORMAL_USERNAME:1}"  ## Thanks, http://stackoverflow.com/a/12487465.
-if [[ -d "$HOME/../$CAPS_USERNAME" ]]
-    then cd "$HOME/../$CAPS_USERNAME"
-    else cd "$HOME"
-fi
+#CAPS_USERNAME="$(tr '[:lower:]' '[:upper:]' <<< ${NORMAL_USERNAME:0:1})${NORMAL_USERNAME:1}"  ## Thanks, http://stackoverflow.com/a/12487465.
+#if [[ -d "$HOME/../$CAPS_USERNAME" ]]
+#	then cd "$HOME/../$CAPS_USERNAME"
+#	else cd "$HOME"
+#fi
+ls
