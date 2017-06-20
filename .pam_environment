@@ -1,0 +1,25 @@
+
+BROWSER='lynx'
+COUNTRY='US'
+DIRSTACKFILE="$HOME/.cache/dirstack"
+DIRSTACKSIZE=12
+EDITOR='nano'
+GPGKEY=3D271E02
+GREP_COLORS='*=0:sl=0:cx=0:mt=7;1:ms=7;1:mc=7;1:fn=94:ln=95:bn=91:se=0'
+GREP_OPTIONS=
+HISTFILE="$HOME/.zhistory"
+HISTSIZE=2048
+HOME=/home/milesbhuff
+JOBS="$(nproc)"
+LS_COLORS='*=0:fi=0:ex=32:di=34:bd=33:cd=33:pi=35:so=35:ln=36:or=31:mi=31'
+NORMAL_HOSTNAME=''
+NORMAL_USERNAME='milesbhuff'
+NPROC="$(nproc)"
+PAGER='less'
+PROJECTDIR="$HOME/Projects"
+SAVEHIST=2048
+USE_COLOR=true
+WATCHFMT="%n from %M has %a tty%l at %T %W"
+WINEARCH='win32'
+WINEDEBUG='-all,+err'
+WINEPREFIX="$HOME/.wine"
