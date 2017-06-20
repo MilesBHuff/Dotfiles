@@ -68,8 +68,8 @@ PLUGINS=false   ## Useful when Antigen's broken.
 
 ### Preparation
 #NOTE:  Order important!
-cd ~
-[[ -f "/etc/profile" ]] && source "/etc/profile"
+#cd ~
+#[[ -f "/etc/profile" ]] && source "/etc/profile"
 emulate zsh
 umask 022
 [[ $LOAD_BAR == true ]] && echo -n '█'
@@ -77,9 +77,9 @@ umask 022
 ### Load Environment
 #NOTE:  Order important!
 setopt all_export
-    [[ -f "/etc/locale.conf" ]] && source "/etc/locale.conf"
-    [[ -f "/etc/environment" ]] && source "/etc/environment"
-    [[ -f "$HOME/.pam_environment" ]] && source "$HOME/.pam_environment"
+	[[ -f "/etc/locale.conf" ]] && source "/etc/locale.conf"
+	[[ -f "/etc/environment" ]] && source "/etc/environment"
+	[[ -f "$HOME/.pam_environment" ]] && source "$HOME/.pam_environment"
 unsetopt all_export
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
@@ -98,8 +98,8 @@ autoload -Uz chpwd_recent_dirs\
 ### Load Plugin-Manager
 #NOTE:  Order important!
 if [[ $PLUGINS == true ]]; then
-    source /usr/share/zsh/scripts/antigen/antigen.zsh
-    antigen-use oh-my-zsh
+	source /usr/share/zsh/scripts/antigen/antigen.zsh
+	antigen-use oh-my-zsh
 fi
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
@@ -108,18 +108,13 @@ fi
 ## rather simple;  there be many a complex manner of configuring one's prompt in
 ## zsh, and I wished to support these such manners fairly explicitly.
 setopt all_export
-#    PROMPT="
-#$([[ ! $(hostname) == $NORMAL_HOSTNAME ]] || [[ ! $(whoami) == $NORMAL_USERNAME ]] && echo $([[ ! $(whoami) == $NORMAL_USERNAME ]] && echo '%F{6}%n%F{0}@')'%F{3}%M%F{0}:')%F{4}%~%F{0}%E %F{5}%#%F{0} " #TODO:  Would be nice to add support for version-control software.
-#    PROMPT="
-#┎╴$([[ ! $(hostname) == $NORMAL_HOSTNAME ]] || [[ ! $(whoami) == $NORMAL_USERNAME ]] && echo $([[ ! $(whoami) == $NORMAL_USERNAME ]] && echo '%F{6}%n%F{0}@')'%F{3}%M%F{0}:')%F{4}%~%F{0}%E
-#┸╴%F{5}%#%F{0} " #TODO:  Would be nice to add support for version-control software.
-    PROMPT="
+	PROMPT="
 $([[ ! "$(hostname)" == "$NORMAL_HOSTNAME" ]] || [[ ! "$(whoami)" == "$NORMAL_USERNAME" ]] && echo $([[ ! "$(whoami)" == "$NORMAL_USERNAME" ]] && echo '%F{6}%n%f@')'%F{3}%M%f:')%F{4}%~%f%E/
 %F{5}%#%f " #TODO:  Would be nice to add support for version-control software.
-    PS1="$PROMPT"
-    PS2="  "
-    RPROMPT=""
-    POSTEDIT=""  ## Might be worth putting a blank line here.
+	PS1="$PROMPT"
+	PS2="  "
+	RPROMPT=""
+	POSTEDIT=""  ## Might be worth putting a blank line here.
 unsetopt all_export
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
@@ -134,12 +129,12 @@ unsetopt all_export
 ## Order wasn't important here, so I did them alphabetically, with Oh-My-ZSH
 ## plugins first, since Oh-My-ZSH is Antigen's default repo.
 if [[ $PLUGINS == true ]]; then
-    source /usr/share/doc/pkgfile/command-not-found.zsh
-    antigen-bundle colemak                    #NOTE:  Remove this line if you don't use the Colemak layout.
-    antigen-bundle extract
-    #antigen-bundle zsh_reload                #NOTE:  Doesn't quite work right.
-    antigen-bundle Tarrasch/zsh-autoenv
-    antigen-bundle zsh-users/zsh-completions
+	source /usr/share/doc/pkgfile/command-not-found.zsh
+	antigen-bundle colemak                    #NOTE:  Remove this line if you don't use the Colemak layout.
+	antigen-bundle extract
+	#antigen-bundle zsh_reload                #NOTE:  Doesn't quite work right.
+	antigen-bundle Tarrasch/zsh-autoenv
+	antigen-bundle zsh-users/zsh-completions
 fi
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
@@ -148,23 +143,23 @@ fi
 ### Set up the keymap
 ## Load a saved keymap...
 if [[ -f "${ZDOTDIR:-$HOME}"/.zkbd/"$TERM-$VENDOR-$OSTYPE" ]]; then  ## I got this line from the manpage.
-    source "${ZDOTDIR:-$HOME}"/.zkbd/"$TERM-$VENDOR-$OSTYPE"
-    [[ -f "${ZDOTDIR:-$HOME}"/.zkbd/*.tmp ]] && rm -f "${ZDOTDIR:-$HOME}"/.zkbd/*.tmp
+	source "${ZDOTDIR:-$HOME}"/.zkbd/"$TERM-$VENDOR-$OSTYPE"
+	[[ -f "${ZDOTDIR:-$HOME}"/.zkbd/*.tmp ]] && rm -f "${ZDOTDIR:-$HOME}"/.zkbd/*.tmp
 ## ...Or generate a new one.
 else
-    echo "Note that if you've already completed this step, your settings might not"
-    echo "have been saved with the right filename.  Make sure the file pertaining"
-    echo "to your current setup is named \"$TERM-$VENDOR-$OSTYPE\".  You can find"
-    echo "your current ZSh keyboard-settings in \"$ZDOTDIR/.zkbd/\"."
-    zkbd
+	echo "Note that if you've already completed this step, your settings might not"
+	echo "have been saved with the right filename.  Make sure the file pertaining"
+	echo "to your current setup is named \"$TERM-$VENDOR-$OSTYPE\".  You can find"
+	echo "your current ZSh keyboard-settings in \"$ZDOTDIR/.zkbd/\"."
+	zkbd
 fi
 ## Declare modifier-keys
 function ctrl {
-    S='1;5'
-    for I in {0..9}; do
-        [[ $1 == *$I* ]] && S=';5'
-    done
-    echo "$(echo $1 | sed 's/[^\^^\[^0-9]//g')$S$(echo $1 | sed 's/[\^\[0-9]//g')"
+	S='1;5'
+	for I in {0..9}; do
+		[[ $1 == *$I* ]] && S=';5'
+	done
+	echo "$(echo $1 | sed 's/[^\^^\[^0-9]//g')$S$(echo $1 | sed 's/[\^\[0-9]//g')"
 }
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
@@ -202,8 +197,8 @@ function ctrl {
 
 ### Plugin-dependent binding
 if [[ $PLUGINS == true ]]; then
-    [[ -n ${key[Down]} ]] && bindkey "${key[Down]}" 'history-substring-search-down'
-    [[ -n ${key[Up]}   ]] && bindkey "${key[Up]}"   'history-substring-search-up'
+	[[ -n ${key[Down]} ]] && bindkey "${key[Down]}" 'history-substring-search-down'
+	[[ -n ${key[Up]}   ]] && bindkey "${key[Up]}"   'history-substring-search-up'
 fi
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
@@ -219,15 +214,15 @@ zstyle ':completion:*' rehash           true
 #### LATE PLUGINS --------------------------------------------------------------
 #NOTE:  Order important!
 if [[ $PLUGINS == true ]]; then
-    antigen-bundle zsh-users/zsh-syntax-highlighting
-    antigen-bundle zsh-users/zsh-history-substring-search
+	antigen-bundle zsh-users/zsh-syntax-highlighting
+	antigen-bundle zsh-users/zsh-history-substring-search
 fi
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
 
 #### SESSION-VARIABLES ---------------------------------------------------------
 setopt all_export
-    #TODO
+	#TODO
 unsetopt all_export
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
@@ -292,73 +287,73 @@ setopt                \
     mark_dirs         \
     numeric_glob_sort
 case $GLOB_MODE in
-    0|1) ## Simple modes
-        setopt                \
-            bad_pattern       \
-         no_bare_glob_qual    \
-         no_equals            \
-         no_extended_glob     \
-         no_hist_subst_pattern\
-            brace_expand      \
-         no_ksh_glob          \
-         no_magic_equal_subst \
-            nomatch           \
-         no_null_glob         \
-         no_rematch_pcre
-        case $GLOB_MODE in
-            0) ## Compliance mode
-                setopt                 \
-                 no_brace_ccl          \
-                    case_glob          \
-                    case_match         \
-                 no_csh_null_glob      \
-                    glob_assign        \
-                    ignore_close_braces\
-                 no_multibyte          \
-                 no_rc_expand_param    \
-                    sh_glob            \
-                 no_unset              \
-                    warn_create_global
-                ;;
-            1) ## Normal mode
-                setopt                 \
-                    brace_ccl          \
-                 no_case_glob          \
-                 no_case_match         \
-                    csh_null_glob      \
-                 no_glob_assign        \
-                    rc_expand_param    \
-                 no_sh_glob            \
-                    unset              \
-                 no_warn_create_global
-                ;;
-        esac
-        ;;
-    2) ## Uber mode
-        setopt                 \
-         no_bad_pattern        \
-            bare_glob_qual     \
-            brace_ccl          \
-            case_glob          \
-            case_match         \
-            csh_null_glob      \
-            equals             \
-            extended_glob      \
-         no_glob_assign        \
-            glob_star_short    \
-            hist_subst_pattern \
-            brace_expand       \
-         no_ignore_close_braces\
-            ksh_glob           \
-            magic_equal_subst  \
-         no_nomatch            \
-            null_glob          \
-            rc_expand_param    \
-            rematch_pcre       \
-         no_sh_glob            \
-            unset              \
-         no_warn_create_global
-        ;;
+	0|1) ## Simple modes
+		setopt                \
+		    bad_pattern       \
+		 no_bare_glob_qual    \
+		 no_equals            \
+		 no_extended_glob     \
+		 no_hist_subst_pattern\
+		    brace_expand      \
+		 no_ksh_glob          \
+		 no_magic_equal_subst \
+		    nomatch           \
+		 no_null_glob         \
+		 no_rematch_pcre
+		case $GLOB_MODE in
+			0) ## Compliance mode
+			    setopt                 \
+			     no_brace_ccl          \
+			        case_glob          \
+			        case_match         \
+			     no_csh_null_glob      \
+			        glob_assign        \
+			        ignore_close_braces\
+			     no_multibyte          \
+			     no_rc_expand_param    \
+			        sh_glob            \
+			     no_unset              \
+			        warn_create_global
+			    ;;
+			1) ## Normal mode
+			    setopt                 \
+			        brace_ccl          \
+			     no_case_glob          \
+			     no_case_match         \
+			        csh_null_glob      \
+			     no_glob_assign        \
+			        rc_expand_param    \
+			     no_sh_glob            \
+			        unset              \
+			     no_warn_create_global
+			    ;;
+		esac
+		;;
+	2) ## Uber mode
+		setopt                 \
+		 no_bad_pattern        \
+		    bare_glob_qual     \
+		    brace_ccl          \
+		    case_glob          \
+		    case_match         \
+		    csh_null_glob      \
+		    equals             \
+		    extended_glob      \
+		 no_glob_assign        \
+		    glob_star_short    \
+		    hist_subst_pattern \
+		    brace_expand       \
+		 no_ignore_close_braces\
+		    ksh_glob           \
+		    magic_equal_subst  \
+		 no_nomatch            \
+		    null_glob          \
+		    rc_expand_param    \
+		    rematch_pcre       \
+		 no_sh_glob            \
+		    unset              \
+		 no_warn_create_global
+		;;
 esac
 unset GLOB_MODE
 
@@ -518,8 +513,9 @@ clear && echo
 ## If the user has another home directory in the same directory with a name
 ## equivalent to the user's username, except that the first letter is
 ## capitalized;  then cd that directory to avoid ls spam.
-CAPS_USERNAME="$(tr '[:lower:]' '[:upper:]' <<< ${NORMAL_USERNAME:0:1})${NORMAL_USERNAME:1}"  ## Thanks, http://stackoverflow.com/a/12487465.
-if [[ -d "$HOME/../$CAPS_USERNAME" ]]
-    then cd "$HOME/../$CAPS_USERNAME"
-    else cd "$HOME"
-fi
+#CAPS_USERNAME="$(tr '[:lower:]' '[:upper:]' <<< ${NORMAL_USERNAME:0:1})${NORMAL_USERNAME:1}"  ## Thanks, http://stackoverflow.com/a/12487465.
+#if [[ -d "$HOME/../$CAPS_USERNAME" ]]
+#	then cd "$HOME/../$CAPS_USERNAME"
+#	else cd "$HOME"
+#fi
+ls
