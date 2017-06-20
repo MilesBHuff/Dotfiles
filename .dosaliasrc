@@ -1,0 +1,84 @@
+#!/usr/bin/env sh
+## Copyright (C) 2017 by Miles B Huff per LGPL3
+##
+## This file contains aliases and functions that mimic those of DOS.
+## There is no reason for this file to exist, but #YOLO.  :p 
+
+function TRUENAME {
+	echo $(pwd)/$1
+}
+
+#alias   'APPEND'=''
+#alias   'ASSIGN'=''
+alias   'ATTRIB'='chattr'
+#alias  'BACKUP'=''
+#alias   'BASIC'=''
+#alias  'BASICA'=''
+alias     'CALL'='source'
+alias       'CD'='cd'
+alias     'CHCP'='locale-set'
+alias    'CHDIR'='CD'
+alias   'CHKDSK'='fsck'
+#alias   'CHOICE'=''
+alias      'CLS'='clear'
+alias     'COMP'='vidiff'  ## I'm sure there's a more accurate substitute out there.
+alias     'COPY'='cp'      ## dd might make a more accurate substitute.
+#alias     'CTTY'=''
+alias     'DATE'='date'
+#alias   'DEFRAG'=''
+alias      'DEL'='rm'
+alias  'DELTREE'='rm -r'
+alias      'DIR'='ls -l'
+alias     'ECHO'='echo'
+alias     'EDIT'='nano'
+alias    'EDLIN'='ed'
+alias    'ERASE'='DEL'
+alias  'EXE2BIN'='alien'   ## Almost works, right?  :p
+alias     'EXIT'='exit'
+#alias 'FASTOPEN'=''
+alias       'FC'='COMP'
+alias    'FDISK'='fdisk'
+alias     'FIND'='find'
+alias      'FOR'='for'
+#alias   'FORMAT'='mkfs'
+alias     'HELP'='man'
+alias 'INTERLNK'='rsync'
+alias 'INTERSVR'='INTERSVR'
+alias     'JOIN'='mount --rbind'
+#alias    'LABEL'=''
+#alias       'LH'=''
+#alias  'LOADFIX'=''
+#alias 'LOADHIGH'='LH'
+alias       'MD'='mkdir'
+alias      'MEM'='free'
+#alias 'MEMMAKER'=''
+alias    'MKDIR'='MD'
+#alias     'MODE'=''
+alias     'MORE'='more'
+alias     'MOVE'='mv'
+alias      'MSD'='uname -a'  ## Not perfect
+alias     'PATH'="echo $PATH"
+alias    'PAUSE'='read'
+alias     'PING'='ping -c 4'
+#alias    'PRINT'=''
+alias       'RD'='rmdir'
+#alias  'RECOVER'=''
+#alias  'RESTORE'=''
+alias    'RMDIR'='RD'
+alias      'REM'='#'
+alias      'REN'='mv'      ## Not sure what a good analogue would be.
+alias 'SCANDISK'='CHKDSK'  ## Supposed to be a better CHKDSK;  but, well.
+alias      'SET'='export'
+#alias   'SETVER'=''
+#alias    'SHARE'=''
+#alias 'SMARTDRV'=''
+alias     'SORT'='sort'
+#alias    'SUBST'=''
+#alias      'SYS'=''
+alias     'TIME'='date'    ## Not sure what a good analogue would be.
+alias     'TREE'='ls **'   ## Not perfect.
+alias     'TYPE'='cat'
+#alias 'UNDELETE'=''       ## If only.
+alias      'VER'='uname'   ## Not perfect.
+#alias   'VERIFY'=''
+alias    'XCOPY'='cp -r'
