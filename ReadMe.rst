@@ -7,6 +7,8 @@ About
   only a handful;  but I'd like to eventually get the majority of my configs
   uploaded.
 | These configs are generally intended for an Arch Linux system.
+| Where possible, I'm trying to separate personal config files from theme files
+  (The latter of which belong in my Optimal Theme repository.).
 
 License
 ================================================================================
