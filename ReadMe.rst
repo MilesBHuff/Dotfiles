@@ -9,8 +9,8 @@ About
 | The files in this repository are generally intended for an Arch Linux system.
 | There is going to be considerable overlap between this repository, and my
   Optimal Theme repository.  Generally speaking, the latter is going to be a
-  subset of this repository, containing only a minimal amount of settings --
-  those that are necessary to get the Optimal theme.
+  subset of the former, and will contain only a minimal amount of settings --
+  those that are necessary to for the Optimal theme to work.
 
 License
 ================================================================================
