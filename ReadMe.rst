@@ -7,8 +7,10 @@ About
   only a handful;  but I'd like to eventually get the majority of my configs
   uploaded.
 | The files in this repository are generally intended for an Arch Linux system.
-| Where possible, I'm trying to separate personal config files from theme files
-  (The latter of which belong in my Optimal Theme repository.).
+| There is going to be considerable overlap between this repository, and my
+  Optimal Theme repository.  Generally speaking, the latter is going to be a
+  subset of this repository, containing only a minimal amount of settings --
+  those that are necessary to get the Optimal theme.
 
 License
 ================================================================================
