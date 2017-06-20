@@ -7,11 +7,11 @@
 ### FUNCTIONS ------------------------------------------------------------------
 ## Base
 function cdls {
-    cd -L "$1"
-    ls -bCFNvX --color --group-directories-first
+	cd -L "$1"
+	ls -bCFNvX --color --group-directories-first
 }
 function get_help {
-    "$1" --help
+	"$1" --help
 }
 function replace_string {
 	sed -i "s/$1/$2/g" "$3"
@@ -24,69 +24,41 @@ function replace_string {
 #	done < $1
 #}
 function smart_sudo {
-    if [[ $# -gt 0 ]]; then
-        if [[ -f /sbin/sudo ]]; then
-#             if xset q &> /dev/null; then
-#                 if [[ -f /sbin/gksudo ]]; then
-#                     sudo -EH gksudo $@
-#                 elif [[ -f /usr/sbin/ktsuss ]]; then
-#                     sudo -EH ktsuss $@
-#                 elif [[ -f /sbin/beesu ]]; then
-#                     sudo -EH beesu $@
-#                 elif [[ -f /sbin/kdesudo ]]; then
-#                     sudo -EH kdesudo $@
-#                 else
-#                     sudo -EH $@
-#                 fi
-#             else
-                sudo -EH $@
-#             fi
-        elif [[ -f /sbin/su ]]; then
-#             if xset q &> /dev/null; then
-#                 if [[ -f /sbin/gksu ]]; then
-#                     sudo -EH gksu $@
-#                 elif [[ -f /sbin/kdesu ]]; then
-#                     sudo -EH kdesu $@
-#                 else
-#                     su -c $@
-#                 fi
-#             else
-                su -c $@
-#             fi
-        else
-            echo "\e[31;1m[ERROR]\e[0;1m Can't find su!\e[0m"
-            exit 1
-        fi
-    elif [[ -f /sbin/su ]]; then
-        su
-    else
-        echo "\e[31;1m[ERROR]\e[0;1m Can't find su!\e[0m"
-        exit 1
-    fi
+	unalias 'sudo'
+	if [[ $# -gt 0 ]]; then
+		if [[ -f "$(command -v sudo)" ]]; then
+			sudo -EH $@
+		else
+			su -c "$@"
+		fi
+	else
+		su
+	fi
+	alias 'sudo'='smart_sudo'
 }
 
 ## System-management
 function edit_env {
-    ENV_FILE="$HOME/.pam_environment"
-    nano $ENV_FILE
-    cat $ENV_FILE | sort -bh | uniq -u > /tmp/.env
-    mv -f /tmp/.env $ENV_FILE
+	ENV_FILE="$HOME/.pam_environment"
+	nano $ENV_FILE
+	cat $ENV_FILE | sort -bh | uniq -u > /tmp/.env
+	mv -f /tmp/.env $ENV_FILE
 }
 function edit_env_sys {
-    ENV_FILE="/etc/environment"
-    smart_sudo nano $ENV_FILE
-    cat $ENV_FILE | sort -bh --parallel=$(nproc) | uniq -u > /tmp/.env
-    smart_sudo mv -f /tmp/.env $ENV_FILE
+	ENV_FILE="/etc/environment"
+	smart_sudo nano $ENV_FILE
+	cat $ENV_FILE | sort -bh --parallel=$(nproc) | uniq -u > /tmp/.env
+	smart_sudo mv -f /tmp/.env $ENV_FILE
 }
 function edit_lc_sys {
-    ENV_FILE="/etc/locale.conf"
-    smart_sudo nano $ENV_FILE
-    cat $ENV_FILE | sort -bh --parallel=$(nproc) | uniq -u > /tmp/.env
-    smart_sudo mv -f /tmp/.env $ENV_FILE
+	ENV_FILE="/etc/locale.conf"
+	smart_sudo nano $ENV_FILE
+	cat $ENV_FILE | sort -bh --parallel=$(nproc) | uniq -u > /tmp/.env
+	smart_sudo mv -f /tmp/.env $ENV_FILE
 }
 function tidy {
-    cat /dev/null
-    #TODO
+	cat /dev/null
+	#TODO
 }
 
 ### ALIASES --------------------------------------------------------------------
@@ -95,23 +67,23 @@ alias 'sudo'='smart_sudo'
 
 ## Package-manager aliases
 if [[ -f /usr/sbin/pacman ]]; then       ## pacman comes first because it's what I use.
-    alias    'pkgcc'='tidy_archlinux'    ## tidy up system
-    alias    'pkgin'='yaourt -a'         ## search and install
-    alias 'pkgindep'='yaourt --asdeps'   ## search and install as dependency
-    alias    'pkgrm'='yaourt -R'         ## remove
-    alias    'pkgru'='yaourt -Qdt'       ## remove orphans
-    alias    'pkgse'='pkgin'             ## redundant with yaourt
-    alias    'pkgup'='update_archlinux'  ## update repo db
-    alias    'pkgug'='upgrade_archlinux' ## upgrade system
+	alias	'pkgcc'='tidy_archlinux'    ## tidy up system
+	alias	'pkgin'='yaourt -a'         ## search and install
+	alias 'pkgindep'='yaourt --asdeps'   ## search and install as dependency
+	alias    'pkgrm'='yaourt -R'         ## remove
+	alias    'pkgru'='yaourt -Qdt'       ## remove orphans
+	alias    'pkgse'='pkgin'             ## redundant with yaourt
+	alias    'pkgup'='update_archlinux'  ## update repo db
+	alias    'pkgug'='upgrade_archlinux' ## upgrade system
 elif [[ -f /usr/sbin/aptitude ]]; then   ## aptitude etc come next because Debian-derivatives are EVERYWHERE
-    alias 'pkgin'='apt-get install'      ## install
-    #TODO
+	alias 'pkgin'='apt-get install'      ## install
+	#TODO
 elif [[ -f /usr/sbin/yum ]]; then        ## yum next because RHEL is widespread
-    alias 'pkgin'='yum install'          ## install
-    #TODO
+	alias 'pkgin'='yum install'          ## install
+	#TODO
 elif [[ -f /usr/sbin/zypper ]]; then     ## then zypper, because OpenSuSE is less widespread than RHEL-ish distros, but still mainstream...ish.
-    alias 'pkgin'='zypper -i'            ## install
-    #TODO
+	alias 'pkgin'='zypper -i'            ## install
+	#TODO
 fi
 
 ## grep
