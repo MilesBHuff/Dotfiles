@@ -1,4 +1,4 @@
-Miles's GNU/Linux Ricing
+Miles's GNU/Linux Rice
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 About
