@@ -1,0 +1,254 @@
+#!/usr/bin/env bash
+## Copyright (C) 2016-2017 by Miles Bradley Huff per LGPL3
+## This file contains aliases and functions as used by different shells.  The
+## code in this script must be capable of being run in at least both bash and
+## zsh.
+
+### FUNCTIONS ------------------------------------------------------------------
+## Base
+function cdls {
+    cd -L "$1"
+    ls -bCFNvX --color --group-directories-first
+}
+function get_help {
+    "$1" --help
+}
+function replace_string {
+	sed -i "s/$1/$2/g" "$3"
+}
+#function catnum {
+#	declare -i I=0
+#	while read L; do
+#		I=$I+1
+#		echo $I':\t'"$L"
+#	done < $1
+#}
+function smart_sudo {
+    if [[ $# -gt 0 ]]; then
+        if [[ -f /sbin/sudo ]]; then
+#             if xset q &> /dev/null; then
+#                 if [[ -f /sbin/gksudo ]]; then
+#                     sudo -EH gksudo $@
+#                 elif [[ -f /usr/sbin/ktsuss ]]; then
+#                     sudo -EH ktsuss $@
+#                 elif [[ -f /sbin/beesu ]]; then
+#                     sudo -EH beesu $@
+#                 elif [[ -f /sbin/kdesudo ]]; then
+#                     sudo -EH kdesudo $@
+#                 else
+#                     sudo -EH $@
+#                 fi
+#             else
+                sudo -EH $@
+#             fi
+        elif [[ -f /sbin/su ]]; then
+#             if xset q &> /dev/null; then
+#                 if [[ -f /sbin/gksu ]]; then
+#                     sudo -EH gksu $@
+#                 elif [[ -f /sbin/kdesu ]]; then
+#                     sudo -EH kdesu $@
+#                 else
+#                     su -c $@
+#                 fi
+#             else
+                su -c $@
+#             fi
+        else
+            echo "\e[31;1m[ERROR]\e[0;1m Can't find su!\e[0m"
+            exit 1
+        fi
+    elif [[ -f /sbin/su ]]; then
+        su
+    else
+        echo "\e[31;1m[ERROR]\e[0;1m Can't find su!\e[0m"
+        exit 1
+    fi
+}
+
+## System-management
+function edit_env {
+    ENV_FILE="$HOME/.pam_environment"
+    nano $ENV_FILE
+    cat $ENV_FILE | sort -bh | uniq -u > /tmp/.env
+    mv -f /tmp/.env $ENV_FILE
+}
+function edit_env_sys {
+    ENV_FILE="/etc/environment"
+    smart_sudo nano $ENV_FILE
+    cat $ENV_FILE | sort -bh --parallel=$(nproc) | uniq -u > /tmp/.env
+    smart_sudo mv -f /tmp/.env $ENV_FILE
+}
+function edit_lc_sys {
+    ENV_FILE="/etc/locale.conf"
+    smart_sudo nano $ENV_FILE
+    cat $ENV_FILE | sort -bh --parallel=$(nproc) | uniq -u > /tmp/.env
+    smart_sudo mv -f /tmp/.env $ENV_FILE
+}
+function tidy {
+    cat /dev/null
+    #TODO
+}
+
+### ALIASES --------------------------------------------------------------------
+## sudo
+alias 'sudo'='smart_sudo'
+
+## Package-manager aliases
+if [[ -f /usr/sbin/pacman ]]; then       ## pacman comes first because it's what I use.
+    alias    'pkgcc'='tidy_archlinux'    ## tidy up system
+    alias    'pkgin'='yaourt -a'         ## search and install
+    alias 'pkgindep'='yaourt --asdeps'   ## search and install as dependency
+    alias    'pkgrm'='yaourt -R'         ## remove
+    alias    'pkgru'='yaourt -Qdt'       ## remove orphans
+    alias    'pkgse'='pkgin'             ## redundant with yaourt
+    alias    'pkgup'='update_archlinux'  ## update repo db
+    alias    'pkgug'='upgrade_archlinux' ## upgrade system
+elif [[ -f /usr/sbin/aptitude ]]; then   ## aptitude etc come next because Debian-derivatives are EVERYWHERE
+    alias 'pkgin'='apt-get install'      ## install
+    #TODO
+elif [[ -f /usr/sbin/yum ]]; then        ## yum next because RHEL is widespread
+    alias 'pkgin'='yum install'          ## install
+    #TODO
+elif [[ -f /usr/sbin/zypper ]]; then     ## then zypper, because OpenSuSE is less widespread than RHEL-ish distros, but still mainstream...ish.
+    alias 'pkgin'='zypper -i'            ## install
+    #TODO
+fi
+
+## grep
+alias          'grep'='grep -EIisTu --color=always'
+alias             'g'='grep'
+alias   'search-full'='grep -Rl'
+alias 'search-full-v'='grep -Rns'
+
+## ls
+alias     'ls'='ls -bCFhNvX --color --group-directories-first --time-style=long-iso'
+alias    'lsg'='ls  -x | grep'
+alias    'lsa'='ls  -A'
+alias   'lsag'='lsa -x | grep'
+alias    'lsl'='ls  -l'
+alias   'lslg'='lsl -x | grep'
+alias   'lsal'='lsa -l'
+alias  'lsalg'='lsal   | grep'
+alias    'lss'='ls  -s'
+alias   'lssg'='lss    | grep'
+alias   'lsas'='lsa -s'
+alias  'lsasg'='lsas   | grep'
+alias    'lst'='lsattr'
+alias   'lstg'='lst    | grep'
+alias   'lsat'='lst -a'
+alias  'lsatg'='lsat   | grep'
+alias 'search'='ls **  | grep'
+
+## clear
+alias    'cl'='clear'
+alias   'cls'='cl && ls'
+alias  'clsa'='cl && lsa'
+alias  'clsl'='cl && lsl'
+alias 'clsal'='cl && lsal'
+alias  'clss'='cl && lss'
+alias 'clsas'='cl && lsas'
+alias  'clst'='cl && lst'
+alias 'clsat'='cl && lsat'
+
+## cd
+alias       'cd'='cdls'
+alias      'cd.'='cd .'
+alias     'cd..'='cd ..'
+alias    'cd...'='cd ...'
+alias   'cd....'='cd ....'
+alias  'cd.....'='cd .....'
+alias 'cd......'='cd ......'
+
+## rsync
+alias   'rscp'='rsync -vrdlpEAXogtOJSzh4 --specials --preallocate --delay-updates --suffix=.bak --no-motd --info=BACKUP0,COPY1,DEL1,FLIST0,MISC0,MOUNT0,NAME0,PROGRESS0,REMOVE1,SKIP0,STATS0,SYMSAFE0' ## Clobbering cp
+alias 'rscpup'='rscp -u' ## Only replace outdated files
+alias   'rsmv'='rscp --remove-source-files' ## Clobbering mv
+
+## ln
+alias 'lnh'='ln -iv' ## Hard links
+alias 'lns'='lnh -s' ## Symbolic links
+alias 'lnr'='lns -r' ## Relative links
+alias  'ln'='lns'    ## Default
+
+## cp
+alias   'cp'='cp -aLv --sparse=always'  ## Preserve all attributes, dereference links, and try to make files sparse whenever possible.
+alias  'cpi'='cp -i'  ## Interactive cp
+alias  'cpf'='cp -f'  ## Clobbering cp
+alias  'cpl'='cp -d'  ## Preserve symlinks
+alias 'cpup'='cp -u'  ## Only replace outdated files
+
+## mv
+alias   'mv'='mv -v'  ## mv defaults
+alias  'mvi'='mv -i'  ## Interactive move
+alias  'mvf'='mv -f'  ## Clobbering move
+alias 'mvup'='mv -u'  ## Only replace outdated files
+
+## rm
+alias  'rm'='rm -dIrv'  ## Interactive rm
+#alias  'rm'='rm_trash'  ## Recycling rm
+alias 'rmi'='rm -dirv'  ## OCD interactive rm
+alias 'rmf'='rm -dfrv'  ## Merciless rm
+
+## *dir
+alias 'md'='mkdir'
+alias 'rd'='rmdir'
+
+## chattr
+## chattr is a hidden gem that really ought to have support in GUI file-managers.  Even Windows Explorer can do more chattr than Linux file managers!
+## Generally speaking, I used the names of related mount options for these aliases.
+alias      'chattr'='chattr -V'  ## Verbose.
+alias      'append'='chattr +a'  ## Only appends;  no clobbering.
+alias       'atime'='chattr -A'  ## Enable timestamps.
+alias       'async'='chattr -D'  ## Perform I/O asynchronously.
+alias       'block'='chattr +T'  ## Place independently on the disk.
+alias     'clobber'='chattr -a'  ## Allow overwrites.
+alias    'compress'='chattr +c'  ## Enable compression.
+alias     'datacow'='chattr -C'  ## Enable Copy-On-Write.
+alias     'deblock'='chattr -T'  ## Place alongside everything else on the disk.
+alias  'decompress'='chattr -c'  ## Disable compression.
+alias    'dirasync'='chattr -S'  ## Perform I/O asynchronously.
+alias     'dirsync'='chattr +S'  ## Perform I/O syncronously.
+alias        'dump'='chattr -d'  ## Allow backups.
+alias     'journal'='chattr +j'  ## Write journal before file.
+alias     'noatime'='chattr +A'  ## Disable timestamps.
+alias   'nodatacow'='chattr +C'  ## Disable Copy-On-Write.
+alias      'nodump'='chattr +d'  ## Disallow backups.
+alias       'nopid'='chattr -P'  ## Allow variable project IDs.
+alias  'norecovery'='chattr +u'  ## Allows a file to be truly deleted.
+alias 'notailmerge'='chattr -t'  ## Disables tail-merging.
+alias         'pid'='chattr +P'  ## Force subfiles to share the same project ID.
+alias   'tailmerge'='chattr +t'  ## Enables tailmerging.
+alias          'ro'='chattr +i'  ## Disallow writes.
+alias          'rw'='chattr -i'  ## Allow writes.
+alias        'sync'='chattr +D'  ## Perform I/O syncronously.
+alias    'recovery'='chattr +u'  ## Makes it such that the file cannot truly be deleted.
+alias   'writeback'='chattr -j'  ## Normal behaviour.
+alias        'zero'='chattr +s'  ## Zero out this file upon deletion.
+
+## Compatibility
+[[ -f /usr/bin/udevadm  ]] && [[ ! -f /usr/bin/udevinfo ]] && alias 'udevinfo'='udevadm'
+[[ -f /usr/bin/udevinfo ]] && [[ ! -f /usr/bin/udevadm  ]] && alias  'udevadm'='udevinfo'
+
+## Edit
+alias       'nano'='nano -FNOPSUiwz$ -T 4'
+alias  'editalias'='nano ~/.aliasrc'
+alias   'editbash'='nano ~/.bashrc'
+alias     'editwm'='nano ~/.config/awesome/rc.lua'
+alias    'editzsh'='nano ~/.zshrc'
+alias    'editenv'='edit_env'
+alias 'editenvsys'='edit_env_sys'
+alias  'editlcsys'='edit_lc_sys'
+
+## Other
+alias     'archey'='cl && archey3'
+alias     'catnum'='cat -ns'
+alias 'fontconfig'='sudo fc-cache-32 -rsv && sudo fc-cache -rsv && fc-cache-32 -rv ~/.fonts && fc-cache -rv ~/.fonts'
+alias       'help'='get_help'
+alias       'hold'='while true; do sleep 60; done'
+alias      'lsblk'='lsblk -a -o NAME,LABEL,FSTYPE,MOUNTPOINT'
+alias  'lsblkloop'='local -i i=0; while true; do i=$i+1 && echo "$i" && lsblk && echo && sleep 1; done'
+alias      'mkdir'='mkdir -pv'
+alias    'replace'='replace_string'
+alias      'rmdir'='rmdir -v'
+alias       'sysd'='sudo systemctl'
+alias   'timidity'='timidity -aB 1,12 -E wpvseToz --noise-shaping=4 --output-stereo --output-signed'
