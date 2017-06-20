@@ -1,0 +1,11 @@
+include /home/milesbhuff/.nano/syntax/*
+set historylog
+set justifytrim
+set linenumbers
+set locking
+set multibuffer
+set nohelp
+set quickblank
+set smooth
+set softwrap
+set tabsize 4
