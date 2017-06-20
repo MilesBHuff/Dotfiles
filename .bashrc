@@ -55,12 +55,16 @@ shopt -u                   \
 
 ## FINALIZATION
 clear && echo
-## If the user has another home directory in the same directory with a name
-## equivalent to the user's username, except that the first letter is
-## capitalized;  then cd that directory to avoid ls spam.
-#CAPS_USERNAME="$(tr '[:lower:]' '[:upper:]' <<< ${NORMAL_USERNAME:0:1})${NORMAL_USERNAME:1}"  ## Thanks, http://stackoverflow.com/a/12487465.
-#if [[ -d "$HOME/../$CAPS_USERNAME" ]]
-#	then cd "$HOME/../$CAPS_USERNAME"
-#	else cd "$HOME"
-#fi
-ls
+if [[ "$(pwd)" == "$HOME" ]]; then
+	## If the user has another home directory in the same directory with a name
+	## equivalent to the user's username, except that at least the first letter
+	## is capitalized;  then cd that directory to avoid ls spam.
+	CAPS_USERNAME="$(tr '[:lower:]' '[:upper:]' <<< ${NORMAL_USERNAME:0:1})${NORMAL_USERNAME:1}"  ## Thanks, http://stackoverflow.com/a/12487465.
+	if [[ -d "$HOME/../$CAPS_USERNAME" ]]; then
+		cd "$HOME/../$CAPS_USERNAME"
+	else
+		ls
+	fi
+else
+	ls
+fi
