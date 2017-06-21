@@ -162,8 +162,14 @@ alias 'rmi'='rm -dirv'  ## OCD interactive rm
 alias 'rmf'='rm -dfrv'  ## Merciless rm
 
 ## *dir
-alias 'md'='mkdir'
-alias 'rd'='rmdir'
+alias 'mkdir'='mkdir -pv'
+alias    'md'='mkdir'
+alias 'rmdir'='rmdir -v'
+alias    'rd'='rmdir'
+
+## GPG
+alias 'gpg1'='gpg'
+alias  'gpg'='gpg2'
 
 ## chattr
 ## chattr is a hidden gem that really ought to have support in GUI file-managers.  Even Windows Explorer can do more chattr than Linux file managers!
@@ -220,8 +226,6 @@ alias       'help'='get_help'
 alias       'hold'='while true; do sleep 60; done'
 alias      'lsblk'='lsblk -a -o NAME,LABEL,FSTYPE,MOUNTPOINT'
 alias  'lsblkloop'='local -i i=0; while true; do i=$i+1 && echo "$i" && lsblk && echo && sleep 1; done'
-alias      'mkdir'='mkdir -pv'
 alias    'replace'='replace_string'
-alias      'rmdir'='rmdir -v'
 alias       'sysd'='sudo systemctl'
 alias   'timidity'='timidity -aB 1,12 -E wpvseToz --noise-shaping=4 --output-stereo --output-signed'
