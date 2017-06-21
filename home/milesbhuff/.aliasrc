@@ -202,7 +202,7 @@ alias        'zero'='chattr +s'  ## Zero out this file upon deletion.
 [[ -f /usr/bin/udevinfo ]] && [[ ! -f /usr/bin/udevadm  ]] && alias  'udevadm'='udevinfo'
 
 ## Edit
-alias       'nano'='nano -FNOPSUiwz$ -T 4'
+alias       'nano'='nano -FNOPSUwz$ -T 4'
 alias  'editalias'='nano ~/.aliasrc'
 alias   'editbash'='nano ~/.bashrc'
 alias     'editwm'='nano ~/.config/awesome/rc.lua'
@@ -214,6 +214,7 @@ alias  'editlcsys'='edit_lc_sys'
 ## Other
 alias     'archey'='cl && archey3'
 alias     'catnum'='cat -ns'
+alias    'entropy'='head -c 4 "/proc/sys/kernel/random/entropy_avail" && echo -n " / " && cat "/proc/sys/kernel/random/poolsize"'
 alias 'fontconfig'='sudo fc-cache-32 -rsv && sudo fc-cache -rsv && fc-cache-32 -rv ~/.fonts && fc-cache -rv ~/.fonts'
 alias       'help'='get_help'
 alias       'hold'='while true; do sleep 60; done'
