@@ -4,8 +4,17 @@
 ## code in this script must be capable of being run in at least both bash and
 ## zsh.
 
+
 #### FUNCTIONS -----------------------------------------------------------------
 ### Base
+## cat a file, showing line-numbers.
+#function catnum {
+#	declare -i I=0
+#	while read L; do
+#		I=$I+1
+#		echo $I':\t'"$L"
+#	done < $1
+#}
 ## ls dirs on cd.
 function cdls {
 	cd -L "$1"
@@ -15,20 +24,8 @@ function cdls {
 function help {
 	"$1" --help
 }
-## Replace all instances of $1 with $2 in the string $3.
-function replace_string {
-	sed -i "s/$1/$2/g" "$3"
-}
-## cat a file, showing line-numbers.
-#function catnum {
-#	declare -i I=0
-#	while read L; do
-#		I=$I+1
-#		echo $I':\t'"$L"
-#	done < $1
-#}
 ## A more intelligent sudo.
-function smart_sudo {
+function intellisu {
 	[[ "$(type 'sudo')" == *' is an alias for '* ]] && unalias 'sudo'
 	if [[ $# -gt 0 ]]; then
 		if [[ -f "$(command -v sudo)" ]]; then
@@ -39,7 +36,11 @@ function smart_sudo {
 	else
 		su
 	fi
-	alias 'sudo'='smart_sudo'
+	alias 'sudo'='intellisu'
+}
+## Replace all instances of $1 with $2 in the string $3.
+function replace_string {
+	sed -i "s/$1/$2/g" "$3"
 }
 
 ### File-editing
@@ -51,15 +52,15 @@ function edit_env {
 }
 function edit_env_sys {
 	ENV_FILE="/etc/environment"
-	smart_sudo nano $ENV_FILE
+	intellisu nano $ENV_FILE
 	cat $ENV_FILE | sort -bh --parallel=$(nproc) | uniq -u > /tmp/.env
-	smart_sudo mv -f /tmp/.env $ENV_FILE
+	intellisu mv -f /tmp/.env $ENV_FILE
 }
 function edit_lc_sys {
 	ENV_FILE="/etc/locale.conf"
-	smart_sudo nano $ENV_FILE
+	intellisu nano $ENV_FILE
 	cat $ENV_FILE | sort -bh --parallel=$(nproc) | uniq -u > /tmp/.env
-	smart_sudo mv -f /tmp/.env $ENV_FILE
+	intellisu mv -f /tmp/.env $ENV_FILE
 }
 
 ### System-management
@@ -80,7 +81,7 @@ function pkgcc {
 			#TODO
 		;;
 		'apt' )
-			smart_sudo apt-get autoclean $*
+			intellisu apt-get autoclean $*
 		;;
 		'yum' )
 			#TODO
@@ -95,19 +96,19 @@ function pkgin {
 	case "$PKGMAN" in
 		'pacman' )
 			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
-				smart_sudo yaourt -a $*
+				intellisu yaourt -a $*
 			else
-				smart_sudo pacman -S $*
+				intellisu pacman -S $*
 			fi
 		;;
 		'apt' )
-			smart_sudo apt-get install $*
+			intellisu apt-get install $*
 		;;
 		'yum' )
-			smart_sudo yum install $*
+			intellisu yum install $*
 		;;
 		'zypper' )
-			smart_sudo zypper -i $*
+			intellisu zypper -i $*
 		;;
 	esac
 }
@@ -116,7 +117,7 @@ function pkgindep {
 	case "$PKGMAN" in
 		'pacman' )
 			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
-				smart_sudo yaourt --asdeps $*
+				intellisu yaourt --asdeps $*
 			else
 				#TODO
 			fi
@@ -171,13 +172,13 @@ function pkgrm {
 	case "$PKGMAN" in
 		'pacman' )
 			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
-				smart_sudo yaourt -R $*
+				intellisu yaourt -R $*
 			else
-				smart_sudo pacman -R $*
+				intellisu pacman -R $*
 			fi
 		;;
 		'apt' )
-			smart_sudo apt-get remove $*
+			intellisu apt-get remove $*
 		;;
 		'yum' )
 			#TODO
@@ -192,13 +193,13 @@ function pkgru {
 	case "$PKGMAN" in
 		'pacman' )
 			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
-				smart_sudo yaourt -Qdt $*
+				intellisu yaourt -Qdt $*
 			else
-				smart_sudo pacman -Qdt $*
+				intellisu pacman -Qdt $*
 			fi
 		;;
 		'apt' )
-			smart_sudo apt-get autoremove $*
+			intellisu apt-get autoremove $*
 		;;
 		'yum' )
 			#TODO
@@ -213,13 +214,13 @@ function pkgse {
 	case "$PKGMAN" in
 		'pacman' )
 			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
-				smart_sudo yaourt -a $*
+				intellisu yaourt -a $*
 			else
 				#TODO
 			fi
 		;;
 		'apt' )
-			smart_sudo apt-cache search $*
+			intellisu apt-cache search $*
 		;;
 		'yum' )
 			#TODO
@@ -234,13 +235,13 @@ function pkgug {
 	case "$PKGMAN" in
 		'pacman' )
 			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
-				smart_sudo yaourt -Suu $*
+				intellisu yaourt -Suu $*
 			else
-				smart_sudo pacman -Suu $*
+				intellisu pacman -Suu $*
 			fi
 		;;
 		'apt' )
-			smart_sudo apt-get upgrade $*
+			intellisu apt-get upgrade $*
 		;;
 		'yum' )
 			#TODO
@@ -255,13 +256,13 @@ function pkgup {
 	case "$PKGMAN" in
 		'pacman' )
 			if [[ "$(which 'pacmatic')" != *'not found'* ]]; then
-				smart_sudo pacmatic -Sy $*
+				intellisu pacmatic -Sy $*
 			else
-				smart_sudo pacman -Sy $*
+				intellisu pacman -Sy $*
 			fi
 		;;
 		'apt' )
-			smart_sudo apt-get update $*
+			intellisu apt-get update $*
 		;;
 		'yum' )
 			#TODO
@@ -280,11 +281,13 @@ function pkgup {
 	fi
 }
 
-### ALIASES --------------------------------------------------------------------
-## sudo
-alias 'sudo'='smart_sudo'
 
-## grep
+#### ALIASES --------------------------------------------------------------------
+### sudo
+#alias 'sudont'='sudo'
+alias   'sudo'='intellisu'
+
+### grep
 alias          'grep'='grep -EIisTu --color=always'
 alias             'g'='grep'
 alias   'search-full'='grep -Rl'
@@ -292,7 +295,7 @@ alias 'search-full-v'='grep -Rns'
 alias      'histgrep'='cat "$HOME/.sh_history" | grep'
 alias          'hist'='histgrep'
 
-## ls
+### ls
 alias     'ls'='ls -bCFhNvX --color --group-directories-first --time-style=long-iso'
 alias    'lsg'='ls  -x | grep'
 alias    'lsa'='ls  -A'
@@ -311,7 +314,7 @@ alias   'lsat'='lst -a'
 alias  'lsatg'='lsat   | grep'
 alias 'search'='ls **  | grep'
 
-## clear
+### clear
 alias    'cl'='clear'
 alias   'cls'='cl && ls'
 alias  'clsa'='cl && lsa'
@@ -322,7 +325,7 @@ alias 'clsas'='cl && lsas'
 alias  'clst'='cl && lst'
 alias 'clsat'='cl && lsat'
 
-## cd
+### cd
 alias       'cd'='cdls'
 alias      'cd.'='cd .'
 alias     'cd..'='cd ..'
@@ -331,47 +334,47 @@ alias   'cd....'='cd ....'
 alias  'cd.....'='cd .....'
 alias 'cd......'='cd ......'
 
-## rsync
+### rsync
 alias   'rscp'='rsync -vrdlpEAXogtOJSzh4 --specials --preallocate --delay-updates --suffix=.bak --no-motd --info=BACKUP0,COPY1,DEL1,FLIST0,MISC0,MOUNT0,NAME0,PROGRESS0,REMOVE1,SKIP0,STATS0,SYMSAFE0' ## Clobbering cp
 alias 'rscpup'='rscp -u' ## Only replace outdated files
 alias   'rsmv'='rscp --remove-source-files' ## Clobbering mv
 
-## ln
+### ln
 alias 'lnh'='ln -iv' ## Hard links
 alias 'lns'='lnh -s' ## Symbolic links
 alias 'lnr'='lns -r' ## Relative links
 alias  'ln'='lns'    ## Default
 
-## cp
+### cp
 alias   'cp'='cp -aLv --sparse=always'  ## Preserve all attributes, dereference links, and try to make files sparse whenever possible.
 alias  'cpi'='cp -i'  ## Interactive cp
 alias  'cpf'='cp -f'  ## Clobbering cp
 alias  'cpl'='cp -d'  ## Preserve symlinks
 alias 'cpup'='cp -u'  ## Only replace outdated files
 
-## mv
+### mv
 alias   'mv'='mv -v'  ## mv defaults
 alias  'mvi'='mv -i'  ## Interactive move
 alias  'mvf'='mv -f'  ## Clobbering move
 alias 'mvup'='mv -u'  ## Only replace outdated files
 
-## rm
+### rm
 alias  'rm'='rm -dIrv'  ## Interactive rm
 #alias  'rm'='rm_trash'  ## Recycling rm
 alias 'rmi'='rm -dirv'  ## OCD interactive rm
 alias 'rmf'='rm -dfrv'  ## Merciless rm
 
-## *dir
+### *dir
 alias 'mkdir'='mkdir -pv'
 alias    'md'='mkdir'
 alias 'rmdir'='rmdir -v'
 alias    'rd'='rmdir'
 
-## GPG
+### GPG
 alias 'gpg1'='gpg'
 alias  'gpg'='gpg2'
 
-## chattr
+### chattr
 ## chattr is a hidden gem that really ought to have support in GUI file-managers.  Even Windows Explorer can do more chattr than Linux file managers!
 ## Generally speaking, I used the names of related mount options for these aliases.
 alias      'chattr'='chattr -V'  ## Verbose.
@@ -403,11 +406,11 @@ alias    'recovery'='chattr +u'  ## Makes it such that the file cannot truly be 
 alias   'writeback'='chattr -j'  ## Normal behaviour.
 alias        'zero'='chattr +s'  ## Zero out this file upon deletion.
 
-## Compatibility
+### Compatibility
 [[ -f /usr/bin/udevadm  ]] && [[ ! -f /usr/bin/udevinfo ]] && alias 'udevinfo'='udevadm'
 [[ -f /usr/bin/udevinfo ]] && [[ ! -f /usr/bin/udevadm  ]] && alias  'udevadm'='udevinfo'
 
-## Edit
+### Edit
 alias       'nano'='nano -FNOPSUwz$ -T 4'
 alias  'editalias'='nano ~/.aliasrc'
 alias   'editbash'='nano ~/.bashrc'
@@ -418,7 +421,7 @@ alias   'editprof'='nano ~/.profile'
 alias     'editwm'='nano ~/.config/awesome/rc.lua'
 alias    'editzsh'='nano ~/.zshrc'
 
-## Other
+### Other
 alias     'archey'='cl && archey3'
 alias     'catnum'='cat -ns'
 alias    'entropy'='head -c 4 "/proc/sys/kernel/random/entropy_avail" && echo -n " / " && cat "/proc/sys/kernel/random/poolsize"'
