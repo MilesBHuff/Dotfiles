@@ -270,6 +270,14 @@ function pkgup {
 			#TODO
 		;;
 	esac
+	
+	if [[ "$(which 'gpg2')" != *'not found'* ]] || [[ "$(which 'gpg')" != *'not found'* ]]; then
+		if [[ "$(which 'gpg2')" != *'not found'* ]]; then
+			gpg2 --refresh
+		else
+			gpg --refresh
+		fi
+	fi
 }
 ## Cleanup.
 unset PKGMAN
