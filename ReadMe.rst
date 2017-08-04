@@ -15,6 +15,10 @@ About
 
 License
 ================================================================================
+  | Code is licensed under the Third Lesser GNU Public License (LGPL3) license.
+  | Non-code is licensed under Creative Commons Attribution-ShareAlike 4.0 (CC
+    BY-SA 4).
+
 | As much as possible, I have tried to create all these files myself.  Files
   (and bits of files) that I did not make myself, *should* be indicated as such;
   these such bits may have a different license than below.  Should you find that
@@ -23,6 +27,3 @@ License
   component(s) in-question.  I aim to abide by all the laws of the United States
   of America.
   
-  | Code is licensed under the Third Lesser GNU Public License (LGPL3) license.
-  | Non-code is licensed under Creative Commons Attribution-ShareAlike 4.0 (CC
-    BY-SA 4).
