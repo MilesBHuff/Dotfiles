@@ -68,18 +68,19 @@ PLUGINS=false   ## Useful when Antigen's broken.
 
 ### Preparation
 #NOTE:  Order important!
-#[[ -f "/etc/profile" ]] && source "/etc/profile"
+[[ -f "/etc/profile"    ]] && source "/etc/profile"
 emulate zsh
-umask 022
+#[[ -f "$HOME/.zprofile" ]] && source "$HOME/.zprofile"
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
 ### Load Environment
 #NOTE:  Order important!
 setopt all_export
-	[[ -f "/etc/locale.conf" ]] && source "/etc/locale.conf"
-	[[ -f "/etc/environment" ]] && source "/etc/environment"
+	[[ -f "/etc/locale.conf"       ]] && source "/etc/locale.conf"
+	[[ -f "/etc/environment"       ]] && source "/etc/environment"
 	[[ -f "$HOME/.pam_environment" ]] && source "$HOME/.pam_environment"
 unsetopt all_export
+[[ "$PATH" != *"$NEWPATH"* ]] && export PATH="$NEWPATH"
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
 ### Autoloads
