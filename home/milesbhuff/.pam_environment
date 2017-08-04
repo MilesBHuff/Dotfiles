@@ -1,4 +1,3 @@
-
 BROWSER='lynx'
 COUNTRY='US'
 DIRSTACKFILE="$HOME/.cache/dirstack"
@@ -7,13 +6,15 @@ EDITOR='nano'
 GPGKEY=0x7BD3CF7F9CB1D54FC2BDDA09E37A04E55B745375
 GREP_COLORS='*=0:sl=0:cx=0:mt=7;1:ms=7;1:mc=7;1:fn=94:ln=95:bn=91:se=0'
 GREP_OPTIONS=
-HISTFILE="$HOME/.zhistory"
+HISTFILE="$HOME/.sh_history"
 HISTSIZE=2048
-HOME=/home/milesbhuff
+HOME=/home/sweyn78
 JOBS="$(nproc)"
 LS_COLORS='*=0:fi=0:ex=32:di=34:bd=33:cd=33:pi=35:so=35:ln=36:or=31:mi=31'
-NORMAL_HOSTNAME=''
-NORMAL_USERNAME='milesbhuff'
+MOZ_USE_XINPUT2=1
+NEWPATH="$HOME/bin:$HOME/.local/bin:$PATH:."
+NORMAL_HOSTNAME='Sweyn78-HP-ProBook-Mint'
+NORMAL_USERNAME='sweyn78'
 NPROC="$(nproc)"
 PAGER='less'
 PROJECTDIR="$HOME/Projects"
