@@ -279,8 +279,6 @@ function pkgup {
 		fi
 	fi
 }
-## Cleanup.
-unset PKGMAN
 
 ### ALIASES --------------------------------------------------------------------
 ## sudo
