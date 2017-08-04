@@ -4,18 +4,22 @@
 ## code in this script must be capable of being run in at least both bash and
 ## zsh.
 
-### FUNCTIONS ------------------------------------------------------------------
-## Base
+#### FUNCTIONS -----------------------------------------------------------------
+### Base
+## ls dirs on cd.
 function cdls {
 	cd -L "$1"
 	ls -bCFNvX --color --group-directories-first
 }
-function get_help {
+## Access a program's helptext.
+function help {
 	"$1" --help
 }
+## Replace all instances of $1 with $2 in the string $3.
 function replace_string {
 	sed -i "s/$1/$2/g" "$3"
 }
+## cat a file, showing line-numbers.
 #function catnum {
 #	declare -i I=0
 #	while read L; do
@@ -23,13 +27,14 @@ function replace_string {
 #		echo $I':\t'"$L"
 #	done < $1
 #}
+## A more intelligent sudo.
 function smart_sudo {
-	unalias 'sudo'
+	[[ "$(type 'sudo')" == *' is an alias for '* ]] && unalias 'sudo'
 	if [[ $# -gt 0 ]]; then
 		if [[ -f "$(command -v sudo)" ]]; then
-			sudo -EH $@
+			sudo -EH $*
 		else
-			su -c "$@"
+			su -c "$*"
 		fi
 	else
 		su
@@ -37,7 +42,7 @@ function smart_sudo {
 	alias 'sudo'='smart_sudo'
 }
 
-## File-editing
+### File-editing
 function edit_env {
 	ENV_FILE="$HOME/.pam_environment"
 	nano $ENV_FILE
@@ -56,43 +61,222 @@ function edit_lc_sys {
 	cat $ENV_FILE | sort -bh --parallel=$(nproc) | uniq -u > /tmp/.env
 	smart_sudo mv -f /tmp/.env $ENV_FILE
 }
-function tidy {
-	cat /dev/null
-	#TODO
-}
 
-## System-management
-function update {
-	#TODO
+### System-management
+## Non-function code (needed to ascertain the package manager
+if   [[ "$(which 'pacman')" != *'not found'* ]]; then  ## pacman comes first because it's what I use.
+	PKGMAN='pacman'
+elif [[ "$(which 'apt')" != *'not found'* ]]; then     ## aptitude etc come next because Debian-derivatives are EVERYWHERE
+	PKGMAN='apt'
+elif [[ "$(which 'yum')" != *'not found'* ]]; then     ## yum next because RHEL is widespread
+	PKGMAN='yum'
+elif [[ "$(which 'zypper')" != *'not found'* ]]; then  ## then zypper, because OpenSuSE is less widespread than RHEL-ish distros, but still mainstream...ish.
+	PKGMAN='zypper'
+fi
+## Tidy up system
+function pkgcc {
+	case "$PKGMAN" in
+		'pacman' )
+			#TODO
+		;;
+		'apt' )
+			smart_sudo apt-get autoclean $*
+		;;
+		'yum' )
+			#TODO
+		;;
+		'zypper' )
+			#TODO
+		;;
+	esac
 }
-function upgrade {
-	#TODO
+## Install package(s)
+function pkgin {
+	case "$PKGMAN" in
+		'pacman' )
+			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
+				smart_sudo yaourt -a $*
+			else
+				smart_sudo pacman -S $*
+			fi
+		;;
+		'apt' )
+			smart_sudo apt-get install $*
+		;;
+		'yum' )
+			smart_sudo yum install $*
+		;;
+		'zypper' )
+			smart_sudo zypper -i $*
+		;;
+	esac
 }
+## Install package(s) as dependency/ies
+function pkgindep {
+	case "$PKGMAN" in
+		'pacman' )
+			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
+				smart_sudo yaourt --asdeps $*
+			else
+				#TODO
+			fi
+		;;
+		'apt' )
+			#TODO
+		;;
+		'yum' )
+			#TODO
+		;;
+		'zypper' )
+			#TODO
+		;;
+	esac
+}
+## Purge package(s)
+function pkgpu {
+	case "$PKGMAN" in
+		'pacman' )
+			#TODO
+		;;
+		'apt' )
+			#TODO
+		;;
+		'yum' )
+			#TODO
+		;;
+		'zypper' )
+			#TODO
+		;;
+	esac
+}
+## Reinstall package(s)
+function pkgri {
+	case "$PKGMAN" in
+		'pacman' )
+			#TODO
+		;;
+		'apt' )
+			#TODO
+		;;
+		'yum' )
+			#TODO
+		;;
+		'zypper' )
+			#TODO
+		;;
+	esac
+}
+## Remove package(s)
+function pkgrm {
+	case "$PKGMAN" in
+		'pacman' )
+			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
+				smart_sudo yaourt -R $*
+			else
+				smart_sudo pacman -R $*
+			fi
+		;;
+		'apt' )
+			smart_sudo apt-get remove $*
+		;;
+		'yum' )
+			#TODO
+		;;
+		'zypper' )
+			#TODO
+		;;
+	esac
+}
+## Remove unused package(s)
+function pkgru {
+	case "$PKGMAN" in
+		'pacman' )
+			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
+				smart_sudo yaourt -Qdt $*
+			else
+				smart_sudo pacman -Qdt $*
+			fi
+		;;
+		'apt' )
+			smart_sudo apt-get autoremove $*
+		;;
+		'yum' )
+			#TODO
+		;;
+		'zypper' )
+			#TODO
+		;;
+	esac
+}
+## Search packages
+function pkgse {
+	case "$PKGMAN" in
+		'pacman' )
+			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
+				smart_sudo yaourt -a $*
+			else
+				#TODO
+			fi
+		;;
+		'apt' )
+			smart_sudo apt-cache search $*
+		;;
+		'yum' )
+			#TODO
+		;;
+		'zypper' )
+			#TODO
+		;;
+	esac
+}
+## Upgrade system
+function pkgug {
+	case "$PKGMAN" in
+		'pacman' )
+			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
+				smart_sudo yaourt -Suu $*
+			else
+				smart_sudo pacman -Suu $*
+			fi
+		;;
+		'apt' )
+			smart_sudo apt-get upgrade $*
+		;;
+		'yum' )
+			#TODO
+		;;
+		'zypper' )
+			#TODO
+		;;
+	esac
+}
+## Update repo DBs
+function pkgup {
+	case "$PKGMAN" in
+		'pacman' )
+			if [[ "$(which 'pacmatic')" != *'not found'* ]]; then
+				smart_sudo pacmatic -Sy $*
+			else
+				smart_sudo pacman -Sy $*
+			fi
+		;;
+		'apt' )
+			smart_sudo apt-get update $*
+		;;
+		'yum' )
+			#TODO
+		;;
+		'zypper' )
+			#TODO
+		;;
+	esac
+}
+## Cleanup.
+unset PKGMAN
 
 ### ALIASES --------------------------------------------------------------------
 ## sudo
 alias 'sudo'='smart_sudo'
-
-## Package-manager aliases
-if [[ -f /usr/sbin/pacman ]]; then       ## pacman comes first because it's what I use.
-	alias	'pkgcc'='tidy_archlinux'    ## tidy up system
-	alias	'pkgin'='yaourt -a'         ## search and install
-	alias 'pkgindep'='yaourt --asdeps'   ## search and install as dependency
-	alias    'pkgrm'='yaourt -R'         ## remove
-	alias    'pkgru'='yaourt -Qdt'       ## remove orphans
-	alias    'pkgse'='pkgin'             ## redundant with yaourt
-	alias    'pkgup'='update_archlinux'  ## update repo db
-	alias    'pkgug'='upgrade_archlinux' ## upgrade system
-elif [[ -f /usr/sbin/aptitude ]]; then   ## aptitude etc come next because Debian-derivatives are EVERYWHERE
-	alias 'pkgin'='apt-get install'      ## install
-	#TODO
-elif [[ -f /usr/sbin/yum ]]; then        ## yum next because RHEL is widespread
-	alias 'pkgin'='yum install'          ## install
-	#TODO
-elif [[ -f /usr/sbin/zypper ]]; then     ## then zypper, because OpenSuSE is less widespread than RHEL-ish distros, but still mainstream...ish.
-	alias 'pkgin'='zypper -i'            ## install
-	#TODO
-fi
 
 ## grep
 alias          'grep'='grep -EIisTu --color=always'
@@ -233,7 +417,6 @@ alias     'archey'='cl && archey3'
 alias     'catnum'='cat -ns'
 alias    'entropy'='head -c 4 "/proc/sys/kernel/random/entropy_avail" && echo -n " / " && cat "/proc/sys/kernel/random/poolsize"'
 alias 'fontconfig'='sudo fc-cache-32 -rsv && sudo fc-cache -rsv && fc-cache-32 -rv ~/.fonts && fc-cache -rv ~/.fonts'
-alias       'help'='get_help'
 alias       'hold'='while true; do sleep 60; done'
 alias      'lsblk'='lsblk -a -o NAME,LABEL,FSTYPE,MOUNTPOINT'
 alias  'lsblkloop'='local -i i=0; while true; do i=$i+1 && echo "$i" && lsblk && echo && sleep 1; done'
