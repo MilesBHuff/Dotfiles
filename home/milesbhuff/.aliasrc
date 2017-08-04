@@ -37,7 +37,7 @@ function smart_sudo {
 	alias 'sudo'='smart_sudo'
 }
 
-## System-management
+## File-editing
 function edit_env {
 	ENV_FILE="$HOME/.pam_environment"
 	nano $ENV_FILE
@@ -58,6 +58,14 @@ function edit_lc_sys {
 }
 function tidy {
 	cat /dev/null
+	#TODO
+}
+
+## System-management
+function update {
+	#TODO
+}
+function upgrade {
 	#TODO
 }
 
@@ -91,6 +99,8 @@ alias          'grep'='grep -EIisTu --color=always'
 alias             'g'='grep'
 alias   'search-full'='grep -Rl'
 alias 'search-full-v'='grep -Rns'
+alias      'histgrep'='cat "$HOME/.sh_history" | grep'
+alias          'hist'='histgrep'
 
 ## ls
 alias     'ls'='ls -bCFhNvX --color --group-directories-first --time-style=long-iso'
@@ -211,11 +221,12 @@ alias        'zero'='chattr +s'  ## Zero out this file upon deletion.
 alias       'nano'='nano -FNOPSUwz$ -T 4'
 alias  'editalias'='nano ~/.aliasrc'
 alias   'editbash'='nano ~/.bashrc'
-alias     'editwm'='nano ~/.config/awesome/rc.lua'
-alias    'editzsh'='nano ~/.zshrc'
 alias    'editenv'='edit_env'
 alias 'editenvsys'='edit_env_sys'
 alias  'editlcsys'='edit_lc_sys'
+alias   'editprof'='nano ~/.profile'
+alias     'editwm'='nano ~/.config/awesome/rc.lua'
+alias    'editzsh'='nano ~/.zshrc'
 
 ## Other
 alias     'archey'='cl && archey3'
