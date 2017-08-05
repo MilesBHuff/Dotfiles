@@ -39,44 +39,44 @@ function intellisu {
 	alias 'sudo'='intellisu'
 }
 ## Replace all instances of $1 with $2 in the string $3.
-function replace_string {
+function replace {
 	sed -i "s/$1/$2/g" "$3"
 }
 
 ### File-editing
-function edit_env {
+function editenv {
 	ENV_FILE="$HOME/.pam_environment"
 	nano $ENV_FILE
 	cat $ENV_FILE | sort -bh | uniq -u > /tmp/.env
 	mv -f /tmp/.env $ENV_FILE
 }
-function edit_env_sys {
+function editenvsys {
 	ENV_FILE="/etc/environment"
 	intellisu nano $ENV_FILE
 	cat $ENV_FILE | sort -bh --parallel=$(nproc) | uniq -u > /tmp/.env
 	intellisu mv -f /tmp/.env $ENV_FILE
 }
-function edit_lc_sys {
+function editlcsys {
 	ENV_FILE="/etc/locale.conf"
 	intellisu nano $ENV_FILE
 	cat $ENV_FILE | sort -bh --parallel=$(nproc) | uniq -u > /tmp/.env
 	intellisu mv -f /tmp/.env $ENV_FILE
 }
 
-### System-management
+### Package-management, etc.
 ## Non-function code (needed to ascertain the package manager
 if   [[ "$(which 'pacman')" != *'not found'* ]]; then  ## pacman comes first because it's what I use.
-	PKGMAN='pacman'
+	PKGMGR='pacman'
 elif [[ "$(which 'apt')" != *'not found'* ]]; then     ## aptitude etc come next because Debian-derivatives are EVERYWHERE
-	PKGMAN='apt'
+	PKGMGR='apt'
 elif [[ "$(which 'yum')" != *'not found'* ]]; then     ## yum next because RHEL is widespread
-	PKGMAN='yum'
+	PKGMGR='yum'
 elif [[ "$(which 'zypper')" != *'not found'* ]]; then  ## then zypper, because OpenSuSE is less widespread than RHEL-ish distros, but still mainstream...ish.
-	PKGMAN='zypper'
+	PKGMGR='zypper'
 fi
 ## Tidy up system
 function pkgcc {
-	case "$PKGMAN" in
+	case "$PKGMGR" in
 		'pacman' )
 			#TODO
 		;;
@@ -93,7 +93,7 @@ function pkgcc {
 }
 ## Install package(s)
 function pkgin {
-	case "$PKGMAN" in
+	case "$PKGMGR" in
 		'pacman' )
 			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
 				intellisu yaourt -a $*
@@ -114,7 +114,7 @@ function pkgin {
 }
 ## Install package(s) as dependency/ies
 function pkgindep {
-	case "$PKGMAN" in
+	case "$PKGMGR" in
 		'pacman' )
 			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
 				intellisu yaourt --asdeps $*
@@ -135,7 +135,7 @@ function pkgindep {
 }
 ## Purge package(s)
 function pkgpu {
-	case "$PKGMAN" in
+	case "$PKGMGR" in
 		'pacman' )
 			#TODO
 		;;
@@ -152,7 +152,7 @@ function pkgpu {
 }
 ## Reinstall package(s)
 function pkgri {
-	case "$PKGMAN" in
+	case "$PKGMGR" in
 		'pacman' )
 			#TODO
 		;;
@@ -169,7 +169,7 @@ function pkgri {
 }
 ## Remove package(s)
 function pkgrm {
-	case "$PKGMAN" in
+	case "$PKGMGR" in
 		'pacman' )
 			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
 				intellisu yaourt -R $*
@@ -190,7 +190,7 @@ function pkgrm {
 }
 ## Remove unused package(s)
 function pkgru {
-	case "$PKGMAN" in
+	case "$PKGMGR" in
 		'pacman' )
 			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
 				intellisu yaourt -Qdt $*
@@ -211,7 +211,7 @@ function pkgru {
 }
 ## Search packages
 function pkgse {
-	case "$PKGMAN" in
+	case "$PKGMGR" in
 		'pacman' )
 			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
 				intellisu yaourt -a $*
@@ -232,7 +232,7 @@ function pkgse {
 }
 ## Upgrade system
 function pkgug {
-	case "$PKGMAN" in
+	case "$PKGMGR" in
 		'pacman' )
 			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
 				intellisu yaourt -Suu $*
@@ -253,7 +253,7 @@ function pkgug {
 }
 ## Update repo DBs
 function pkgup {
-	case "$PKGMAN" in
+	case "$PKGMGR" in
 		'pacman' )
 			if [[ "$(which 'pacmatic')" != *'not found'* ]]; then
 				intellisu pacmatic -Sy $*
@@ -281,11 +281,45 @@ function pkgup {
 	fi
 }
 
+### Security scans
+## Alias for rkhunter
+function _rkhunter {
+	PKGFMT='NONE'
+	case "$PKGMGR" in
+		'apt' )
+			PKGFMT='DPKG'
+		;;
+		'yum' )
+			PKGFMT='RPM'
+		;;
+		'zypper' )
+			PKGFMT='RPM'
+		;;
+	esac
+	intellisu rkhunter -c -l '/var/log/rkhunter.log' --pkgmgr "$PKGFMT" --sk
+	unset PKGFMT
+}
+## Alias for clamscan
+function _clamscan {
+	intellisu clamscan -aoirzl '/var/log/clamav/clamscan.log' --bell --enable-stats $@
+}
+## Scan for security threats
+function scansys {
+	echo ':: Checking for rootkits...'
+	_rkhunter
+	echo ':: Done.'
+
+	echo ':: Checking for viruses...'
+	_clamscan
+	echo ':: Done.'
+}
+
 
 #### ALIASES --------------------------------------------------------------------
-### sudo
-#alias 'sudont'='sudo'
-alias   'sudo'='intellisu'
+### Function-based
+alias 'clamscan'='_clamscan'
+alias 'rkhunter'='_rkhunter'
+alias     'sudo'='intellisu'
 
 ### grep
 alias          'grep'='grep -EIisTu --color=always'
@@ -414,9 +448,6 @@ alias        'zero'='chattr +s'  ## Zero out this file upon deletion.
 alias       'nano'='nano -FNOPSUwz$ -T 4'
 alias  'editalias'='nano ~/.aliasrc'
 alias   'editbash'='nano ~/.bashrc'
-alias    'editenv'='edit_env'
-alias 'editenvsys'='edit_env_sys'
-alias  'editlcsys'='edit_lc_sys'
 alias   'editprof'='nano ~/.profile'
 alias     'editwm'='nano ~/.config/awesome/rc.lua'
 alias    'editzsh'='nano ~/.zshrc'
@@ -429,6 +460,5 @@ alias 'fontconfig'='sudo fc-cache-32 -rsv && sudo fc-cache -rsv && fc-cache-32 -
 alias       'hold'='while true; do sleep 60; done'
 alias      'lsblk'='lsblk -a -o NAME,LABEL,FSTYPE,MOUNTPOINT'
 alias  'lsblkloop'='local -i i=0; while true; do i=$i+1 && echo "$i" && lsblk && echo && sleep 1; done'
-alias    'replace'='replace_string'
 alias       'sysd'='sudo systemctl'
 alias   'timidity'='timidity -aB 1,12 -E wpvseToz --noise-shaping=4 --output-stereo --output-signed'
