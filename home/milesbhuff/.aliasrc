@@ -9,6 +9,7 @@
 ## All functions start with '_'.
 ## Even though this '_' could be removed (thus eliminating the need for several
 ## alias lines), the extra alias lines help to codify the functions in-use.
+
 ### Base
 function _cdls {
 	cd -L "$1"
