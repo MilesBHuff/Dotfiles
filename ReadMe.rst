@@ -1,4 +1,4 @@
-Miles's GNU/Linux Rice
+Miles's GNU/Linux Dotfiles/Rice
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 About
