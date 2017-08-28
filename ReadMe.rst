@@ -1,8 +1,8 @@
 Miles's GNU/Linux Dotfiles/Rice
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+################################################################################
 
 About
-================================================================================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | A repository containing some of my GNU/Linux configs.  Currently, there are
   only a handful;  but I'd like to eventually get the majority of my configs
   uploaded.
@@ -14,7 +14,7 @@ About
   those that are necessary to for the Optimal theme to work.
 
 License
-================================================================================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   | Code is licensed under the Third Lesser GNU Public License (LGPL3) license.
   | Non-code is licensed under Creative Commons Attribution-ShareAlike 4.0 (CC
     BY-SA 4).
