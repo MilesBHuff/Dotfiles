@@ -352,7 +352,7 @@ alias 'clsas'='cl && lsas'
 alias  'clst'='cl && lst'
 alias 'clsat'='cl && lsat'
 ## cd
-alias       'cd'='cdls'
+alias       'cd'='_cdls'
 alias      'cd.'='cd .'
 alias     'cd..'='cd ..'
 alias    'cd...'='cd ...'
