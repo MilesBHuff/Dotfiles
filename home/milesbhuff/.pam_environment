@@ -13,8 +13,8 @@ JOBS="$(nproc)"
 LS_COLORS='*=0:fi=0:ex=32:di=34:bd=33:cd=33:pi=35:so=35:ln=36:or=31:mi=31'
 MOZ_USE_XINPUT2=1
 NEWPATH="$HOME/bin:$HOME/.local/bin:$PATH:."
-NORMAL_HOSTNAME='Sweyn78-HP-ProBook-Mint'
-NORMAL_USERNAME='sweyn78'
+NORMAL_HOSTNAME='MilesBHuff-HP-ProBook-Mint'
+NORMAL_USERNAME='MilesBHuff'
 NPROC="$(nproc)"
 PAGER='less'
 PROJECTDIR="$HOME/Projects"
