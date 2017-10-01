@@ -1,16 +1,13 @@
-# This is a whitelist
 *
-
-# Directories
-!./.gnupg
-
-# Files
+# Files to include
 !./.aliasrc
 !./.bash_profile
 !./.bashrc
 !./.dosaliasrc
 !./.face
 !./.gitignore
+!./.gnupg/dirmngr.conf
+!./.gnupg/gpg.conf
 !./.nanorc
 !./.pam_environment
 !./.profile
