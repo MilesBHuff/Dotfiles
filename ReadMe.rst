@@ -15,9 +15,9 @@ About
 
 License
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  | Code is licensed under the Third Lesser GNU Public License (LGPL3) license.
-  | Non-code is licensed under Creative Commons Attribution-ShareAlike 4.0 (CC
-    BY-SA 4).
+* Code is licensed under the Third Lesser GNU Public License (LGPL3) license.
+* Non-code is licensed under Creative Commons Attribution-ShareAlike 4.0 (CC
+  BY-SA 4).
 
 | As much as possible, I have tried to create all these files myself.  Files
   (and bits of files) that I did not make myself, *should* be indicated as such;
