@@ -41,21 +41,21 @@ function _replace {
 ### File-editing
 function _editenv {
 	ENV_FILE="$HOME/.pam_environment"
-	nano $ENV_FILE
-	cat $ENV_FILE | sort -bh | uniq -u > /tmp/.env
-	mv -f /tmp/.env $ENV_FILE
+	nano "$ENV_FILE"
+	sort -bh < "$ENV_FILE" | uniq -u > '/tmp/.env'
+	mv -f '/tmp/.env' "$ENV_FILE"
 }
 function _editenvsys {
-	ENV_FILE="/etc/environment"
-	_intellisu nano $ENV_FILE
-	cat $ENV_FILE | sort -bh --parallel=$(nproc) | uniq -u > /tmp/.env
-	_intellisu mv -f /tmp/.env $ENV_FILE
+	ENV_FILE='/etc/environment'
+	_intellisu nano "$ENV_FILE"
+	sort -bh --parallel="$(nproc)" < "$ENV_FILE"| uniq -u > '/tmp/.env'
+	_intellisu mv -f '/tmp/.env' "$ENV_FILE"
 }
 function _editlcsys {
-	ENV_FILE="/etc/locale.conf"
-	_intellisu nano $ENV_FILE
-	cat $ENV_FILE | sort -bh --parallel=$(nproc) | uniq -u > /tmp/.env
-	_intellisu mv -f /tmp/.env $ENV_FILE
+	ENV_FILE='/etc/locale.conf'
+	_intellisu nano "$ENV_FILE"
+	sort -bh --parallel="$(nproc)" < "$ENV_FILE" | uniq -u > '/tmp/.env'
+	_intellisu mv -f /tmp/.env "$ENV_FILE"
 }
 
 ### Package-management, etc.
@@ -71,9 +71,12 @@ elif [[ "$(which 'zypper')" != *'not found'* ]]; then  ## then zypper, because O
 fi
 ## Tidy up system
 function _pkgcc {
+	echo "\e[34;1m::\e[0;1m Cleaning package manager...\e[0m"
 	case "$PKGMGR" in
 		'pacman' )
-			#TODO
+			#[ -f /var/cache/pacman/pkg/*.aria2 ] && _intellisu rm -fv /var/cache/pacman/pkg/*.aria2
+			_intellisu pacman -Sc
+			[[ "$(which 'pacman-optimize')" != *'not found'* ]] && _intellisu pacman-optimize
 		;;
 		'apt' )
 			_intellisu apt-get autoclean $*
@@ -84,7 +87,12 @@ function _pkgcc {
 		'zypper' )
 			#TODO
 		;;
+		* )
+			(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
+			exit 1
+		;;
 	esac
+	echo "\e[34;1m::\e[0;1m Done.\e[0m"
 }
 ## Install package(s)
 function _pkgin {
@@ -105,6 +113,10 @@ function _pkgin {
 		'zypper' )
 			_intellisu zypper -i $*
 		;;
+		* )
+			(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
+			exit 1
+		;;
 	esac
 }
 ## Install package(s) as dependency/ies
@@ -114,7 +126,7 @@ function _pkgindep {
 			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
 				_intellisu yaourt --asdeps $*
 			else
-				#TODO
+				_intellisu pacman --asdeps #TODO
 			fi
 		;;
 		'apt' )
@@ -125,6 +137,10 @@ function _pkgindep {
 		;;
 		'zypper' )
 			#TODO
+		;;
+		* )
+			(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
+			exit 1
 		;;
 	esac
 }
@@ -143,6 +159,10 @@ function _pkgpu {
 		'zypper' )
 			#TODO
 		;;
+		* )
+			(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
+			exit 1
+		;;
 	esac
 }
 ## Reinstall package(s)
@@ -159,6 +179,10 @@ function _pkgri {
 		;;
 		'zypper' )
 			#TODO
+		;;
+		* )
+			(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
+			exit 1
 		;;
 	esac
 }
@@ -181,6 +205,10 @@ function _pkgrm {
 		'zypper' )
 			#TODO
 		;;
+		* )
+			(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
+			exit 1
+		;;
 	esac
 }
 ## Remove unused package(s)
@@ -202,6 +230,10 @@ function _pkgru {
 		'zypper' )
 			#TODO
 		;;
+		* )
+			(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
+			exit 1
+		;;
 	esac
 }
 ## Search packages
@@ -211,11 +243,11 @@ function _pkgse {
 			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
 				_intellisu yaourt -a $*
 			else
-				#TODO
+				echo -n '' #TODO
 			fi
 		;;
 		'apt' )
-			_intellisu apt-cache search $*
+			apt-cache search $*
 		;;
 		'yum' )
 			#TODO
@@ -223,14 +255,19 @@ function _pkgse {
 		'zypper' )
 			#TODO
 		;;
+		* )
+			(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
+			exit 1
+		;;
 	esac
 }
 ## Upgrade system
 function _pkgug {
+	echo "\e[34;1m::\e[0;1m Upgrading system...\e[0m"
 	case "$PKGMGR" in
 		'pacman' )
 			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
-				_intellisu yaourt -Suu $*
+				_intellisu yaourt -Suua $*
 			else
 				_intellisu pacman -Suu $*
 			fi
@@ -244,17 +281,112 @@ function _pkgug {
 		'zypper' )
 			#TODO
 		;;
+		* )
+			(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
+			exit 1
+		;;
 	esac
+    echo "\e[34;1m::\e[0;1m Done.\e[0m"
+	
+	## Update virus-definition database
+	if [[ "$(which 'freshclam')" != *'not found'* ]]; then
+	    echo -n 'Update virus-definition database?  [Y/n] '
+	    read -r INPUT
+	    if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
+	        echo "\e[34;1m::\e[0;1m Updating virus-definition database...\e[0m"
+	        _intellisu freshclam
+	        echo "\e[34;1m::\e[0;1m Done.\e[0m"
+	        echo
+	    fi
+	fi
+
+    ## Upgrade Antigen plugins
+	if [[ "$(which 'antigen-update')" != *'not found'* ]]; then
+		echo -n 'Upgrade Antigen plugins?  [Y/n] '
+		read -r INPUT
+		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
+			echo "\e[34;1m::\e[0;1m Upgrading Antigen plugins...\e[0m"
+			if [[ ! -d "$HOME/.antigen/repos" ]]; then
+				[[ ! -d "$HOME/.antigen" ]] && mkdir "$HOME/.antigen"
+				mkdir "$HOME/.antigen/repos"
+			elif [[ $(ls -A "$HOME/.antigen/repos") ]]; then
+				for D in "$HOME/.antigen/repos/"*; do
+					if [[ ! -d "$D/.git" ]]; then
+						rm -rf "$D"
+					fi
+				done
+			fi
+			#antigen-update
+			echo "\e[34;1m::\e[0;1m Done.\e[0m"
+			echo
+		fi
+	fi
+
+    ## Update Pipelight plugins database
+	if [[ "$(which 'pipelight-plugin')" != *'not found'* ]]; then
+		echo -n 'Update Pipelight plugins database?  [Y/n] '
+		read -r INPUT
+		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
+			echo "\e[34;1m::\e[0;1m Updating Pipelight plugins database...\e[0m"
+			_intellisu pipelight-plugin --update --accept --create-mozilla-plugins
+			echo "\e[34;1m::\e[0;1m Done.\e[0m"
+			echo
+		fi
+	fi
+
+    ## Upgrade Python plugins
+	if [[ "$(which 'pip2')" != *'not found'* ]] || [[ "$(which 'pip3')" != *'not found'* ]]; then
+		echo -n 'Upgrade Python plugins?  [Y/n] '
+		read -r INPUT
+		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
+			echo "\e[34;1m::\e[0;1m Upgrading Python plugins...\e[0m"
+			[[ "$(which 'pip2')" != *'not found'* ]] && _intellisu pip2 install --upgrade pip
+			[[ "$(which 'pip3')" != *'not found'* ]] && _intellisu pip3 install --upgrade pip
+			echo "\e[34;1m::\e[0;1m Done.\e[0m"
+			echo
+		fi
+	fi
+
+    ## Generate init images
+	if [[ "$(which 'mkinitcpio')" != *'not found'* ]]; then
+		echo -n 'Generate new init images?  [Y/n] '
+		read -r INPUT
+		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
+			echo "\e[34;1m::\e[0;1m Generating init images...\e[0m"
+			_intellisu mkinitcpio -p fallback
+			echo "\e[34;1m::\e[0;1m Done.\e[0m"
+			echo
+		fi
+	fi
 }
 ## Update repo DBs
 function _pkgup {
 	case "$PKGMGR" in
 		'pacman' )
-			if [[ "$(which 'pacmatic')" != *'not found'* ]]; then
-				_intellisu pacmatic -Sy $*
-			else
-				_intellisu pacman -Sy $*
+			## Refresh mirrors
+			if [[ "$(which 'reflector')" != *'not found'* ]]; then
+				echo "\e[34;1m::\e[0;1m Refreshing mirrors...\e[0m"
+				TMP_MIRRORLIST='/tmp/mirrorlist' #TODO: Randomize the filename in order to protect against attacks.
+				[[ -f $TMP_MIRRORLIST ]] && rm -f $TMP_MIRRORLIST
+				reflector -c US --threads $(nproc) --sort score > $TMP_MIRRORLIST #NOTE: Make sure you set it to use your country!
+				_intellisu mv -f $TMP_MIRRORLIST /etc/pacman.d/mirrorlist
+				## Remove unneeded pacnews and such
+				[[ -f /etc/pacman.d/mirrorlist.pacnew  ]] && _intellisu rm -f /etc/pacman.d/mirrorlist.pacnew
+				[[ -f /etc/pacman.d/mirrorlist.pacsave ]] && _intellisu rm -f /etc/pacman.d/mirrorlist.pacsave
+				echo "\e[34;1m::\e[0;1m Done.\e[0m"
 			fi
+			## Update repos
+			echo "\e[34;1m::\e[0;1m Updating repository-database...\e[0m"
+			  if [[ "$(which 'yaourt')"   != *'not found'* ]]; then #NOTE: If you want to use pacmatic with yaourt, make sure to edit /etc/yaourtrc.
+				EXE="yaourt -Sy $*"
+			elif [[ "$(which 'pacmatic')" != *'not found'* ]]; then
+				EXE="_intellisu pacmatic -Sy $*"
+			else
+				EXE="_intellisu pacman -Sy $*"
+			fi
+			$EXE
+			unset EXE
+			echo "\e[34;1m::\e[0;1m Done.\e[0m"
 		;;
 		'apt' )
 			_intellisu apt-get update $*
@@ -264,6 +396,10 @@ function _pkgup {
 		;;
 		'zypper' )
 			#TODO
+		;;
+		* )
+			(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
+			exit 1
 		;;
 	esac
 	
@@ -296,17 +432,17 @@ function _rkhunter {
 }
 ## Alias for clamscan
 function _clamscan {
-	_intellisu clamscan -aoirzl '/var/log/clamav/clamscan.log' --bell --enable-stats $@
+	_intellisu clamscan -aoirzl '/var/log/clamav/clamscan.log' --bell --enable-stats $*
 }
 ## Scan for security threats
 function _scansys {
-	echo ':: Checking for rootkits...'
+	echo "\e[34;1m::\e[0;1m Checking for rootkits...\e[0m"
 	_rkhunter
-	echo ':: Done.'
+	echo "\e[34;1m::\e[0;1m Done.\e[0m"
 
-	echo ':: Checking for viruses...'
+	echo "\e[34;1m::\e[0;1m Checking for viruses...\e[0m"
 	_clamscan '/'
-	echo ':: Done.'
+	echo "\e[34;1m::\e[0;1m Done.\e[0m"
 }
 
 
