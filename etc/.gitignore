@@ -1,5 +1,6 @@
 **
 # Files to include
+!.directory
 !.gitignore
 !aria2.conf
 !asound.conf
