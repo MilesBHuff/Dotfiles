@@ -1,6 +1,8 @@
 # Unmaintained filetypes
-*.tmp
 *.bak
+*.pacnew
+*.pacsave
+*.tmp
 
 # Disable most root directories
 /*
