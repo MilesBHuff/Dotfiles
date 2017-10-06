@@ -6,6 +6,13 @@
 
 # Disable most root directories
 /**
-!/.directory
 !/etc/**
 !/home/**
+
+# Enable special files
+!/.directory
+!/.editorconfig
+!/.gitignore
+!/ReadMe.rst
+!/License.txt
+!/ToDo.rst
