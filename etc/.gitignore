@@ -1,4 +1,5 @@
 **
 # Files to include
+!security/limits.conf
 !sysctl.conf
 !sysctl.d/*
