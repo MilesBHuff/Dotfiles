@@ -21,7 +21,7 @@ function _help {
 }
 ## A more intelligent sudo.
 function _intellisu {
-	[[ "$(type 'sudo')" == *' is an alias for '* ]] && unalias 'sudo'
+	[[ "$(type 'sudo')" == *'alias'* ]] && unalias 'sudo'
 	if [[ $# -gt 0 ]]; then
 		if [[ -f "$(command -v sudo)" ]]; then
 			sudo -EH $*
@@ -60,7 +60,7 @@ function _editlcsys {
 
 ### Package-management, etc.
 ## Non-function code (needed to ascertain the package manager
-if   [[ "$(which 'pacman')" != *'not found'* ]]; then  ## pacman comes first because it's what I use.
+  if [[ "$(which 'pacman')" != *'not found'* ]]; then  ## pacman comes first because it's what I use.
 	PKGMGR='pacman'
 elif [[ "$(which 'apt')"    != *'not found'* ]]; then  ## aptitude etc come next because Debian-derivatives are EVERYWHERE
 	PKGMGR='apt'
@@ -68,7 +68,7 @@ elif [[ "$(which 'yum')"    != *'not found'* ]]; then  ## yum next because RHEL 
 	PKGMGR='yum'
 elif [[ "$(which 'zypper')" != *'not found'* ]]; then  ## then zypper, because OpenSuSE is less widespread than RHEL-ish distros, but still mainstream...ish.
 	PKGMGR='zypper'
-fi
+  fi
 ## Tidy up system
 function _pkgcc {
 	echo "\e[34;1m::\e[0;1m Cleaning package manager...\e[0m"
