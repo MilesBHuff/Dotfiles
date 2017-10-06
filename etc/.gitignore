@@ -18,5 +18,5 @@
 !resolvconf.conf
 !security/limits.conf
 !sysctl.conf
-!sysctl.d/*
+!sysctl.d/**
 !yaourtrc
