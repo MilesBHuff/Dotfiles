@@ -6,5 +6,6 @@
 
 # Disable most root directories
 /*
+!/.directory
 !/etc
 !/home
