@@ -13,7 +13,7 @@ PS1='\n\e[36m\u\e[0m@\e[33m\H\e[0m:\e[34m\w\e[0m/\e[35m\$\e[0m '
 source "$HOME/.aliasrc"
 
 ## COMPLETION
-[[ -r /usr/share/bash-completion/bash_completion ]] && /usr/share/bash-completion/bash_completion
+[[ -r /usr/share/bash-completion/bash_completion ]] && . /usr/share/bash-completion/bash_completion
 
 ## OPTIONS
 shopt -s                \
