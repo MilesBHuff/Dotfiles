@@ -1,5 +1,22 @@
 **
 # Files to include
+!.gitignore
+!aria2.conf
+!asound.conf
+!dnsmasq.conf
+!hosts.conf
+!libao.conf
+!locale.conf
+!makepkg.conf
+!makepkg-i686.conf
+!mkinitcpio-fallback.conf
+!mkinitcpio.conf
+!ntp.conf
+!pacman.conf
+!resolv-dnsmasq.conf
+!resolv.conf
+!resolvconf.conf
 !security/limits.conf
 !sysctl.conf
 !sysctl.d/*
+!yaourtrc
