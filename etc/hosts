@@ -1,0 +1,8 @@
+## /etc/hosts: static lookup table for host names
+## You can use this file to act as a personal DNS.
+
+## <ip-address>	<hostname.domain.org>	<hostname>
+127.0.0.1	localhost.localdomain	localhost
+::1		localhost.localdomain	localhost
+127.0.0.1	ultima2.localdomain	ultima2
+::1		ultima2.localdomain	ultima2
