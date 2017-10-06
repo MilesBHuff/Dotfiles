@@ -1,1 +1,8 @@
+# Unmaintained filetypes
 *.tmp
+*.bak
+
+# Disable most root directories
+/*
+!/etc
+!/home
