@@ -60,13 +60,13 @@ function _editlcsys {
 
 ### Package-management, etc.
 ## Non-function code (needed to ascertain the package manager
-  if [[ "$(which 'pacman')" != *'not found'* ]]; then  ## pacman comes first because it's what I use.
+  if [[ ! -z "$(which 'pacman')" ]] && [[ "$(which 'pacman')" != *'not found'* ]]; then  ## pacman comes first because it's what I use.
 	PKGMGR='pacman'
-elif [[ "$(which 'apt')"    != *'not found'* ]]; then  ## aptitude etc come next because Debian-derivatives are EVERYWHERE
+elif [[ ! -z "$(which 'apt')" ]] && [[ "$(which 'apt')"    != *'not found'* ]]; then  ## aptitude etc come next because Debian-derivatives are EVERYWHERE
 	PKGMGR='apt'
-elif [[ "$(which 'yum')"    != *'not found'* ]]; then  ## yum next because RHEL is widespread
+elif [[ ! -z "$(which 'yum')" ]] && [[ "$(which 'yum')"    != *'not found'* ]]; then  ## yum next because RHEL is widespread
 	PKGMGR='yum'
-elif [[ "$(which 'zypper')" != *'not found'* ]]; then  ## then zypper, because OpenSuSE is less widespread than RHEL-ish distros, but still mainstream...ish.
+elif [[ ! -z "$(which 'zypper')" ]] && [[ "$(which 'zypper')" != *'not found'* ]]; then  ## then zypper, because OpenSuSE is less widespread than RHEL-ish distros, but still mainstream...ish.
 	PKGMGR='zypper'
   fi
 ## Tidy up system
@@ -76,7 +76,7 @@ function _pkgcc {
 		'pacman' )
 			#[ -f /var/cache/pacman/pkg/*.aria2 ] && _intellisu rm -fv /var/cache/pacman/pkg/*.aria2
 			_intellisu pacman -Sc
-			[[ "$(which 'pacman-optimize')" != *'not found'* ]] && _intellisu pacman-optimize
+			[[ ! -z "$(which 'pacman-optimize')" ]] && [[ "$(which 'pacman-optimize')" != *'not found'* ]] && _intellisu pacman-optimize
 		;;
 		'apt' )
 			_intellisu apt-get autoclean $*
@@ -98,7 +98,7 @@ function _pkgcc {
 function _pkgin {
 	case "$PKGMGR" in
 		'pacman' )
-			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
+			if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
 				_intellisu yaourt -a $*
 			else
 				_intellisu pacman -S $*
@@ -123,7 +123,7 @@ function _pkgin {
 function _pkgindep {
 	case "$PKGMGR" in
 		'pacman' )
-			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
+			if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
 				_intellisu yaourt --asdeps $*
 			else
 				_intellisu pacman --asdeps #TODO
@@ -190,7 +190,7 @@ function _pkgri {
 function _pkgrm {
 	case "$PKGMGR" in
 		'pacman' )
-			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
+			if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
 				_intellisu yaourt -R $*
 			else
 				_intellisu pacman -R $*
@@ -215,7 +215,7 @@ function _pkgrm {
 function _pkgru {
 	case "$PKGMGR" in
 		'pacman' )
-			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
+			if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
 				_intellisu yaourt -Qdt $*
 			else
 				_intellisu pacman -Qdt $*
@@ -240,7 +240,7 @@ function _pkgru {
 function _pkgse {
 	case "$PKGMGR" in
 		'pacman' )
-			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
+			if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
 				_intellisu yaourt -a $*
 			else
 				echo -n '' #TODO
@@ -266,7 +266,7 @@ function _pkgug {
 	echo "\e[34;1m::\e[0;1m Upgrading system...\e[0m"
 	case "$PKGMGR" in
 		'pacman' )
-			if [[ "$(which 'yaourt')" != *'not found'* ]]; then
+			if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
 				_intellisu yaourt -Suua $*
 			else
 				_intellisu pacman -Suu $*
@@ -289,7 +289,7 @@ function _pkgug {
     echo "\e[34;1m::\e[0;1m Done.\e[0m"
 	
 	## Update virus-definition database
-	if [[ "$(which 'freshclam')" != *'not found'* ]]; then
+	if [[ ! -z "$(which 'freshclam')" ]] && [[ "$(which 'freshclam')" != *'not found'* ]]; then
 	    echo -n 'Update virus-definition database?  [Y/n] '
 	    read -r INPUT
 	    if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
@@ -301,7 +301,7 @@ function _pkgug {
 	fi
 
     ## Upgrade Antigen plugins
-	if [[ "$(which 'antigen-update')" != *'not found'* ]]; then
+	if [[ ! -z "$(which 'antigen-update')" ]] && [[ "$(which 'antigen-update')" != *'not found'* ]]; then
 		echo -n 'Upgrade Antigen plugins?  [Y/n] '
 		read -r INPUT
 		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
@@ -323,7 +323,7 @@ function _pkgug {
 	fi
 
     ## Update Pipelight plugins database
-	if [[ "$(which 'pipelight-plugin')" != *'not found'* ]]; then
+	if [[ ! -z "$(which 'pipelight-plugin')" ]] && [[ "$(which 'pipelight-plugin')" != *'not found'* ]]; then
 		echo -n 'Update Pipelight plugins database?  [Y/n] '
 		read -r INPUT
 		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
@@ -335,20 +335,20 @@ function _pkgug {
 	fi
 
     ## Upgrade Python plugins
-	if [[ "$(which 'pip2')" != *'not found'* ]] || [[ "$(which 'pip3')" != *'not found'* ]]; then
+	if [[ ! -z "$(which 'pip2')" ]] && [[ "$(which 'pip2')" != *'not found'* ]] || [[ ! -z "$(which 'pip3')" ]] && [[ "$(which 'pip3')" != *'not found'* ]]; then
 		echo -n 'Upgrade Python plugins?  [Y/n] '
 		read -r INPUT
 		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
 			echo "\e[34;1m::\e[0;1m Upgrading Python plugins...\e[0m"
-			[[ "$(which 'pip2')" != *'not found'* ]] && _intellisu pip2 install --upgrade pip
-			[[ "$(which 'pip3')" != *'not found'* ]] && _intellisu pip3 install --upgrade pip
+			[[ ! -z "$(which 'pip2')" ]] && [[ "$(which 'pip2')" != *'not found'* ]] && _intellisu pip2 install --upgrade pip
+			[[ ! -z "$(which 'pip3')" ]] && [[ "$(which 'pip3')" != *'not found'* ]] && _intellisu pip3 install --upgrade pip
 			echo "\e[34;1m::\e[0;1m Done.\e[0m"
 			echo
 		fi
 	fi
 
     ## Generate init images
-	if [[ "$(which 'mkinitcpio')" != *'not found'* ]]; then
+	if [[ ! -z "$(which 'mkinitcpio')" ]] && [[ "$(which 'mkinitcpio')" != *'not found'* ]]; then
 		echo -n 'Generate new init images?  [Y/n] '
 		read -r INPUT
 		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
@@ -364,7 +364,7 @@ function _pkgup {
 	case "$PKGMGR" in
 		'pacman' )
 			## Refresh mirrors
-			if [[ "$(which 'reflector')" != *'not found'* ]]; then
+			if [[ ! -z "$(which 'reflector')" ]] && [[ "$(which 'reflector')" != *'not found'* ]]; then
 				echo "\e[34;1m::\e[0;1m Refreshing mirrors...\e[0m"
 				TMP_MIRRORLIST='/tmp/mirrorlist' #TODO: Randomize the filename in order to protect against attacks.
 				[[ -f $TMP_MIRRORLIST ]] && rm -f $TMP_MIRRORLIST
@@ -377,9 +377,9 @@ function _pkgup {
 			fi
 			## Update repos
 			echo "\e[34;1m::\e[0;1m Updating repository-database...\e[0m"
-			  if [[ "$(which 'yaourt')"   != *'not found'* ]]; then #NOTE: If you want to use pacmatic with yaourt, make sure to edit /etc/yaourtrc.
+			  if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')"   != *'not found'* ]]; then #NOTE: If you want to use pacmatic with yaourt, make sure to edit /etc/yaourtrc.
 				EXE="yaourt -Sy $*"
-			elif [[ "$(which 'pacmatic')" != *'not found'* ]]; then
+			elif [[ ! -z "$(which 'pacmatic')" ]] && [[ "$(which 'pacmatic')" != *'not found'* ]]; then
 				EXE="_intellisu pacmatic -Sy $*"
 			else
 				EXE="_intellisu pacman -Sy $*"
@@ -403,8 +403,8 @@ function _pkgup {
 		;;
 	esac
 	
-	if [[ "$(which 'gpg2')" != *'not found'* ]] || [[ "$(which 'gpg')" != *'not found'* ]]; then
-		if [[ "$(which 'gpg2')" != *'not found'* ]]; then
+	if [[ ! -z "$(which 'gpg2')" ]] && [[ "$(which 'gpg2')" != *'not found'* ]] || [[ ! -z "$(which 'gpg')" ]] && [[ "$(which 'gpg')" != *'not found'* ]]; then
+		if [[ ! -z "$(which 'gpg2')" ]] && [[ "$(which 'gpg2')" != *'not found'* ]]; then
 			gpg2 --refresh
 		else
 			gpg --refresh
