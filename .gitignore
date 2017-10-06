@@ -5,7 +5,7 @@
 *.tmp
 
 # Disable most root directories
-/*
+/**
 !/.directory
-!/etc
-!/home
+!/etc/**
+!/home/**
