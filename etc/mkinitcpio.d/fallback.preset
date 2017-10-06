@@ -1,0 +1,10 @@
+## mkinitcpio preset file for a custom fallback image
+
+ALL_config="/etc/mkinitcpio.conf"
+ALL_kver="/boot/vmlinuz-linux"
+
+PRESETS=('fallback')
+
+fallback_config="/etc/mkinitcpio-fallback.conf"
+fallback_image="/boot/initramfs-linux-fallback.img"
+fallback_options=""
