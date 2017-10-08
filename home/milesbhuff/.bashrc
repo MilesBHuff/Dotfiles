@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-## Copyright (C) 2016-2017 by Miles Bradley Huff per LGPL3
+## Copyright © by Miles Bradley Huff from 2016-2017 per the LGPL3 (the Third Lesser GNU Public License)
 
 ## PRELIMINARY
 [[ $- != *i* ]] && return  ## If not running interactively, don't do anything

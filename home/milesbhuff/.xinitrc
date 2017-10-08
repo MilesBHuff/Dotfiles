@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
-## ~/.xinitrc
-## Executed by startx (run your window manager from here)
+## Copyright © by Miles Bradley Huff from 2016-2017 per the LGPL3 (the Third Lesser GNU Public License)
 
 ### Merge defaults and load keymaps
 SYS_RESOURCES=/etc/X11/xinit/.Xresources

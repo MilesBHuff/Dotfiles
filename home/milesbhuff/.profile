@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
-## ~/.profile: executed by the command interpreter for login shells.
 ## See /usr/share/doc/bash/examples/startup-files for examples.
-## The files are located in the bash-doc package.
+## You'll probably need the bash-doc package to get these example files.
+## Copyright © by Miles Bradley Huff from 2016-2017 per the LGPL3 (the Third Lesser GNU Public License)
 
-## The default umask is set in /etc/profile
-## To set the umask for ssh logins, install and configure the libpam-umask package.
+## The system-wide default umask is set in /etc/profile.
+## ssh umasks are configured via the libpam-umask package.
 umask 022

@@ -1,4 +1,5 @@
 ## As recommended by the Arch Wiki:  https://wiki.archlinux.org/index.php/Simple_stateful_firewall
+## Copyright © by Miles Bradley Huff from 2016-2017 per the LGPL3 (the Third Lesser GNU Public License)
 
 
 ### DEFAULTS
@@ -61,7 +62,7 @@
 # -A TRAFFIC -m state --state NEW -m tcp -p tcp -m recent --name SSH0 --remove -j DROP
 # -A TRAFFIC -m state --state NEW -m tcp -p tcp --dport 9468 -m recent --name SSH0 --set -j DROP
 # -A SSH-INPUT -m recent --name SSH1 --set -j DROP
-# -A SSH-INPUTTWO -m recent --name SSH2 --set -j DROP 
+# -A SSH-INPUTTWO -m recent --name SSH2 --set -j DROP
 # -A TRAFFIC -j DROP
 
 

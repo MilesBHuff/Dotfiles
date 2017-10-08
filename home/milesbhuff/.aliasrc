@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-## Copyright (C) 2016-2017 by Miles Bradley Huff per LGPL3
 ## This file contains aliases and functions as used by different shells.  The
 ## code in this script must be capable of being run in at least both bash and
 ## zsh.
+## Copyright © by Miles Bradley Huff from 2016-2017 per the LGPL3 (the Third Lesser GNU Public License)
 
 
 #### FUNCTIONS -----------------------------------------------------------------
@@ -287,7 +287,7 @@ function _pkgug {
 		;;
 	esac
     echo "\e[34;1m::\e[0;1m Done.\e[0m"
-	
+
 	## Update virus-definition database
 	if [[ ! -z "$(which 'freshclam')" ]] && [[ "$(which 'freshclam')" != *'not found'* ]]; then
 	    echo -n 'Update virus-definition database?  [Y/n] '
@@ -400,7 +400,7 @@ function _pkgup {
 			exit 1
 		;;
 	esac
-	
+
 	if [[ ! -z "$(which 'gpg2')" ]] && [[ "$(which 'gpg2')" != *'not found'* ]] || [[ ! -z "$(which 'gpg')" ]] && [[ "$(which 'gpg')" != *'not found'* ]]; then
 		if [[ ! -z "$(which 'gpg2')" ]] && [[ "$(which 'gpg2')" != *'not found'* ]]; then
 			gpg2 --refresh

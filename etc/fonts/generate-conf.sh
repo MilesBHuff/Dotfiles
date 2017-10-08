@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 ## This script is a convenient means by which to manage your fontconfigs.
+## Copyright © by Miles Bradley Huff from 2016-2017 per the LGPL3 (the Third Lesser GNU Public License)
 
 DIR_OUT='/etc/fonts/conf.d'
 if [ -d $DIR_OUT ]; then
@@ -90,7 +91,7 @@ fi
 DIR_IN='/etc/fonts/conf.avail.custom'
 if [ -d $DIR_IN ]; then
 	echo ':: Creating symlinks from conf.avail.custom...'
-	ln -sv "$DIR_IN/"* "$DIR_OUT/"	
+	ln -sv "$DIR_IN/"* "$DIR_OUT/"
 	echo ':: Done.'
 fi
 ## Cleanup
