@@ -7,10 +7,13 @@
 !.dosaliasrc
 !.face
 !.gitignore
+!.gitconfig
 !.gnupg/dirmngr.conf
 !.gnupg/gpg.conf
 !.nanorc
 !.pam_environment
 !.profile
+!.xinitrc
+!.Xresources
 !.zprofile
 !.zshrc
