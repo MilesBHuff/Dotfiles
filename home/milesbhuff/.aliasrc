@@ -582,6 +582,13 @@ alias    'pkgug'='_pkgug'
 alias    'pkgup'='_pkgup'
 
 ### Specific applications
+## git
+alias    'gadd'='git add'
+alias  'gclone'='git clone'
+alias 'gcommit'='git commit -m'
+alias   'gpull'='git pull'
+alias   'gpush'='git push'
+alias  'gstage'='gadd'
 ## GnuPG
 alias 'gpg1'='gpg'
 alias  'gpg'='gpg2'
