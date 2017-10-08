@@ -1,5 +1,5 @@
 **
-# Files to include
+## Files to include
 !.directory
 !.gitignore
 !X11/xorg.conf.d/**

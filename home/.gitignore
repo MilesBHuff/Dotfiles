@@ -1,5 +1,5 @@
-/home/*
-# Files to include
+**
+## Files to include
 !.directory
 !.gitignore
-!milesbhuff
+!milesbhuff/**

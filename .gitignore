@@ -1,18 +1,10 @@
-# Unmaintained filetypes
-*.bak
-*.pacnew
-*.pacsave
-*.tmp
-
-# Disable most root directories
-/**
+**
+## Files to include
+!.directory
+!.editorconfig
 !/etc/**
+!.gitignore
 !/home/**
-
-# Enable special files
-!/.directory
-!/.editorconfig
-!/.gitignore
-!/ReadMe.rst
 !/License.txt
+!/ReadMe.rst
 !/ToDo.rst
