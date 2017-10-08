@@ -1,3 +1,7 @@
+[core]
+editor = atom
+[push]
+default = simple
 [user]
-	email = MilesBHuff@UGA.edu
-	name = Miles B Huff
+email = MilesBHuff@Users.NoReply.Github.com
+name = Miles B Huff
