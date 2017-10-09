@@ -1,4 +1,4 @@
-BROWSER='lynx'
+BROWSER='elinks'
 COUNTRY='US'
 DIRSTACKFILE="$HOME/.cache/dirstack"
 DIRSTACKSIZE=12
@@ -8,18 +8,18 @@ GREP_COLORS='*=0:sl=0:cx=0:mt=7;1:ms=7;1:mc=7;1:fn=94:ln=95:bn=91:se=0'
 GREP_OPTIONS=
 HISTFILE="$HOME/.sh_history"
 HISTSIZE=2048
-HOME=/home/sweyn78
-JOBS="$(nproc)"
+JOBS=$(nproc)
 LS_COLORS='*=0:fi=0:ex=32:di=34:bd=33:cd=33:pi=35:so=35:ln=36:or=31:mi=31'
 MOZ_USE_XINPUT2=1
 NEWPATH="$HOME/bin:$HOME/.local/bin:$PATH:."
-NORMAL_HOSTNAME='MilesBHuff-HP-ProBook-Mint'
+NORMAL_HOSTNAME="$(hostname)"
 NORMAL_USERNAME='MilesBHuff'
-NPROC="$(nproc)"
+NPROC=$(nproc)
 PAGER='less'
 PROJECTDIR="$HOME/Projects"
 SAVEHIST=2048
 USE_COLOR=true
+VISUAL='nano'
 WATCHFMT="%n from %M has %a tty%l at %T %W"
 WINEARCH='win32'
 WINEDEBUG='-all,+err'
