@@ -11,6 +11,7 @@
 !.gitconfig
 !.gnupg/dirmngr.conf
 !.gnupg/gpg.conf
+!.gnupg/gpg-agent.conf
 !.nanorc
 !.pam_environment
 !.profile

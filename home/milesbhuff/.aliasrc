@@ -263,30 +263,34 @@ function _pkgse {
 }
 ## Upgrade system
 function _pkgug {
-	echo "\e[34;1m::\e[0;1m Upgrading system...\e[0m"
-	case "$PKGMGR" in
-		'pacman' )
-			if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
-				_intellisu yaourt -Suua $*
-			else
-				_intellisu pacman -Suu $*
-			fi
-		;;
-		'apt' )
-			_intellisu apt-get upgrade $*
-		;;
-		'yum' )
-			#TODO
-		;;
-		'zypper' )
-			#TODO
-		;;
-		* )
-			(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
-			exit 1
-		;;
-	esac
-    echo "\e[34;1m::\e[0;1m Done.\e[0m"
+	echo -n 'Upgrade system packages?  [Y/n] '
+	read -r INPUT
+	if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
+		echo "\e[34;1m::\e[0;1m Upgrading system...\e[0m"
+		case "$PKGMGR" in
+			'pacman' )
+				if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
+					_intellisu yaourt -Suua $*
+				else
+					_intellisu pacman -Suu $*
+				fi
+			;;
+			'apt' )
+				_intellisu apt-get upgrade $*
+			;;
+			'yum' )
+				#TODO
+			;;
+			'zypper' )
+				#TODO
+			;;
+			* )
+				(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
+				exit 1
+			;;
+		esac
+   		echo "\e[34;1m::\e[0;1m Done.\e[0m"
+	fi
 
 	## Update virus-definition database
 	if [[ ! -z "$(which 'freshclam')" ]] && [[ "$(which 'freshclam')" != *'not found'* ]]; then
@@ -322,18 +326,6 @@ function _pkgug {
 		fi
 	fi
 
-    ## Update Pipelight plugins database
-	if [[ ! -z "$(which 'pipelight-plugin')" ]] && [[ "$(which 'pipelight-plugin')" != *'not found'* ]]; then
-		echo -n 'Update Pipelight plugins database?  [Y/n] '
-		read -r INPUT
-		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
-			echo "\e[34;1m::\e[0;1m Updating Pipelight plugins database...\e[0m"
-			_intellisu pipelight-plugin --update --accept --create-mozilla-plugins
-			echo "\e[34;1m::\e[0;1m Done.\e[0m"
-			echo
-		fi
-	fi
-
     ## Upgrade Python plugins
 	if [[ ! -z "$(which 'pip2')" ]] && [[ "$(which 'pip2')" != *'not found'* ]] || [[ ! -z "$(which 'pip3')" ]] && [[ "$(which 'pip3')" != *'not found'* ]]; then
 		echo -n 'Upgrade Python plugins?  [Y/n] '
@@ -361,51 +353,75 @@ function _pkgug {
 }
 ## Update repo DBs
 function _pkgup {
-	case "$PKGMGR" in
-		'pacman' )
-			## Refresh mirrors
-			if [[ ! -z "$(which 'reflector')" ]] && [[ "$(which 'reflector')" != *'not found'* ]]; then
-				echo "\e[34;1m::\e[0;1m Refreshing mirrors...\e[0m"
-				TMP_MIRRORLIST='/tmp/mirrorlist' #TODO: Randomize the filename in order to protect against attacks.
-				[[ -f $TMP_MIRRORLIST ]] && rm -f $TMP_MIRRORLIST
-				reflector -c US --threads $(nproc) --sort score > $TMP_MIRRORLIST #NOTE: Make sure you set it to use your country!
-				_intellisu mv -f $TMP_MIRRORLIST /etc/pacman.d/mirrorlist
-				## Remove unneeded pacnews and such
-				[[ -f /etc/pacman.d/mirrorlist.pacnew  ]] && _intellisu rm -f /etc/pacman.d/mirrorlist.pacnew
-				[[ -f /etc/pacman.d/mirrorlist.pacsave ]] && _intellisu rm -f /etc/pacman.d/mirrorlist.pacsave
+	echo -n 'Update package repository databases?  [Y/n] '
+	read -r INPUT
+	if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
+		case "$PKGMGR" in
+			'pacman' )
+				## Refresh mirrors
+				if [[ ! -z "$(which 'reflector')" ]] && [[ "$(which 'reflector')" != *'not found'* ]]; then
+					echo "\e[34;1m::\e[0;1m Refreshing mirrors...\e[0m"
+					TMP_MIRRORLIST='/tmp/mirrorlist' #TODO: Randomize the filename in order to protect against attacks.
+					[[ -f $TMP_MIRRORLIST ]] && rm -f $TMP_MIRRORLIST
+					reflector -c US --threads $(nproc) --sort score > $TMP_MIRRORLIST #NOTE: Make sure you set it to use your country!
+					_intellisu mv -f $TMP_MIRRORLIST /etc/pacman.d/mirrorlist
+					## Remove unneeded pacnews and such
+					[[ -f /etc/pacman.d/mirrorlist.pacnew  ]] && _intellisu rm -f /etc/pacman.d/mirrorlist.pacnew
+					[[ -f /etc/pacman.d/mirrorlist.pacsave ]] && _intellisu rm -f /etc/pacman.d/mirrorlist.pacsave
+					echo "\e[34;1m::\e[0;1m Done.\e[0m"
+				fi
+				## Update repos
+				echo "\e[34;1m::\e[0;1m Updating repository-database...\e[0m"
+				if [[ ! -z "$(which 'pacmatic')" ]] && [[ "$(which 'pacmatic')" != *'not found'* ]]; then
+					EXE="_intellisu pacmatic -Sy $*"
+				else
+					EXE="_intellisu pacman -Sy $*"
+				fi
+				$EXE
+				unset EXE
 				echo "\e[34;1m::\e[0;1m Done.\e[0m"
-			fi
-			## Update repos
-			echo "\e[34;1m::\e[0;1m Updating repository-database...\e[0m"
-			if [[ ! -z "$(which 'pacmatic')" ]] && [[ "$(which 'pacmatic')" != *'not found'* ]]; then
-				EXE="_intellisu pacmatic -Sy $*"
-			else
-				EXE="_intellisu pacman -Sy $*"
-			fi
-			$EXE
-			unset EXE
-			echo "\e[34;1m::\e[0;1m Done.\e[0m"
-		;;
-		'apt' )
-			_intellisu apt-get update $*
-		;;
-		'yum' )
-			#TODO
-		;;
-		'zypper' )
-			#TODO
-		;;
-		* )
-			(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
-			exit 1
-		;;
-	esac
+			;;
+			'apt' )
+				_intellisu apt-get update $*
+			;;
+			'yum' )
+				#TODO
+			;;
+			'zypper' )
+				#TODO
+			;;
+			* )
+				(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
+				exit 1
+			;;
+		esac
+	fi
 
+    ## Update PGP database
 	if [[ ! -z "$(which 'gpg2')" ]] && [[ "$(which 'gpg2')" != *'not found'* ]] || [[ ! -z "$(which 'gpg')" ]] && [[ "$(which 'gpg')" != *'not found'* ]]; then
-		if [[ ! -z "$(which 'gpg2')" ]] && [[ "$(which 'gpg2')" != *'not found'* ]]; then
-			gpg2 --refresh
-		else
-			gpg --refresh
+		echo -n 'Update PGP database?  [Y/n] '
+		read -r INPUT
+		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
+			echo "\e[34;1m::\e[0;1m Updating PGP database...\e[0m"
+			if [[ ! -z "$(which 'gpg2')" ]] && [[ "$(which 'gpg2')" != *'not found'* ]]; then
+				gpg2 --refresh
+			else
+				gpg --refresh
+			fi
+			echo "\e[34;1m::\e[0;1m Done.\e[0m"
+			echo
+		fi
+	fi
+
+    ## Update Pipelight plugins database
+	if [[ ! -z "$(which 'pipelight-plugin')" ]] && [[ "$(which 'pipelight-plugin')" != *'not found'* ]]; then
+		echo -n 'Update Pipelight plugins database?  [Y/n] '
+		read -r INPUT
+		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
+			echo "\e[34;1m::\e[0;1m Updating Pipelight plugins database...\e[0m"
+			_intellisu pipelight-plugin --update --accept --create-mozilla-plugins
+			echo "\e[34;1m::\e[0;1m Done.\e[0m"
+			echo
 		fi
 	fi
 }
@@ -586,12 +602,14 @@ alias    'pkgup'='_pkgup'
 alias    'gadd'='git add'
 alias  'gclone'='git clone'
 alias 'gcommit'='git commit -m'
+alias   'ginit'='git init'
 alias   'gpull'='git pull'
 alias   'gpush'='git push'
 alias  'gstage'='gadd'
 ## GnuPG
-alias 'gpg1'='gpg'
-alias  'gpg'='gpg2'
+alias        'gpg1'='gpg'
+alias         'gpg'='gpg2'
+alias 'fingerprint'='gpg --fingerprint'
 ## udevinfo/udevadm (for cross-distro compatibility)
 [[ -f /usr/bin/udevadm  ]] && [[ ! -f /usr/bin/udevinfo ]] && alias 'udevinfo'='udevadm'
 [[ -f /usr/bin/udevinfo ]] && [[ ! -f /usr/bin/udevadm  ]] && alias  'udevadm'='udevinfo'
