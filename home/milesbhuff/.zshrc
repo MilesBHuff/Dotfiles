@@ -395,7 +395,7 @@ setopt                   \
  no_correct_all          \
  no_dvorak               \
     flow_control         \
- no_ignore_eof           \
+    ignore_eof           \
     interactive_comments \
     hash_cmds            \
  no_hash_dirs            \

@@ -3,7 +3,6 @@
 
 ## PRELIMINARY
 [[ $- != *i* ]] && return  ## If not running interactively, don't do anything
-umask 022
 
 ## VARIABLES
 #source "$HOME/.local/scripts/readenv.sh"
@@ -52,6 +51,7 @@ shopt -u                   \
 	no_empty_cmd_completion\
 	nocaseglob             \
 	shift_verbose
+set -o ignoreeof
 
 ## FINALIZATION
 clear && echo
