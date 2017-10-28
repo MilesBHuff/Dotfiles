@@ -11,12 +11,12 @@ HISTSIZE=2048
 JOBS=$(nproc)
 LS_COLORS='*=0:fi=0:ex=32:di=34:bd=33:cd=33:pi=35:so=35:ln=36:or=31:mi=31'
 MOZ_USE_XINPUT2=1
-NEWPATH="$HOME/bin:$HOME/.local/bin:$PATH:."
+NEWPATH="$HOME/.local/bin:$PATH:."
 NORMAL_HOSTNAME="$(hostname)"
-NORMAL_USERNAME='MilesBHuff'
+NORMAL_USERNAME='milesbhuff'
 NPROC=$(nproc)
 PAGER='less'
-PROJECTDIR="$HOME/Projects"
+PROJECTDIR="$HOME/.local/src"
 SAVEHIST=2048
 USE_COLOR=true
 VISUAL='nano'
