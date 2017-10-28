@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-## Copyright © by Miles Bradley Huff from 2016-2017 per the LGPL3 (the Third Lesser GNU Public License)
 
 ### Merge defaults and load keymaps
 SYS_RESOURCES=/etc/X11/xinit/.Xresources
@@ -28,9 +27,10 @@ fi
 [ -f ~/.xprofile   ] && source ~/.xprofile
 
 ### Load environment
-/home/sweyn78/.local/bin/readenv.bash
+#/home/milesbhuff/.local/bin/readenv.bash
 export SESSION_MANAGER=
 
 ### WM or DE to execute
 #exec /usr/bin/awesome -c ~/.config/awesome/rc.lua
 exec /usr/bin/startxfce4
+#exec terminator -bmf --geometry="$(xrandr | grep 'connected' | awk '{print $3}')"
