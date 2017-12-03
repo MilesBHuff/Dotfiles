@@ -597,15 +597,21 @@ alias    'pkgse'='_pkgse'
 alias    'pkgug'='_pkgug'
 alias    'pkgup'='_pkgup'
 
+## User/group management
+alias 'chmod'='chmod -Rc'
+alias 'chown'='chown -Rc'
+alias 'chgrp'='chgrp -Rc'
+
 ### Specific applications
 ## git
-alias    'gadd'='git add'
+alias    'gadd'='git add -A'
 alias  'gclone'='git clone'
 alias 'gcommit'='git commit -m'
 alias   'ginit'='git init'
+alias    'glog'='git log'
 alias   'gpull'='git pull'
 alias   'gpush'='git push'
-alias  'gstage'='gadd'
+alias 'gstatus'='git status'
 ## GnuPG
 alias        'gpg1'='gpg'
 alias         'gpg'='gpg2'
