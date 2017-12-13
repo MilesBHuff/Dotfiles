@@ -17,5 +17,6 @@
 !.profile
 !.xinitrc
 !.Xresources
+!.xsession
 !.zprofile
 !.zshrc

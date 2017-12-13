@@ -34,4 +34,5 @@
 !sysctl.conf
 !sysctl.d/**
 !timidity++/timidity.cfg
+!ReadMe.rst
 !yaourtrc
