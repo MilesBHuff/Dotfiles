@@ -1,8 +1,13 @@
 ## Copyright © by Miles Bradley Huff from 2017 per the LGPL3 (the Third Lesser GNU Public License)
 [core]
-editor = atom
+	editor = atom
 [push]
-default = simple
+	default = simple
 [user]
-email = MilesBHuff@Users.NoReply.Github.com
-name = Miles B Huff
+	email = MilesBHuff@Users.NoReply.Github.com
+	name = Miles B Huff
+	signingkey = 0x7BD3CF7F9CB1D54FC2BDDA09E37A04E55B745375
+[commit]
+	gpgsign = true
+[gpg]
+	program = /usr/bin/gpg2
