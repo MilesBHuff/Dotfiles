@@ -604,15 +604,18 @@ alias 'chgrp'='chgrp -Rc'
 
 ### Specific applications
 ## git
-alias   'gadd'='git add --ignore-errors -A'
-alias 'gamend'='git commit --branch --no-status --amend'
-alias 'gclone'='git clone'
-alias  'gcomm'='git commit --branch --no-status -m'
-alias  'ginit'='git init'
-alias   'glog'="echo 'Graph	Branch         Commit     Date        PGP  Email       Summary' && git log --abbrev-commit --cherry-mark --date-order --graph --ignore-space-at-eol --left-right --use-mailmap --color=auto --date=format:'%Y-%m-%d' --decorate=auto --max-count=12 --pretty=tformat:'	%C(auto)%<(13,mtrunc)%D%C(reset)  %C(auto)%>(9,trunc)%H%C(reset)  %C(green)%>(10,trunc)%cd%C(reset)  %C(red)(%G?)%C(reset)  %C(blue)%<(10,trunc)%aE%C(reset)  %<(50,trunc)%s'"
-alias  'gpull'='git pull'
-alias  'gpush'='git push'
-alias  'gstat'='git status -sb --ignored --column'
+alias    'gadd'='git add --ignore-errors -A'
+alias  'gamend'='git commit --branch --no-status --amend'
+alias     'gcd'='git checkout'
+alias 'gbranch'='git branch'
+alias  'gclone'='git clone'
+alias   'gcomm'='git commit --branch --no-status -m'
+alias   'ginit'='git init'
+alias    'glog'="echo 'Graph	Branch         Commit     Date        PGP  Email       Summary' && git log --abbrev-commit --cherry-mark --date-order --graph --ignore-space-at-eol --left-right --use-mailmap --color=auto --date=format:'%Y-%m-%d' --decorate=auto --max-count=12 --pretty=tformat:'	%C(auto)%<(13,mtrunc)%D%C(reset)  %C(auto)%>(9,trunc)%H%C(reset)  %C(green)%>(10,trunc)%cd%C(reset)  %C(red)(%G?)%C(reset)  %C(blue)%<(10,trunc)%aE%C(reset)  %<(50,trunc)%s'"
+alias   'gpull'='git pull'
+alias   'gpush'='git push'
+alias     'grm'='git rm'
+alias   'gstat'='git status -sb --ignored --column'
 ## GnuPG
 alias        'gpg1'='gpg'
 alias         'gpg'='gpg2'
