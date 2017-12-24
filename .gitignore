@@ -1,11 +1,70 @@
 ## Copyright © by Miles Bradley Huff from 2017 per the LGPL3 (the Third Lesser GNU Public License)
 **
-## Files to include
+
+## Files to include from *
 !.directory
 !.editorconfig
 !.gitignore
-!/etc/**
-!/home/**
+
+## Files to include from /
 !/License.txt
 !/ReadMe.rst
 !/ToDo.rst
+
+## Files to include from /etc
+!/etc/.directory
+!/etc/X11/xorg.conf.d/**
+!/etc/aria2.conf
+!/etc/asound.conf
+!/etc/cron.daily/**
+!/etc/cron.hourly/**
+!/etc/cron.monthly/**
+!/etc/cron.weekly/**
+!/etc/dnsmasq.conf
+!/etc/fonts/conf.avail.custom/**
+!/etc/fonts/generate-conf.sh
+!/etc/hosts.conf
+!/etc/iptables/**
+!/etc/libao.conf
+!/etc/locale.conf
+!/etc/makepkg.conf
+!/etc/makepkg-i686.conf
+!/etc/mkinitcpio.d/**
+!/etc/mkinitcpio-fallback.conf
+!/etc/mkinitcpio.conf
+!/etc/ntp.conf
+!/etc/openal/alsoft.conf
+!/etc/pacman.conf
+!/etc/pulse/client.conf
+!/etc/pulse/daemon.conf
+!/etc/resolv-dnsmasq.conf
+!/etc/resolv.conf
+!/etc/resolvconf.conf
+!/etc/security/limits.conf
+!/etc/sysctl.conf
+!/etc/sysctl.d/**
+!/etc/timidity++/timidity.cfg
+!/etc/ReadMe.rst
+!/etc/yaourtrc
+
+## Files to include from /home/milesbhuff
+!/home/milesbhuff/.aliasrc
+!/home/milesbhuff/.bash_profile
+!/home/milesbhuff/.bashrc
+!/home/milesbhuff/.directory
+!/home/milesbhuff/.dosaliasrc
+!/home/milesbhuff/.face
+!/home/milesbhuff/.gitignore
+!/home/milesbhuff/.gitconfig
+!/home/milesbhuff/.gnupg/dirmngr.conf
+!/home/milesbhuff/.gnupg/gpg.conf
+!/home/milesbhuff/.gnupg/gpg-agent.conf
+!/home/milesbhuff/.nanorc
+!/home/milesbhuff/.pam_environment
+!/home/milesbhuff/.profile
+!/home/milesbhuff/.ssh/id_rsa.pub
+!/home/milesbhuff/.xinitrc
+!/home/milesbhuff/.Xresources
+!/home/milesbhuff/.xsession
+!/home/milesbhuff/.zprofile
+!/home/milesbhuff/.zshrc

@@ -37,25 +37,19 @@ function _intellisu {
 function _replace {
 	sed -i "s/$1/$2/g" "$3"
 }
-
-### File-editing
-function _editenv {
-	ENV_FILE="$HOME/.pam_environment"
-	nano "$ENV_FILE"
-	sort -bh < "$ENV_FILE" | uniq -u > '/tmp/.env'
-	mv -f '/tmp/.env' "$ENV_FILE"
-}
-function _editenvsys {
-	ENV_FILE='/etc/environment'
-	_intellisu nano "$ENV_FILE"
-	sort -bh --parallel="$(nproc)" < "$ENV_FILE"| uniq -u > '/tmp/.env'
-	_intellisu mv -f '/tmp/.env' "$ENV_FILE"
-}
-function _editlcsys {
-	ENV_FILE='/etc/locale.conf'
-	_intellisu nano "$ENV_FILE"
-	sort -bh --parallel="$(nproc)" < "$ENV_FILE" | uniq -u > '/tmp/.env'
-	_intellisu mv -f /tmp/.env "$ENV_FILE"
+## Sort, uniq, trim
+function _sut {
+	if [ ! "$1" ]; then
+		echo 'ERROR:  Please provide a file!' >&2
+		return 1
+	fi
+	if [ ! -f "$1" ]; then
+		echo 'ERROR:  File does not exist!' >&2
+		return 2
+	fi
+	TEMP="/tmp/.$RANDOM$RANDOM.tmp"
+	sort -bhs --parallel=$(nproc) < "$1" | uniq -u | sed -e 's/^[ \t]*//' > "$TEMP"
+	mv -f "$TEMP" "$1"
 }
 
 ### Package-management, etc.
@@ -574,16 +568,25 @@ alias    'recovery'='chattr +u'  ## Makes it such that the file cannot truly be 
 alias   'writeback'='chattr -j'  ## Normal behaviour.
 alias        'zero'='chattr +s'  ## Zero out this file upon deletion.
 
-### Edit
-alias       'nano'='nano -FNOPSUwz$ -T 4'
-alias  'editalias'='nano ~/.aliasrc'
-alias   'editbash'='nano ~/.bashrc'
-alias    'editenv'='_editenv'
-alias 'editenvsys'='_editenvsys'
-alias  'editlcsys'='_editlcsys'
-alias   'editprof'='nano ~/.profile'
-alias     'editwm'='nano ~/.config/awesome/rc.lua'
-alias    'editzsh'='nano ~/.zshrc'
+### Editors
+alias 'nano'='nano -FNOPSUwz$ -T 4'
+## Sort/uniq/etc
+alias 'sort'="sort -bhs --parallel=$(nproc)"
+alias 'uniq'='uniq -u'
+alias 'trim'="sed -e 's/^[ \t]*//'"
+## Wrappers
+alias  'editalias'="$VISUAL $HOME/.aliasrc"
+alias   'editbash'="$VISUAL $HOME/.bashrc"
+              FILE="$HOME/.pam_environment"
+alias    'editenv'="$VISUAL $FILE && _sut $FILE"
+              FILE='/etc/environment'
+alias 'editenvsys'="_intellisu $VISUAL $FILE && _intellisu _sut $FILE"
+              FILE='/etc/locale.conf'
+alias  'editlcsys'="_intellisu $VISUAL $FILE && _intellisu _sut $FILE"
+              FILE=
+alias   'editprof'="$VISUAL $HOME/.profile"
+alias     'editwm'="$VISUAL $HOME/.config/awesome/rc.lua"
+alias    'editzsh'="$VISUAL $HOME/.zshrc"
 
 ## Package management
 alias    'pkgcc'='_pkgcc'
@@ -598,9 +601,9 @@ alias    'pkgug'='_pkgug'
 alias    'pkgup'='_pkgup'
 
 ## User/group management
-alias 'chmod'='chmod -Rc'
-alias 'chown'='chown -Rc'
-alias 'chgrp'='chgrp -Rc'
+alias 'chmod'='chmod -c'
+alias 'chown'='chown -c'
+alias 'chgrp'='chgrp -c'
 
 ### Specific applications
 ## git
@@ -617,7 +620,7 @@ alias   'gpush'='git push'
 alias     'grm'='git rm'
 alias   'gstat'='git status -sb --ignored --column'
 ## GnuPG
-alias        'gpg1'='gpg'
+alias        'gpg1'="$(which gpg)"
 alias         'gpg'='gpg2'
 alias 'fingerprint'='gpg --fingerprint'
 ## udevinfo/udevadm (for cross-distro compatibility)
@@ -638,5 +641,7 @@ alias  'lsblkloop'='local -i i=0; while true; do i=$i+1 && echo "$i" && lsblk &&
 alias    'replace'='_replace'
 alias   'rkhunter'='_rkhunter'
 alias    'scansys'='_scansys'
+alias        'sut'='_sut'
 alias       'sysd'='sudo systemctl'
 alias   'timidity'='timidity -aB 1,12 -E wpvseToz --noise-shaping=4 --output-stereo --output-signed'
+
