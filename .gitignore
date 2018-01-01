@@ -1,4 +1,4 @@
-## Copyright © by Miles Bradley Huff from 2017 per the LGPL3 (the Third Lesser GNU Public License)
+## Copyright © by Miles Bradley Huff from 2017-2018 per the LGPL3 (the Third Lesser GNU Public License)
 **
 
 ## Files to include from *
@@ -57,8 +57,9 @@
 !/home/milesbhuff/.gitignore
 !/home/milesbhuff/.gitconfig
 !/home/milesbhuff/.gnupg/dirmngr.conf
-!/home/milesbhuff/.gnupg/gpg.conf
 !/home/milesbhuff/.gnupg/gpg-agent.conf
+!/home/milesbhuff/.gnupg/gpg.conf
+!/home/milesbhuff/.gnupg/sshcontrol
 !/home/milesbhuff/.nanorc
 !/home/milesbhuff/.pam_environment
 !/home/milesbhuff/.profile

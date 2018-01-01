@@ -2,7 +2,7 @@
 ## This file contains aliases and functions as used by different shells.  The
 ## code in this script must be capable of being run in at least both bash and
 ## zsh.
-## Copyright © by Miles Bradley Huff from 2016-2017 per the LGPL3 (the Third Lesser GNU Public License)
+## Copyright © by Miles Bradley Huff from 2016-2018 per the LGPL3 (the Third Lesser GNU Public License)
 
 
 #### FUNCTIONS -----------------------------------------------------------------
@@ -33,6 +33,11 @@ function _intellisu {
 	fi
 	alias 'sudo'='_intellisu'
 }
+## Change keyboard variant
+function _kv {
+	loadkeys "$1"
+	setxkbmap -variant "$1"
+}
 ## Replace all instances of $1 with $2 in the string $3.
 function _replace {
 	sed -i "s/$1/$2/g" "$3"
@@ -48,7 +53,7 @@ function _sut {
 		return 2
 	fi
 	TEMP="/tmp/.$RANDOM$RANDOM.tmp"
-	sort -bhs --parallel=$(nproc) < "$1" | uniq -u | sed -e 's/^[ \t]*//' > "$TEMP"
+	sort -bhs --parallel=$(nproc) < "$1" | uniq | sed -e 's/^[ \t]*//' > "$TEMP"
 	mv -f "$TEMP" "$1"
 }
 
@@ -56,9 +61,9 @@ function _sut {
 ## Non-function code (needed to ascertain the package manager
   if [[ ! -z "$(which 'pacman')" ]] && [[ "$(which 'pacman')" != *'not found'* ]]; then  ## pacman comes first because it's what I use.
 	PKGMGR='pacman'
-elif [[ ! -z "$(which 'apt')" ]] && [[ "$(which 'apt')"    != *'not found'* ]]; then  ## aptitude etc come next because Debian-derivatives are EVERYWHERE
+elif [[ ! -z "$(which 'apt')"    ]] && [[ "$(which 'apt')"    != *'not found'* ]]; then  ## aptitude etc come next because Debian-derivatives are EVERYWHERE
 	PKGMGR='apt'
-elif [[ ! -z "$(which 'yum')" ]] && [[ "$(which 'yum')"    != *'not found'* ]]; then  ## yum next because RHEL is widespread
+elif [[ ! -z "$(which 'yum')"    ]] && [[ "$(which 'yum')"    != *'not found'* ]]; then  ## yum next because RHEL is widespread
 	PKGMGR='yum'
 elif [[ ! -z "$(which 'zypper')" ]] && [[ "$(which 'zypper')" != *'not found'* ]]; then  ## then zypper, because OpenSuSE is less widespread than RHEL-ish distros, but still mainstream...ish.
 	PKGMGR='zypper'
@@ -257,7 +262,7 @@ function _pkgse {
 }
 ## Upgrade system
 function _pkgug {
-	echo -n 'Upgrade system packages?  [Y/n] '
+	echo -n '   Upgrade system packages?  [Y/n] '
 	read -r INPUT
 	if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
 		echo "\e[34;1m::\e[0;1m Upgrading system...\e[0m"
@@ -283,24 +288,23 @@ function _pkgug {
 				exit 1
 			;;
 		esac
-   		echo "\e[34;1m::\e[0;1m Done.\e[0m"
+   		echo "\e[34;1m::\e[0;1m Done.\e[0m\n"
 	fi
 
 	## Update virus-definition database
 	if [[ ! -z "$(which 'freshclam')" ]] && [[ "$(which 'freshclam')" != *'not found'* ]]; then
-	    echo -n 'Update virus-definition database?  [Y/n] '
+	    echo -n '   Update virus-definition database?  [Y/n] '
 	    read -r INPUT
 	    if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
 	        echo "\e[34;1m::\e[0;1m Updating virus-definition database...\e[0m"
 	        _intellisu freshclam
-	        echo "\e[34;1m::\e[0;1m Done.\e[0m"
-	        echo
+	        echo "\e[34;1m::\e[0;1m Done.\e[0m\n"
 	    fi
 	fi
 
     ## Upgrade Antigen plugins
 	if [[ ! -z "$(which 'antigen-update')" ]] && [[ "$(which 'antigen-update')" != *'not found'* ]]; then
-		echo -n 'Upgrade Antigen plugins?  [Y/n] '
+		echo -n '   Upgrade Antigen plugins?  [Y/n] '
 		read -r INPUT
 		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
 			echo "\e[34;1m::\e[0;1m Upgrading Antigen plugins...\e[0m"
@@ -315,39 +319,36 @@ function _pkgug {
 				done
 			fi
 			#antigen-update
-			echo "\e[34;1m::\e[0;1m Done.\e[0m"
-			echo
+			echo "\e[34;1m::\e[0;1m Done.\e[0m\n"
 		fi
 	fi
 
     ## Upgrade Python plugins
 	if [[ ! -z "$(which 'pip2')" ]] && [[ "$(which 'pip2')" != *'not found'* ]] || [[ ! -z "$(which 'pip3')" ]] && [[ "$(which 'pip3')" != *'not found'* ]]; then
-		echo -n 'Upgrade Python plugins?  [Y/n] '
+		echo -n '   Upgrade Python plugins?  [Y/n] '
 		read -r INPUT
 		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
 			echo "\e[34;1m::\e[0;1m Upgrading Python plugins...\e[0m"
 			[[ ! -z "$(which 'pip2')" ]] && [[ "$(which 'pip2')" != *'not found'* ]] && _intellisu pip2 install --upgrade pip
 			[[ ! -z "$(which 'pip3')" ]] && [[ "$(which 'pip3')" != *'not found'* ]] && _intellisu pip3 install --upgrade pip
-			echo "\e[34;1m::\e[0;1m Done.\e[0m"
-			echo
+			echo "\e[34;1m::\e[0;1m Done.\e[0m\n"
 		fi
 	fi
 
     ## Generate init images
 	if [[ ! -z "$(which 'mkinitcpio')" ]] && [[ "$(which 'mkinitcpio')" != *'not found'* ]]; then
-		echo -n 'Generate new init images?  [Y/n] '
+		echo -n '   Generate new init images?  [Y/n] '
 		read -r INPUT
 		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
 			echo "\e[34;1m::\e[0;1m Generating init images...\e[0m"
 			_intellisu mkinitcpio -p fallback
-			echo "\e[34;1m::\e[0;1m Done.\e[0m"
-			echo
+			echo "\e[34;1m::\e[0;1m Done.\e[0m\n"
 		fi
 	fi
 }
 ## Update repo DBs
 function _pkgup {
-	echo -n 'Update package repository databases?  [Y/n] '
+	echo -n '   Update package repository databases?  [Y/n] '
 	read -r INPUT
 	if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
 		case "$PKGMGR" in
@@ -365,7 +366,7 @@ function _pkgup {
 					echo "\e[34;1m::\e[0;1m Done.\e[0m"
 				fi
 				## Update repos
-				echo "\e[34;1m::\e[0;1m Updating repository-database...\e[0m"
+				echo "\e[34;1m::\e[0;1m Updating repository database...\e[0m"
 				if [[ ! -z "$(which 'pacmatic')" ]] && [[ "$(which 'pacmatic')" != *'not found'* ]]; then
 					EXE="_intellisu pacmatic -Sy $*"
 				else
@@ -373,9 +374,9 @@ function _pkgup {
 				fi
 				$EXE
 				unset EXE
-				echo "\e[34;1m::\e[0;1m Done.\e[0m"
 			;;
 			'apt' )
+				echo "\e[34;1m::\e[0;1m Updating repository database...\e[0m"
 				_intellisu apt-get update $*
 			;;
 			'yum' )
@@ -389,11 +390,12 @@ function _pkgup {
 				exit 1
 			;;
 		esac
+		echo "\e[34;1m::\e[0;1m Done.\e[0m\n"
 	fi
 
     ## Update PGP database
 	if [[ ! -z "$(which 'gpg2')" ]] && [[ "$(which 'gpg2')" != *'not found'* ]] || [[ ! -z "$(which 'gpg')" ]] && [[ "$(which 'gpg')" != *'not found'* ]]; then
-		echo -n 'Update PGP database?  [Y/n] '
+		echo -n '   Update PGP database?  [Y/n] '
 		read -r INPUT
 		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
 			echo "\e[34;1m::\e[0;1m Updating PGP database...\e[0m"
@@ -402,20 +404,18 @@ function _pkgup {
 			else
 				gpg --refresh
 			fi
-			echo "\e[34;1m::\e[0;1m Done.\e[0m"
-			echo
+			echo "\e[34;1m::\e[0;1m Done.\e[0m\n"
 		fi
 	fi
 
     ## Update Pipelight plugins database
 	if [[ ! -z "$(which 'pipelight-plugin')" ]] && [[ "$(which 'pipelight-plugin')" != *'not found'* ]]; then
-		echo -n 'Update Pipelight plugins database?  [Y/n] '
+		echo -n '   Update Pipelight plugins database?  [Y/n] '
 		read -r INPUT
 		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
 			echo "\e[34;1m::\e[0;1m Updating Pipelight plugins database...\e[0m"
 			_intellisu pipelight-plugin --update --accept --create-mozilla-plugins
-			echo "\e[34;1m::\e[0;1m Done.\e[0m"
-			echo
+			echo "\e[34;1m::\e[0;1m Done.\e[0m\n"
 		fi
 	fi
 }
@@ -446,11 +446,11 @@ function _clamscan {
 function _scansys {
 	echo "\e[34;1m::\e[0;1m Checking for rootkits...\e[0m"
 	_rkhunter
-	echo "\e[34;1m::\e[0;1m Done.\e[0m"
+	echo "\e[34;1m::\e[0;1m Done.\e[0m\n"
 
 	echo "\e[34;1m::\e[0;1m Checking for viruses...\e[0m"
 	_clamscan '/'
-	echo "\e[34;1m::\e[0;1m Done.\e[0m"
+	echo "\e[34;1m::\e[0;1m Done.\e[0m]\n"
 }
 
 
@@ -572,7 +572,7 @@ alias        'zero'='chattr +s'  ## Zero out this file upon deletion.
 alias 'nano'='nano -FNOPSUwz$ -T 4'
 ## Sort/uniq/etc
 alias 'sort'="sort -bhs --parallel=$(nproc)"
-alias 'uniq'='uniq -u'
+#alias 'uniq'='uniq'
 alias 'trim'="sed -e 's/^[ \t]*//'"
 ## Wrappers
 alias  'editalias'="$VISUAL $HOME/.aliasrc"
