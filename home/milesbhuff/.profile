@@ -1,10 +1,21 @@
 #!/usr/bin/env sh
-## See /usr/share/doc/bash/examples/startup-files for examples.
-## You'll probably need the bash-doc package to get these example files.
+## Remember:  This file needs to be compatible with POSIX sh!
 
-## The system-wide default umask is set in /etc/profile.
-## ssh umasks are configured via the libpam-umask package.
+## Settings
+## =============================================================================
+## Import environment
+if [ -f .pam_environment ]; then
+	while read L; do
+		export "$L"
+	done < .pam_environment
+fi
+## Configure the PATH
+[ "$PATH" != *'.'* ] && export PATH="$HOME/.local/bin:$HOME/.local/sbin:$PATH:."
+## Create new dirs/files with 755/644 perms
 umask 022
 
+## Background programs
+## =============================================================================
 ## Start gpg-agent
-eval "$(gpg-agent --daemon)"
+[ ! -z `which 'gpg-agent'` ] && [ `which 'gpg-agent'` != *'not found'* ] && gpg-agent --daemon > /dev/null
+
