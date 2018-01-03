@@ -7,3 +7,22 @@ Xft.hinting: 1
 Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
 Xft.rgba: rgb
+
+*background: #585858
+*foreground: #dbdbdb
+*color0: #585858
+*color1: #ffa5a5
+*color2: #67f867
+*color3: #e2e252
+*color4: #a5a5ff
+*color5: #ffa5ff
+*color6: #6cefef
+*color7: #dbdbdb
+*color8: #212121
+*color9: #e95c5c
+*color10: #0fb00f
+*color11: #9c9c00
+*color12: #5c5ce9
+*color13: #e95ce9
+*color14: #00a8a8
+*color15: #979797
