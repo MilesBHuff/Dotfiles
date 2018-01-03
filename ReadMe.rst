@@ -1,19 +1,19 @@
 Miles's GNU/Linux Dotfiles/Rice
-################################################################################
+================================================================================
 
 About
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------------------------------------------------------------
 | A repository containing many of my GNU/Linux configs, containing files from
   both ``/home`` and ``/etc``.  
 | The files in this repository are generally intended for an Arch Linux system,
   although many of the files have been written with multiple distros in-mind.
 | There may eventually be considerable overlap between this repository, and my
-  Optimal Theme repository.  Generally speaking, the latter is going to be a
+  Optimality Theme repository.  Generally speaking, the latter is going to be a
   subset of the former, and will contain only a minimal amount of settings --
-  those that are necessary to for the Optimal theme to work.
+  those that are necessary to for the Optimality theme to work.
 
 License
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------------------------------------------------------------
 * Code is licensed under the Third Lesser GNU Public License (LGPL3) license.
 * Non-code is licensed under Creative Commons Attribution-ShareAlike 4.0 (CC
   BY-SA 4).
