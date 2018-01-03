@@ -5,7 +5,8 @@ licensed under the CC BY-SA 4.0 (Creative Commons Attribution Share-
 Alike 4.0).
   Unless otherwise stated, all source-code in this project is licensed 
 under the LGPL3 (the Lesser General Public License).
-  The contents of all three licenses can be found below, verbatim.
+  The contents of both licenses, as well as those of the GPL3, can be
+found below, verbatim.
 
 ------------------------------------------------------------------------
                               §  §  §
