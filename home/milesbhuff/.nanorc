@@ -1,4 +1,4 @@
-include /home/milesbhuff/.nano/syntax/*
+include ~/.nano/syntax/*
 set historylog
 set justifytrim
 set linenumbers

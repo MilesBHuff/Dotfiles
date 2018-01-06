@@ -53,7 +53,7 @@ function _sut {
 		return 2
 	fi
 	TEMP="/tmp/.$RANDOM$RANDOM.tmp"
-	sort -bhs --parallel=$(nproc) < "$1" | uniq | sed -e 's/^[ \t]*//' > "$TEMP"
+	sort -bs --parallel=$(nproc) < "$1" | uniq | sed -e 's/^[ \t]*//' > "$TEMP"
 	mv -f "$TEMP" "$1"
 }
 
@@ -276,6 +276,7 @@ function _pkgug {
 			;;
 			'apt' )
 				_intellisu apt-get upgrade $*
+				_intellisu apt-get dist-upgrade $*
 			;;
 			'yum' )
 				#TODO
@@ -571,7 +572,7 @@ alias        'zero'='chattr +s'  ## Zero out this file upon deletion.
 ### Editors
 alias 'nano'='nano -FNOPSUwz$ -T 4'
 ## Sort/uniq/etc
-alias 'sort'="sort -bhs --parallel=$(nproc)"
+alias 'sort'="sort -bh --parallel=$(nproc)"
 #alias 'uniq'='uniq'
 alias 'trim'="sed -e 's/^[ \t]*//'"
 ## Wrappers

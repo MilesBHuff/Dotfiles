@@ -60,6 +60,7 @@
 !/home/milesbhuff/.gnupg/gpg-agent.conf
 !/home/milesbhuff/.gnupg/gpg.conf
 !/home/milesbhuff/.gnupg/sshcontrol
+!/home/milesbhuff/.i18n
 !/home/milesbhuff/.nanorc
 !/home/milesbhuff/.pam_environment
 !/home/milesbhuff/.profile

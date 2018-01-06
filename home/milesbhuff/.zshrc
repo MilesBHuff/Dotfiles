@@ -6,7 +6,7 @@
 ## The few parts from help-sites and such that I didn't actually write myself
 ## are sourced inline via comment.
 ##
-## Copyright (c) 2016-2017 under the Third Lesser GNU Public License (LGPL3)
+## Copyright (c) 2016-2018 under the Third Lesser GNU Public License (LGPL3)
 ## ^^ This, naturally, does not apply to lines that I did not write.
 
 
@@ -64,24 +64,7 @@ LOAD_BAR=false  ## Useful for finding bottlenecks.
 PLUGINS=false   ## Useful when Antigen's broken.
 
 ### Loading-bar
-[[ $LOAD_BAR == true ]] && echo '_________________'
-
-### Preparation
-#NOTE:  Order important!
-[[ -f "/etc/profile"    ]] && source "/etc/profile"
-emulate zsh
-#[[ -f "$HOME/.zprofile" ]] && source "$HOME/.zprofile"
-[[ $LOAD_BAR == true ]] && echo -n '█'
-
-### Load Environment
-#NOTE:  Order important!
-setopt all_export
-	[[ -f "/etc/locale.conf"       ]] && source "/etc/locale.conf"
-	[[ -f "/etc/environment"       ]] && source "/etc/environment"
-	[[ -f "$HOME/.pam_environment" ]] && source "$HOME/.pam_environment"
-unsetopt all_export
-[[ "$PATH" != *"$NEWPATH"* ]] && export PATH="$NEWPATH"
-[[ $LOAD_BAR == true ]] && echo -n '█'
+[[ $LOAD_BAR == true ]] && echo '_______________'
 
 ### Autoloads
 #TODO
@@ -279,7 +262,7 @@ setopt                \
 ##   0. Compliance
 ##   1. Normal
 ##   2. Uber
-export GLOB_MODE=1
+export GLOB_MODE=2
 #NOTE:  glob_subst can break history-scrolling
 setopt                \
     glob              \
@@ -405,7 +388,7 @@ setopt                   \
  no_print_eight_bit      \
  no_print_exit_value     \
     rc_quotes            \
- no_rm_star_silent       \
+    rm_star_silent       \
  no_rm_star_wait         \
     short_loops          \
  no_sun_keyboard_hack

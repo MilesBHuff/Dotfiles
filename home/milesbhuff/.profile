@@ -1,21 +1,19 @@
 #!/usr/bin/env sh
+## Copyright © by Miles Bradley Huff from 2016-2018 per the LGPL3 (the Third Lesser GNU Public License)
 ## Remember:  This file needs to be compatible with POSIX sh!
 
-## Settings
-## =============================================================================
-## Import environment
-if [ -f .pam_environment ]; then
-	while read L; do
-		export "$L"
-	done < .pam_environment
-fi
-## Configure the PATH
-[ "$PATH" != *'.'* ] && export PATH="$HOME/.local/bin:$HOME/.local/sbin:$PATH:."
-## Create new dirs/files with 755/644 perms
-umask 022
+## By the time this script is executed, the following files have already been
+## interpreted, and in this order:
+## 1) /etc/environment           (doesn't support variable expansion)
+## 2) /etc/security/pam_env.conf (uses pam_env syntax)
+## 3) /etc/profile               (this calls all scripts in /etc/profile.d)
+##   a) /etc/locale.conf         (localization) (also: /etc/default/locale, /etc/sysconfig/i18n)
+##   b) ~/.i18n                  (localization)
+## 4) ~/.pam_environment         (uses pam_env syntax)
 
-## Background programs
-## =============================================================================
-## Start gpg-agent
-[ ! -z `which 'gpg-agent'` ] && [ `which 'gpg-agent'` != *'not found'* ] && gpg-agent --daemon > /dev/null
+## Environment variables
+[ ! `echo $PATH | grep '\:\.'` ] && export PATH="$HOME/.local/sbin:$HOME/.local/bin:${PATH}:."
+export JOBS=`nproc`
 
+## Create new dirs/files with 751/640 perms
+umask 5026
