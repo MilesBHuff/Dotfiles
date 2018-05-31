@@ -303,9 +303,9 @@ function _pkgug {
 	    fi
 	fi
 
-    ## Upgrade Antigen plugins
+	## Upgrade shell plugins
 	if [[ ! -z "$(which 'antigen-update')" ]] && [[ "$(which 'antigen-update')" != *'not found'* ]]; then
-		echo -n '   Upgrade Antigen plugins?  [Y/n] '
+		echo -n '   Upgrade shell plugins?  [Y/n] '
 		read -r INPUT
 		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
 			echo "\e[34;1m::\e[0;1m Upgrading Antigen plugins...\e[0m"
@@ -324,14 +324,30 @@ function _pkgug {
 		fi
 	fi
 
-    ## Upgrade Python plugins
-	if [[ ! -z "$(which 'pip2')" ]] && [[ "$(which 'pip2')" != *'not found'* ]] || [[ ! -z "$(which 'pip3')" ]] && [[ "$(which 'pip3')" != *'not found'* ]]; then
-		echo -n '   Upgrade Python plugins?  [Y/n] '
+    ## Upgrade programming plugins
+	if ([[ ! -z "$(which 'pip2')" ]] && [[ "$(which 'pip2')" != *'not found'* ]]) \
+	|| ([[ ! -z "$(which 'pip3')" ]] && [[ "$(which 'pip3')" != *'not found'* ]]) \
+	|| ([[ ! -z "$(which 'npm')" ]] && [[ "$(which 'npm')" != *'not found'* ]]); then 
+		echo -n '   Upgrade programming plugins?  [Y/n] '
 		read -r INPUT
 		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
-			echo "\e[34;1m::\e[0;1m Upgrading Python plugins...\e[0m"
-			[[ ! -z "$(which 'pip2')" ]] && [[ "$(which 'pip2')" != *'not found'* ]] && _intellisu pip2 install --upgrade pip
-			[[ ! -z "$(which 'pip3')" ]] && [[ "$(which 'pip3')" != *'not found'* ]] && _intellisu pip3 install --upgrade pip
+			if [[ ! -z "$(which 'pip2')" ]] && [[ "$(which 'pip2')" != *'not found'* ]]; then
+				echo "\e[34;1m::\e[0;1m Upgrading Python2 plugins...\e[0m"
+				_intellisu pip2 install --upgrade pip
+			fi
+			if [[ ! -z "$(which 'pip3')" ]] && [[ "$(which 'pip3')" != *'not found'* ]]; then
+				echo "\e[34;1m::\e[0;1m Upgrading Python3 plugins...\e[0m"
+				_intellisu pip3 install --upgrade pip
+			fi
+			if [[ ! -z "$(which 'npm' )" ]]; then
+				echo "\e[34;1m::\e[0;1m Upgrading npm plugins...\e[0m"
+				_intellisu npm i -g npm
+				_intellisu npm up -g
+#				_intellisu npm audit fix -g
+				_intellisu npm ddp -g
+				_intellisu chmod -Rc og+w /usr/lib/node_modules
+				_intellisu chmod -Rc a+r /usr/lib/node_modules
+			fi
 			echo "\e[34;1m::\e[0;1m Done.\e[0m\n"
 		fi
 	fi
@@ -620,6 +636,7 @@ alias   'gpull'='git pull'
 alias   'gpush'='git push'
 alias     'grm'='git rm'
 alias   'gstat'='git status -sb --ignored --column'
+alias    'ga:s'='gadd : && gstat'
 ## GnuPG
 alias        'gpg1'="$(which gpg)"
 alias         'gpg'='gpg2'
@@ -632,7 +649,7 @@ alias 'fingerprint'='gpg --fingerprint'
 alias     'archey'='cl && archey3'
 alias     'catnum'='cat -ns'
 alias   'clamscan'='_clamscan'
-alias       'date'='date +"%Y-%m-%d | %H:%M %Z"'
+alias   'datetime'='date +"%Y-%m-%d | %H:%M %Z"'
 alias    'entropy'='head -c 4 "/proc/sys/kernel/random/entropy_avail" && echo -n " / " && cat "/proc/sys/kernel/random/poolsize"'
 alias 'fontconfig'='sudo fc-cache-32 -rsv && sudo fc-cache -rsv && fc-cache-32 -rv ~/.fonts && fc-cache -rv ~/.fonts'
 alias       'help'='_help'
@@ -644,5 +661,5 @@ alias   'rkhunter'='_rkhunter'
 alias    'scansys'='_scansys'
 alias        'sut'='_sut'
 alias       'sysd'='sudo systemctl'
+alias    'sysinfo'='inxi -Fxzd'
 alias   'timidity'='timidity -aB 1,12 -E wpvseToz --noise-shaping=4 --output-stereo --output-signed'
-

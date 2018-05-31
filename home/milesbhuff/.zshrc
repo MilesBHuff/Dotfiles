@@ -262,7 +262,7 @@ setopt                \
 ##   0. Compliance
 ##   1. Normal
 ##   2. Uber
-export GLOB_MODE=2
+export GLOB_MODE=1
 #NOTE:  glob_subst can break history-scrolling
 setopt                \
     glob              \
@@ -323,7 +323,6 @@ case $GLOB_MODE in
 		    equals             \
 		    extended_glob      \
 		 no_glob_assign        \
-		    glob_star_short    \
 		    hist_subst_pattern \
 		    brace_expand       \
 		 no_ignore_close_braces\
