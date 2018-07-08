@@ -95,6 +95,11 @@ function _pkgcc {
 }
 ## Install package(s)
 function _pkgin {
+	## If there's no pkgug lockfile or its modification date is more than a day ago, upgrade system first.
+	if [[ ! -f '/run/pkgug.lock' ]] || [[ 86400 -lt $(expr $(date +'%s') - $(stat -c %Y '/run/pkgug.lock')) ]]; then
+		echo "\e[34;1m::\e[0;1m A system upgrade is required before installing.\e[0m"
+		_pkgug
+	fi
 	case "$PKGMGR" in
 		'pacman' )
 			if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
@@ -120,6 +125,11 @@ function _pkgin {
 }
 ## Install package(s) as dependency/ies
 function _pkgindep {
+	## If there's no pkgug lockfile or its modification date is more than a day ago, upgrade system first.
+	if [[ ! -f '/run/pkgug.lock' ]] || [[ 86400 -lt $(expr $(date +'%s') - $(stat -c %Y '/run/pkgug.lock')) ]]; then
+		echo "\e[34;1m::\e[0;1m A system upgrade is required before installing.\e[0m"
+		_pkgug
+	fi
 	case "$PKGMGR" in
 		'pacman' )
 			if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
@@ -166,6 +176,11 @@ function _pkgpu {
 }
 ## Reinstall package(s)
 function _pkgri {
+	## If there's no pkgug lockfile or its modification date is more than a day ago, upgrade system first.
+	if [[ ! -f '/run/pkgug.lock' ]] || [[ 86400 -lt $(expr $(date +'%s') - $(stat -c %Y '/run/pkgug.lock')) ]]; then
+		echo "\e[34;1m::\e[0;1m A system upgrade is required before installing.\e[0m"
+		_pkgug
+	fi
 	case "$PKGMGR" in
 		'pacman' )
 			#TODO
@@ -264,7 +279,12 @@ function _pkgse {
 function _pkgug {
 	echo -n '   Upgrade system packages?  [Y/n] '
 	read -r INPUT
-	if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
+	if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
+		## If there's no pkgup lockfile or its modification date is more than a day ago, update repos first.
+		if [[ ! -f '/run/pkgup.lock' ]] || [[ 86400 -lt $(expr $(date +'%s') - $(stat -c %Y '/run/pkgup.lock')) ]]; then
+			echo "\e[34;1m::\e[0;1m A repo update is required before upgrading.\e[0m"
+			_pkgup
+		fi
 		echo "\e[34;1m::\e[0;1m Upgrading system...\e[0m"
 		case "$PKGMGR" in
 			'pacman' )
@@ -289,17 +309,18 @@ function _pkgug {
 				exit 1
 			;;
 		esac
-   		echo "\e[34;1m::\e[0;1m Done.\e[0m\n"
+		_intellisu touch '/run/pkgug.lock'
+   		echo "\e[34;1m::\e[0;1m Done.\e[0m"
 	fi
 
 	## Update virus-definition database
 	if [[ ! -z "$(which 'freshclam')" ]] && [[ "$(which 'freshclam')" != *'not found'* ]]; then
 	    echo -n '   Update virus-definition database?  [Y/n] '
 	    read -r INPUT
-	    if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
+	    if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
 	        echo "\e[34;1m::\e[0;1m Updating virus-definition database...\e[0m"
 	        _intellisu freshclam
-	        echo "\e[34;1m::\e[0;1m Done.\e[0m\n"
+	        echo "\e[34;1m::\e[0;1m Done.\e[0m"
 	    fi
 	fi
 
@@ -307,7 +328,7 @@ function _pkgug {
 	if [[ ! -z "$(which 'antigen-update')" ]] && [[ "$(which 'antigen-update')" != *'not found'* ]]; then
 		echo -n '   Upgrade shell plugins?  [Y/n] '
 		read -r INPUT
-		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
+		if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
 			echo "\e[34;1m::\e[0;1m Upgrading Antigen plugins...\e[0m"
 			if [[ ! -d "$HOME/.antigen/repos" ]]; then
 				[[ ! -d "$HOME/.antigen" ]] && mkdir "$HOME/.antigen"
@@ -320,17 +341,17 @@ function _pkgug {
 				done
 			fi
 			#antigen-update
-			echo "\e[34;1m::\e[0;1m Done.\e[0m\n"
+			echo "\e[34;1m::\e[0;1m Done.\e[0m"
 		fi
 	fi
 
     ## Upgrade programming plugins
 	if ([[ ! -z "$(which 'pip2')" ]] && [[ "$(which 'pip2')" != *'not found'* ]]) \
 	|| ([[ ! -z "$(which 'pip3')" ]] && [[ "$(which 'pip3')" != *'not found'* ]]) \
-	|| ([[ ! -z "$(which 'npm')" ]] && [[ "$(which 'npm')" != *'not found'* ]]); then 
+	|| ([[ ! -z "$(which 'npm')" ]] && [[ "$(which 'npm')" != *'not found'* ]]); then
 		echo -n '   Upgrade programming plugins?  [Y/n] '
 		read -r INPUT
-		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
+		if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
 			if [[ ! -z "$(which 'pip2')" ]] && [[ "$(which 'pip2')" != *'not found'* ]]; then
 				echo "\e[34;1m::\e[0;1m Upgrading Python2 plugins...\e[0m"
 				_intellisu pip2 install --upgrade pip
@@ -348,7 +369,7 @@ function _pkgug {
 				_intellisu chmod -Rc og+w /usr/lib/node_modules
 				_intellisu chmod -Rc a+r /usr/lib/node_modules
 			fi
-			echo "\e[34;1m::\e[0;1m Done.\e[0m\n"
+			echo "\e[34;1m::\e[0;1m Done.\e[0m"
 		fi
 	fi
 
@@ -356,10 +377,10 @@ function _pkgug {
 	if [[ ! -z "$(which 'mkinitcpio')" ]] && [[ "$(which 'mkinitcpio')" != *'not found'* ]]; then
 		echo -n '   Generate new init images?  [Y/n] '
 		read -r INPUT
-		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
+		if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
 			echo "\e[34;1m::\e[0;1m Generating init images...\e[0m"
 			_intellisu mkinitcpio -p fallback
-			echo "\e[34;1m::\e[0;1m Done.\e[0m\n"
+			echo "\e[34;1m::\e[0;1m Done.\e[0m"
 		fi
 	fi
 }
@@ -367,7 +388,7 @@ function _pkgug {
 function _pkgup {
 	echo -n '   Update package repository databases?  [Y/n] '
 	read -r INPUT
-	if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
+	if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
 		case "$PKGMGR" in
 			'pacman' )
 				## Refresh mirrors
@@ -407,21 +428,22 @@ function _pkgup {
 				exit 1
 			;;
 		esac
-		echo "\e[34;1m::\e[0;1m Done.\e[0m\n"
+		_intellisu touch '/run/pkgup.lock'
+		echo "\e[34;1m::\e[0;1m Done.\e[0m"
 	fi
 
     ## Update PGP database
 	if [[ ! -z "$(which 'gpg2')" ]] && [[ "$(which 'gpg2')" != *'not found'* ]] || [[ ! -z "$(which 'gpg')" ]] && [[ "$(which 'gpg')" != *'not found'* ]]; then
 		echo -n '   Update PGP database?  [Y/n] '
 		read -r INPUT
-		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
+		if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
 			echo "\e[34;1m::\e[0;1m Updating PGP database...\e[0m"
 			if [[ ! -z "$(which 'gpg2')" ]] && [[ "$(which 'gpg2')" != *'not found'* ]]; then
 				gpg2 --refresh
 			else
 				gpg --refresh
 			fi
-			echo "\e[34;1m::\e[0;1m Done.\e[0m\n"
+			echo "\e[34;1m::\e[0;1m Done.\e[0m"
 		fi
 	fi
 
@@ -429,10 +451,10 @@ function _pkgup {
 	if [[ ! -z "$(which 'pipelight-plugin')" ]] && [[ "$(which 'pipelight-plugin')" != *'not found'* ]]; then
 		echo -n '   Update Pipelight plugins database?  [Y/n] '
 		read -r INPUT
-		if [ "$INPUT" != 'n' ] && [ "$INPUT" != 'N' ] && [ "$INPUT" != 'no' ] && [ "$INPUT" != 'No' ] && [ "$INPUT" != 'NO' ] && [ "$INPUT" != 'nO' ]; then
+		if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
 			echo "\e[34;1m::\e[0;1m Updating Pipelight plugins database...\e[0m"
 			_intellisu pipelight-plugin --update --accept --create-mozilla-plugins
-			echo "\e[34;1m::\e[0;1m Done.\e[0m\n"
+			echo "\e[34;1m::\e[0;1m Done.\e[0m"
 		fi
 	fi
 }
@@ -463,7 +485,7 @@ function _clamscan {
 function _scansys {
 	echo "\e[34;1m::\e[0;1m Checking for rootkits...\e[0m"
 	_rkhunter
-	echo "\e[34;1m::\e[0;1m Done.\e[0m\n"
+	echo "\e[34;1m::\e[0;1m Done.\e[0m"
 
 	echo "\e[34;1m::\e[0;1m Checking for viruses...\e[0m"
 	_clamscan '/'
