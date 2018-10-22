@@ -287,7 +287,7 @@ function _pkgug {
 		fi
 		echo "\e[34;1m::\e[0;1m Upgrading system...\e[0m"
 		LC_OLD="$LC_ALL"
-		LC_ALL='C'
+		export LC_ALL='C'
 		case "$PKGMGR" in
 			'pacman' )
 				if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
@@ -313,7 +313,7 @@ function _pkgug {
 			;;
 		esac
 		_intellisu touch '/run/pkgug.lock'
-		LC_ALL="$LC_OLD"
+		export LC_ALL="$LC_OLD"
    		echo "\e[34;1m::\e[0;1m Done.\e[0m"
 	fi
 
