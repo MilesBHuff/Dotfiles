@@ -680,6 +680,7 @@ alias    'entropy'='head -c 4 "/proc/sys/kernel/random/entropy_avail" && echo -n
 alias 'fontconfig'='sudo fc-cache-32 -rsv && sudo fc-cache -rsv && fc-cache-32 -rv ~/.fonts && fc-cache -rv ~/.fonts'
 alias       'help'='_help'
 alias       'hold'='while true; do sleep 60; done'
+alias   'killwine'='for EACH in $(top -bn 1 | /bin/grep .exe | sed "s/.*\ //gm"); do pkill -9 "$EACH"; done'
 alias      'lsblk'='lsblk -a -o NAME,LABEL,FSTYPE,MOUNTPOINT'
 alias  'lsblkloop'='local -i i=0; while true; do i=$i+1 && echo "$i" && lsblk && echo && sleep 1; done'
 alias    'replace'='_replace'
