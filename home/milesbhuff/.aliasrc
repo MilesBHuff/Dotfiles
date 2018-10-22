@@ -286,6 +286,8 @@ function _pkgug {
 			_pkgup
 		fi
 		echo "\e[34;1m::\e[0;1m Upgrading system...\e[0m"
+		LC_OLD="$LC_ALL"
+		LC_ALL='C'
 		case "$PKGMGR" in
 			'pacman' )
 				if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
@@ -295,8 +297,9 @@ function _pkgug {
 				fi
 			;;
 			'apt' )
-				_intellisu apt-get upgrade $*
 				_intellisu apt-get dist-upgrade $*
+				_intellisu apt-get upgrade $*
+				_intellisu dpkg --configure -a
 			;;
 			'yum' )
 				#TODO
@@ -306,10 +309,11 @@ function _pkgug {
 			;;
 			* )
 				(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
-				exit 1
+#				exit 1
 			;;
 		esac
 		_intellisu touch '/run/pkgug.lock'
+		LC_ALL="$LC_OLD"
    		echo "\e[34;1m::\e[0;1m Done.\e[0m"
 	fi
 
