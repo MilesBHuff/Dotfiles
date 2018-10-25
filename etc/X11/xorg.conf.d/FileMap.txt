@@ -1,0 +1,7 @@
+00-09	Global Settings
+10-19	GPUs
+20-29	Monitors
+30-39	Screens
+40-49	Input
+50-59	Layouts
+60-99	(Reserved)
