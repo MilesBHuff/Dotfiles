@@ -78,7 +78,8 @@ function _pkgcc {
 			[[ ! -z "$(which 'pacman-optimize')" ]] && [[ "$(which 'pacman-optimize')" != *'not found'* ]] && _intellisu pacman-optimize
 		;;
 		'apt' )
-			_intellisu apt-get autoclean $*
+#			_intellisu apt-get autoclean $*
+			apt autoclean $*
 		;;
 		'yum' )
 			#TODO
@@ -109,7 +110,8 @@ function _pkgin {
 			fi
 		;;
 		'apt' )
-			_intellisu apt-get install $*
+#			_intellisu apt-get install $*
+			apt install $*
 		;;
 		'yum' )
 			_intellisu yum install $*
@@ -160,7 +162,8 @@ function _pkgpu {
 			#TODO
 		;;
 		'apt' )
-			#TODO
+#			_intellisu apt-get purge $*
+			apt purge $*
 		;;
 		'yum' )
 			#TODO
@@ -186,7 +189,8 @@ function _pkgri {
 			#TODO
 		;;
 		'apt' )
-			#TODO
+#			_intellisu aptitude reinstall $*
+			apt reinstall $*
 		;;
 		'yum' )
 			#TODO
@@ -211,7 +215,8 @@ function _pkgrm {
 			fi
 		;;
 		'apt' )
-			_intellisu apt-get remove $*
+#			_intellisu apt-get remove $*
+			apt remove $*
 		;;
 		'yum' )
 			#TODO
@@ -236,7 +241,8 @@ function _pkgru {
 			fi
 		;;
 		'apt' )
-			_intellisu apt-get autoremove $*
+#			_intellisu apt-get autoremove $*
+			apt autoremove $*
 		;;
 		'yum' )
 			#TODO
@@ -261,7 +267,8 @@ function _pkgse {
 			fi
 		;;
 		'apt' )
-			apt-cache search $*
+#			apt-cache search $*
+			apt search $*
 		;;
 		'yum' )
 			#TODO
@@ -297,8 +304,8 @@ function _pkgug {
 				fi
 			;;
 			'apt' )
-				_intellisu apt-get dist-upgrade $*
-				_intellisu apt-get upgrade $*
+#				_intellisu apt-get dist-upgrade $*
+				apt dist-upgrade $*
 				_intellisu dpkg --configure -a
 			;;
 			'yum' )
@@ -315,17 +322,6 @@ function _pkgug {
 		_intellisu touch '/run/pkgug.lock'
 #		export LC_ALL="$LC_OLD"
 		echo "\e[34;1m::\e[0;1m Done.\e[0m"
-	fi
-
-	## Update virus-definition database
-	if [[ ! -z "$(which 'freshclam')" ]] && [[ "$(which 'freshclam')" != *'not found'* ]]; then
-	    echo -n '   Update virus-definition database?  [Y/n] '
-	    read -r INPUT
-	    if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
-	        echo "\e[34;1m::\e[0;1m Updating virus-definition database...\e[0m"
-	        _intellisu freshclam
-	        echo "\e[34;1m::\e[0;1m Done.\e[0m"
-	    fi
 	fi
 
 	## Upgrade shell plugins
@@ -370,8 +366,8 @@ function _pkgug {
 				_intellisu npm up -g
 #				_intellisu npm audit fix -g
 				_intellisu npm ddp -g
-				_intellisu chmod -Rc og+w /usr/lib/node_modules
-				_intellisu chmod -Rc a+r /usr/lib/node_modules
+				_intellisu chmod -R og+w /usr/lib/node_modules
+				_intellisu chmod -R  a+r /usr/lib/node_modules
 			fi
 			echo "\e[34;1m::\e[0;1m Done.\e[0m"
 		fi
@@ -386,6 +382,17 @@ function _pkgug {
 			_intellisu mkinitcpio -p fallback
 			echo "\e[34;1m::\e[0;1m Done.\e[0m"
 		fi
+	fi
+
+	## Update virus-definition database
+	if [[ ! -z "$(which 'freshclam')" ]] && [[ "$(which 'freshclam')" != *'not found'* ]]; then
+	    echo -n '   Update virus-definition database?  [Y/n] '
+	    read -r INPUT
+	    if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
+	        echo "\e[34;1m::\e[0;1m Updating virus-definition database...\e[0m"
+	        _intellisu freshclam
+	        echo "\e[34;1m::\e[0;1m Done.\e[0m"
+	    fi
 	fi
 }
 ## Update repo DBs
@@ -419,7 +426,8 @@ function _pkgup {
 			;;
 			'apt' )
 				echo "\e[34;1m::\e[0;1m Updating repository database...\e[0m"
-				_intellisu apt-get update $*
+#				_intellisu apt-get update $*
+				apt update $*
 			;;
 			'yum' )
 				#TODO
