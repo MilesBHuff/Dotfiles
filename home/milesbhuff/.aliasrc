@@ -286,8 +286,8 @@ function _pkgug {
 			_pkgup
 		fi
 		echo "\e[34;1m::\e[0;1m Upgrading system...\e[0m"
-		LC_OLD="$LC_ALL"
-		export LC_ALL='C'
+#		LC_OLD="$LC_ALL"
+#		export LC_ALL='C'
 		case "$PKGMGR" in
 			'pacman' )
 				if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
@@ -313,8 +313,8 @@ function _pkgug {
 			;;
 		esac
 		_intellisu touch '/run/pkgug.lock'
-		export LC_ALL="$LC_OLD"
-   		echo "\e[34;1m::\e[0;1m Done.\e[0m"
+#		export LC_ALL="$LC_OLD"
+		echo "\e[34;1m::\e[0;1m Done.\e[0m"
 	fi
 
 	## Update virus-definition database
