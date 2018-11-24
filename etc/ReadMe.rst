@@ -16,15 +16,20 @@ Names
 - The OS itself can change, so the OS name can't be used.
 - Using names composed entirely of random numbers results in names that are
   hard for humans to use.
+- Including metadata in the hostname can be a minor security risk.
 
 | Here are the rules determining how these strings should be constructed:
 
+- They must contain only lowercase ASCII letters, numbers, and hyphens.
+- They must start with a letter.
+- They may not end with a hyphen.
 - They must be no longer than 15 characters.
-  To a certain extent, 8 characters or less is preferrable.
+  To a certain extent, 8 characters or less is preferable.
 
   - Longer names are incompatible with certain older apps and protocols.
-    
+
 - Multi-word strings should have constituent words separated by dashes.
+- All computers on the same network should have unique hostnames.
 
 Users and groups
 ================================================================================
@@ -42,12 +47,12 @@ Usernames and groupnames
   - Including special characters can confuse various applications, especially
     older ones
 
+- They must start with a letter.
 - They must be no longer than 8 characters.
 
   - Longer names are incompatible with certain older apps, even some that
     are commonly used, like ``ps``.
 
-- They must start with a letter.
 - They must be unique, even among each other.
 
 Groupnames
