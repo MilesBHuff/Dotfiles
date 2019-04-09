@@ -500,28 +500,30 @@ function _scansys {
 ## Git
 function _glog {
 	## Variables
+	[[ -z "$1" ]] && 1=12
 	START_DIR="$(pwd)"
 	THEADER='\e[1mGraph	Branch         Commit     Date        PGP  Email                     Summary\e[0m'
 	TFORMAT='	%C(auto)%<(13,mtrunc)%D%C(reset)  %C(yellow)%>(9,trunc)%H%C(reset)  %C(green)%>(10,trunc)%cd%C(reset)  %C(red)(%G?)%C(reset)  %C(blue)%<(24,trunc)%aE%C(reset)  %s'
 	## Email address length:  https://www.freshaddress.com/blog/long-email-addresses
 
 	## If the user specified a directory, cd to it.
-	[[ -d "$1" ]] && cd "$1"
+	[[ -d "$2" ]] && cd "$2"
 
 	## Print the table
 	if [[ -d '.git' ]]; then
-		echo -e "$THEADER" &&\
-		git log                          \
-		  --abbrev-commit                \
-			--cherry-mark                  \
-			--date-order                   \
-			--graph                        \
-			--ignore-space-at-eol          \
-			--left-right                   \
-			--use-mailmap                  \
-			--color=auto                   \
-			--date=format:'%Y-%m-%d'       \
-			--decorate=auto --max-count=12 \
+		echo -e "$THEADER" &&        \
+		git log                      \
+		  --abbrev-commit            \
+			--cherry-mark            \
+			--date-order             \
+			--graph                  \
+			--ignore-space-at-eol    \
+			--left-right             \
+			--use-mailmap            \
+			--color=auto             \
+			--date=format:'%Y-%m-%d' \
+			--decorate=auto          \
+			--max-count="$1"         \
 		  --pretty=tformat:"$TFORMAT"
 	else
 		echo 'fatal: not a git repository (or any of the parent directories): .git' >&2
@@ -685,20 +687,21 @@ alias 'chgrp'='chgrp -c'
 
 ### Specific applications
 ## git
-alias    'gadd'='git add --ignore-errors -A'
-alias  'gamend'='git commit --branch --no-status --amend'
-alias     'gcd'='git checkout'
-alias    'gcut'='git branch'
-alias  'gclone'='git clone'
-alias   'gcomm'='git commit --branch --no-status -m'
-alias   'ginit'='git init'
-alias    'glog'='_glog'
-alias   'gpull'='git pull'
-alias   'gpush'='git push'
-alias 'grevert'='gcd --'
-alias     'grm'='git rm'
-alias   'gstat'='git status -sb --ignored --column'
-alias    'ga:s'='gadd : && gstat'
+alias   'gadd'='git add --ignore-errors -A'
+alias 'gamend'='git commit --branch --no-status --amend'
+alias    'gcd'='git checkout'
+alias   'gcut'='git branch'
+alias 'gclone'='git clone'
+alias  'gcomm'='git commit --branch --no-status -m'
+alias  'ginit'='git init'
+alias   'glog'='_glog 12'
+alias  'gloga'='_glog 100'
+alias  'gpull'='git pull'
+alias  'gpush'='git push'
+alias  'gundo'='gcd --'
+alias    'grm'='git rm'
+alias  'gstat'='git status -sb --ignored --column'
+alias   'ga:s'='gadd : && gstat'
 ## GnuPG
 alias        'gpg1'="$(which gpg)"
 alias         'gpg'='gpg2'
