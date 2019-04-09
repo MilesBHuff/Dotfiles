@@ -504,6 +504,41 @@ function _scansys {
 	echo "\e[34;1m::\e[0;1m Done.\e[0m]\n"
 }
 
+### Miscellanious
+## Git
+function _glog {
+	## Variables
+	START_DIR="$(pwd)"
+	THEADER='\e[1mGraph	Branch         Commit     Date        PGP  Email                     Summary\e[0m'
+	TFORMAT='	%C(auto)%<(13,mtrunc)%D%C(reset)  %C(yellow)%>(9,trunc)%H%C(reset)  %C(green)%>(10,trunc)%cd%C(reset)  %C(red)(%G?)%C(reset)  %C(blue)%<(24,trunc)%aE%C(reset)  %s'
+	## Email address length:  https://www.freshaddress.com/blog/long-email-addresses
+
+	## If the user specified a directory, cd to it.
+	[[ -d "$1" ]] && cd "$1"
+
+	## Print the table
+	if [[ -d '.git' ]]; then
+		echo -e "$THEADER" &&\
+		git log                          \
+		  --abbrev-commit                \
+			--cherry-mark                  \
+			--date-order                   \
+			--graph                        \
+			--ignore-space-at-eol          \
+			--left-right                   \
+			--use-mailmap                  \
+			--color=auto                   \
+			--date=format:'%Y-%m-%d'       \
+			--decorate=auto --max-count=12 \
+		  --pretty=tformat:"$TFORMAT"
+	else
+		echo 'fatal: not a git repository (or any of the parent directories): .git' >&2
+	fi
+
+	## Return to the starting directory
+	cd "$START_DIR"
+}
+
 
 #### ALIASES --------------------------------------------------------------------
 ### High-importance
@@ -665,7 +700,7 @@ alias    'gcut'='git branch'
 alias  'gclone'='git clone'
 alias   'gcomm'='git commit --branch --no-status -m'
 alias   'ginit'='git init'
-alias    'glog'="echo -e '\e[1mGraph	Branch         Commit     Date        PGP  Email                     Summary\e[0m' && git log --abbrev-commit --cherry-mark --date-order --graph --ignore-space-at-eol --left-right --use-mailmap --color=auto --date=format:'%Y-%m-%d' --decorate=auto --max-count=12 --pretty=tformat:'	%C(auto)%<(13,mtrunc)%D%C(reset)  %C(yellow)%>(9,trunc)%H%C(reset)  %C(green)%>(10,trunc)%cd%C(reset)  %C(red)(%G?)%C(reset)  %C(blue)%<(24,trunc)%aE%C(reset)  %s'" ## Email address length:  https://www.freshaddress.com/blog/long-email-addresses
+alias    'glog'="_glog'
 alias   'gpull'='git pull'
 alias   'gpush'='git push'
 alias 'grevert'='gcd --'
