@@ -91,7 +91,6 @@ function _pkgcc {
 		;;
 		* )
 			(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
-			exit 1
 		;;
 	esac
 	echo "\e[34;1m::\e[0;1m Done.\e[0m"
@@ -123,7 +122,6 @@ function _pkgin {
 		;;
 		* )
 			(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
-			exit 1
 		;;
 	esac
 }
@@ -153,7 +151,6 @@ function _pkgindep {
 		;;
 		* )
 			(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
-			exit 1
 		;;
 	esac
 }
@@ -175,7 +172,6 @@ function _pkgpu {
 		;;
 		* )
 			(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
-			exit 1
 		;;
 	esac
 }
@@ -202,7 +198,6 @@ function _pkgri {
 		;;
 		* )
 			(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
-			exit 1
 		;;
 	esac
 }
@@ -228,7 +223,6 @@ function _pkgrm {
 		;;
 		* )
 			(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
-			exit 1
 		;;
 	esac
 }
@@ -254,7 +248,6 @@ function _pkgru {
 		;;
 		* )
 			(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
-			exit 1
 		;;
 	esac
 }
@@ -280,7 +273,6 @@ function _pkgse {
 		;;
 		* )
 			(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
-			exit 1
 		;;
 	esac
 }
@@ -318,7 +310,6 @@ function _pkgug {
 			;;
 			* )
 				(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
-#				exit 1
 			;;
 		esac
 		_intellisu touch '/run/pkgug.lock'
@@ -439,7 +430,6 @@ function _pkgup {
 			;;
 			* )
 				(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
-				exit 1
 			;;
 		esac
 		_intellisu touch '/run/pkgup.lock'
