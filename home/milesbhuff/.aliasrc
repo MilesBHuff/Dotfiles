@@ -59,6 +59,7 @@ function _sut {
 
 ### Package-management, etc.
 ## Non-function code (needed to ascertain the package manager
+if [[ ! "$(uname)" = MINGW* ]]; then                                                     ## If it looks like we're on Windows, avoid the package manager detection code -- Windows doesn't seem to like `which` very much.
   if [[ ! -z "$(which 'pacman')" ]] && [[ "$(which 'pacman')" != *'not found'* ]]; then  ## pacman comes first because it's what I use.
 	PKGMGR='pacman'
 elif [[ ! -z "$(which 'apt')"    ]] && [[ "$(which 'apt')"    != *'not found'* ]]; then  ## aptitude etc come next because Debian-derivatives are EVERYWHERE
@@ -68,6 +69,7 @@ elif [[ ! -z "$(which 'yum')"    ]] && [[ "$(which 'yum')"    != *'not found'* ]
 elif [[ ! -z "$(which 'zypper')" ]] && [[ "$(which 'zypper')" != *'not found'* ]]; then  ## then zypper, because OpenSuSE is less widespread than RHEL-ish distros, but still mainstream...ish.
 	PKGMGR='zypper'
   fi
+fi
 ## Tidy up system
 function _pkgcc {
 	echo "\e[34;1m::\e[0;1m Cleaning package manager...\e[0m"
@@ -700,7 +702,7 @@ alias    'gcut'='git branch'
 alias  'gclone'='git clone'
 alias   'gcomm'='git commit --branch --no-status -m'
 alias   'ginit'='git init'
-alias    'glog'="_glog'
+alias    'glog'='_glog'
 alias   'gpull'='git pull'
 alias   'gpush'='git push'
 alias 'grevert'='gcd --'
