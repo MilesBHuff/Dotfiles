@@ -2,7 +2,7 @@
 ## This file contains aliases and functions as used by different shells.  The
 ## code in this script must be capable of being run in at least both bash and
 ## zsh.
-## Copyright © by Miles Bradley Huff from 2016-2018 per the LGPL3 (the Third Lesser GNU Public License)
+## Copyright © by Miles Bradley Huff from 2016-2019 per the LGPL3 (the Third Lesser GNU Public License)
 
 
 #### FUNCTIONS -----------------------------------------------------------------
@@ -665,7 +665,7 @@ alias 'gbranch'='git branch'
 alias  'gclone'='git clone'
 alias   'gcomm'='git commit --branch --no-status -m'
 alias   'ginit'='git init'
-alias    'glog'="echo 'Graph	Branch         Commit     Date        PGP  Email       Summary' && git log --abbrev-commit --cherry-mark --date-order --graph --ignore-space-at-eol --left-right --use-mailmap --color=auto --date=format:'%Y-%m-%d' --decorate=auto --max-count=12 --pretty=tformat:'	%C(auto)%<(13,mtrunc)%D%C(reset)  %C(auto)%>(9,trunc)%H%C(reset)  %C(green)%>(10,trunc)%cd%C(reset)  %C(red)(%G?)%C(reset)  %C(blue)%<(10,trunc)%aE%C(reset)  %<(50,trunc)%s'"
+alias    'glog'="echo -e '\e[1mGraph	Branch         Commit     Date        PGP  Email                     Summary\e[0m' && git log --abbrev-commit --cherry-mark --date-order --graph --ignore-space-at-eol --left-right --use-mailmap --color=auto --date=format:'%Y-%m-%d' --decorate=auto --max-count=12 --pretty=tformat:'	%C(auto)%<(13,mtrunc)%D%C(reset)  %C(yellow)%>(9,trunc)%H%C(reset)  %C(green)%>(10,trunc)%cd%C(reset)  %C(red)(%G?)%C(reset)  %C(blue)%<(24,trunc)%aE%C(reset)  %s'" ## Email address length:  https://www.freshaddress.com/blog/long-email-addresses
 alias   'gpull'='git pull'
 alias   'gpush'='git push'
 alias     'grm'='git rm'
