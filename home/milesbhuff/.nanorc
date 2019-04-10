@@ -1,4 +1,4 @@
-include ~/.nano/syntax/*
+#include ~/.nano/syntax/*
 set historylog
 set justifytrim
 set linenumbers
