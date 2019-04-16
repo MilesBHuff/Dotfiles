@@ -16,4 +16,4 @@
 export JOBS=`nproc`
 
 ## Create new dirs/files with 751/640 perms
-umask 5026
+umask 026 #5026
