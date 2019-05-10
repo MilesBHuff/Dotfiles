@@ -545,7 +545,7 @@ alias          'grep'='grep -EIisTu --color=always'
 alias             'g'='grep'
 alias   'search-full'='grep -Rl'
 alias 'search-full-v'='grep -Rns'
-alias      'histgrep'='cat "$HOME/$HISTFILE" | grep'
+alias      'histgrep'='cat "$HISTFILE" | grep'
 alias          'hist'='histgrep'
 ## ls
 alias     'ls'='ls -bCFhNvX --color --group-directories-first --time-style=long-iso'
