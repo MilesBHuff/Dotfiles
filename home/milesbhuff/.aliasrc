@@ -590,7 +590,7 @@ alias   'rscp'='rsync -vrdlpEAXogtOJSzh4 --specials --preallocate --delay-update
 alias 'rscpup'='rscp -u' ## Only replace outdated files
 alias   'rsmv'='rscp --remove-source-files' ## Clobbering mv
 ### cp
-alias   'cp'='cp -aLv --sparse=always'  ## Preserve all attributes, dereference links, and try to make files sparse whenever possible.
+alias   'cp'='cp -aLv --sparse=always --reflink'  ## Preserve all attributes, dereference links, try to make files sparse whenever possible, and deduplicate where possible.
 alias  'cpi'='cp -i'  ## Interactive cp
 alias  'cpf'='cp -f'  ## Clobbering cp
 alias  'cpl'='cp -d'  ## Preserve symlinks
