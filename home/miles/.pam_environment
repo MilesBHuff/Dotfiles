@@ -1,22 +1,22 @@
 BROWSER=elinks
-DIRSTACKFILE=.cache/dirstack
+DIRSTACKFILE=~/.cache/dirstack
 DIRSTACKSIZE=12
 EDITOR=nano
 GPGKEY=0x7BD3CF7F9CB1D54FC2BDDA09E37A04E55B745375
 GREP_COLORS=*=0:sl=0:cx=0:mt=7;1:ms=7;1:mc=7;1:fn=94:ln=95:bn=91:se=0
 GREP_OPTIONS=
-HISTFILE=.sh_history
+HISTFILE=~/.sh_history
 HISTSIZE=2048
 LS_COLORS=*=0:fi=0:ex=32:di=34:bd=33:cd=33:pi=35:so=35:ln=36:or=31:mi=31
 MOZ_USE_XINPUT2=1
 NORMAL_HOSTNAME=
 NORMAL_USERNAME=miles
 PAGER=less
-PROJECTDIR=.local/src
+PROJECTDIR=~/.local/src
 SAVEHIST=2048
 USE_COLOR=true
 VISUAL=nano
 WATCHFMT=%n from %M has %a tty%l at %T %W
 WINEARCH=win32
 WINEDEBUG=-all,+err
-WINEPREFIX=.wine
+WINEPREFIX=~/.wine

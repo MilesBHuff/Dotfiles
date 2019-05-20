@@ -1,6 +1,6 @@
 ## Copyright © by Miles Bradley Huff from 2017-2018 per the LGPL3 (the Third Lesser GNU Public License)
 [commit]
-	gpgsign = true
+#	gpgsign = true
 [core]
 #	autocrlf = true
 	checkStat = minimal
