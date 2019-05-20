@@ -1,7 +1,0 @@
-## Empty iptables rule file
-## Copyright © by Miles Bradley Huff from 2016-2017 per the LGPL3 (the Third Lesser GNU Public License)
-*filter
-:INPUT ACCEPT [0:0]
-:FORWARD ACCEPT [0:0]
-:OUTPUT ACCEPT [0:0]
-COMMIT

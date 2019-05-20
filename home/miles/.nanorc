@@ -1,6 +1,6 @@
 #include ~/.nano/syntax/*
 set historylog
-set justifytrim
+#set justifytrim
 set linenumbers
 set locking
 set multibuffer
