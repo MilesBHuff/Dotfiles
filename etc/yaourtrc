@@ -1,8 +1,6 @@
+#!/usr/bin/sh
 #    yaourtrc  - Configuration for yaourt
-#
 #   See yaourtrc(5) for more information
-#
-#
 
 # General
 AUTOSAVEBACKUPFILE=1
@@ -13,8 +11,8 @@ AUTOSAVEBACKUPFILE=1
 
 # Environment variables
 #EDITOR="$EDITOR"
-#TMPDIR="/tmp"
 #VISUAL="$VISUAL"
+#TMPDIR="/tmp"
 
 # SUDO
 SUDONOVERIF=1      # Avoid multiple sudo checks when timestamp_timeout=0

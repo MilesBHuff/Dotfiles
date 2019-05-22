@@ -1,0 +1,45 @@
+#!/usr/bin/sh
+##/usr/bin/grub-mkconfig -o /boot/grub/grub.cfg
+
+## Features
+## -----------------------------------------------------------------------------
+## Preload both GPT and MBR modules so that they are not missed
+GRUB_PRELOAD_MODULES="part_gpt part_msdos"
+## Uncomment to enable support for dm-crypt
+#GRUB_ENABLE_CRYPTODISK=y
+
+## Timeouts
+## -----------------------------------------------------------------------------
+GRUB_DEFAULT=0
+GRUB_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT=1
+GRUB_HIDDEN_TIMEOUT_QUIET=false
+
+## Targets
+## -----------------------------------------------------------------------------
+GRUB_DISTRIBUTOR="Arch"
+GRUB_DISABLE_RECOVERY=false
+#GRUB_DEFAULT=saved
+#GRUB_SAVEDEFAULT=true
+
+## Boot flags
+## -----------------------------------------------------------------------------
+## Used for all non-recovery Linux boots
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash loglevel=3 rd.udev.log_priority=3 vt.global_cursor_default=0"
+## Used for all Linux boots
+GRUB_CMDLINE_LINUX=""
+
+## Graphics
+## -----------------------------------------------------------------------------
+GRUB_TERMINAL_INPUT=console
+#GRUB_TERMINAL_OUTPUT=console
+GRUB_GFXMODE=auto
+GRUB_GFXPAYLOAD_LINUX=keep
+
+## Appearance
+## -----------------------------------------------------------------------------
+#GRUB_THEME="/path/to/gfxtheme"
+#GRUB_BACKGROUND="/path/to/wallpaper"
+#GRUB_COLOR_NORMAL="light-blue/black"
+#GRUB_COLOR_HIGHLIGHT="light-cyan/blue"
+#GRUB_INIT_TUNE="480 440 1"

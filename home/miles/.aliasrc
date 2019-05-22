@@ -98,17 +98,17 @@ function _pkgcc {
 ## Install package(s)
 function _pkgin {
 	## If there's no pkgug lockfile or its modification date is more than a day ago, upgrade system first.
-	if [[ ! -f '/run/pkgug.lock' ]] || [[ 86400 -lt $(expr $(date +'%s') - $(stat -c %Y '/run/pkgug.lock')) ]]; then
+	if [[ ! -f '/var/lib/pkgug.lock' ]] || [[ 86400 -lt $(expr $(date +'%s') - $(stat -c %Y '/var/lib/pkgug.lock')) ]]; then
 		echo "\e[34;1m::\e[0;1m A system upgrade is required before installing.\e[0m"
 		_pkgug
 	fi
 	case "$PKGMGR" in
 		'pacman' )
-			if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
-				_intellisu yaourt -a $*
-			else
+			#if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
+			#	yaourt -a $*
+			#else
 				_intellisu pacman -S $*
-			fi
+			#fi
 		;;
 		'apt' )
 #			_intellisu apt-get install $*
@@ -128,17 +128,17 @@ function _pkgin {
 ## Install package(s) as dependency/ies
 function _pkgindep {
 	## If there's no pkgug lockfile or its modification date is more than a day ago, upgrade system first.
-	if [[ ! -f '/run/pkgug.lock' ]] || [[ 86400 -lt $(expr $(date +'%s') - $(stat -c %Y '/run/pkgug.lock')) ]]; then
+	if [[ ! -f '/var/lib/pkgug.lock' ]] || [[ 86400 -lt $(expr $(date +'%s') - $(stat -c %Y '/var/lib/pkgug.lock')) ]]; then
 		echo "\e[34;1m::\e[0;1m A system upgrade is required before installing.\e[0m"
 		_pkgug
 	fi
 	case "$PKGMGR" in
 		'pacman' )
-			if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
-				_intellisu yaourt --asdeps $*
-			else
-				_intellisu pacman --asdeps #TODO
-			fi
+			#if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
+			#	yaourt --asdeps $*
+			#else
+				_intellisu pacman -S --asdeps $*
+			#fi
 		;;
 		'apt' )
 			#TODO
@@ -184,7 +184,7 @@ function _pkgri {
 	fi
 	case "$PKGMGR" in
 		'pacman' )
-			#TODO
+			_intellisu pacman -S $*
 		;;
 		'apt' )
 #			_intellisu aptitude reinstall $*
@@ -206,7 +206,7 @@ function _pkgrm {
 	case "$PKGMGR" in
 		'pacman' )
 			if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
-				_intellisu yaourt -R $*
+				yaourt -R $*
 			else
 				_intellisu pacman -R $*
 			fi
@@ -231,7 +231,7 @@ function _pkgru {
 	case "$PKGMGR" in
 		'pacman' )
 			if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
-				_intellisu yaourt -Qdt $*
+				yaourt -Qdt $*
 			else
 				_intellisu pacman -Qdt $*
 			fi
@@ -256,7 +256,7 @@ function _pkgse {
 	case "$PKGMGR" in
 		'pacman' )
 			if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
-				_intellisu yaourt -a $*
+				yaourt -a $*
 			else
 				echo -n '' #TODO
 			fi
@@ -282,7 +282,7 @@ function _pkgug {
 	read -r INPUT
 	if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
 		## If there's no pkgup lockfile or its modification date is more than a day ago, update repos first.
-		if [[ ! -f '/run/pkgup.lock' ]] || [[ 86400 -lt $(expr $(date +'%s') - $(stat -c %Y '/run/pkgup.lock')) ]]; then
+		if [[ ! -f '/var/lib/pkgup.lock' ]] || [[ 86400 -lt $(expr $(date +'%s') - $(stat -c %Y '/var/lib/pkgup.lock')) ]]; then
 			echo "\e[34;1m::\e[0;1m A repo update is required before upgrading.\e[0m"
 			_pkgup
 		fi
@@ -312,7 +312,7 @@ function _pkgug {
 				(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
 			;;
 		esac
-		_intellisu touch '/run/pkgug.lock'
+		_intellisu touch '/var/lib/pkgug.lock'
 #		export LC_ALL="$LC_OLD"
 		echo "\e[34;1m::\e[0;1m Done.\e[0m"
 	fi
@@ -372,7 +372,7 @@ function _pkgug {
 		read -r INPUT
 		if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
 			echo "\e[34;1m::\e[0;1m Generating init images...\e[0m"
-			_intellisu mkinitcpio -p linux
+			_intellisu mkinitcpio -p $(ls -A /etc/mkinitcpio.d)
 			echo "\e[34;1m::\e[0;1m Done.\e[0m"
 		fi
 	fi
@@ -432,7 +432,7 @@ function _pkgup {
 				(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
 			;;
 		esac
-		_intellisu touch '/run/pkgup.lock'
+		_intellisu touch '/var/lib/pkgup.lock'
 		echo "\e[34;1m::\e[0;1m Done.\e[0m"
 	fi
 
@@ -590,7 +590,7 @@ alias   'rscp'='rsync -vrdlpEAXogtOJSzh4 --specials --preallocate --delay-update
 alias 'rscpup'='rscp -u' ## Only replace outdated files
 alias   'rsmv'='rscp --remove-source-files' ## Clobbering mv
 ### cp
-alias   'cp'='cp -aLv --sparse=auto --reflink'  ## Preserve all attributes, dereference links, try to make files sparse whenever possible, and deduplicate where possible.
+alias   'cp'='cp -aLv --sparse=auto --reflink=auto'  ## Preserve all attributes, dereference links, try to make files sparse whenever possible, and deduplicate where possible.
 alias  'cpi'='cp -i'  ## Interactive cp
 alias  'cpf'='cp -f'  ## Clobbering cp
 alias  'cpl'='cp -d'  ## Preserve symlinks
@@ -687,21 +687,21 @@ alias 'chgrp'='chgrp -c'
 
 ### Specific applications
 ## git
-alias   'gadd'='git add --ignore-errors -A'
-alias 'gamend'='git commit --branch --no-status --amend'
-alias    'gcd'='git checkout'
-alias   'gcut'='git branch'
-alias 'gclone'='git clone'
-alias  'gcomm'='git commit --branch --no-status -m'
-alias  'ginit'='git init'
-alias   'glog'='_glog 12'
-alias  'gloga'='_glog 100'
-alias  'gpull'='git pull'
-alias  'gpush'='git push'
-alias  'gundo'='gcd --'
-alias    'grm'='git rm'
-alias  'gstat'='git status -sb --ignored --column'
-alias   'ga:s'='gadd : && gstat'
+alias    'gadd'='git add --ignore-errors -A'
+alias  'gamend'='git commit --branch --no-status --amend'
+alias     'gcd'='git checkout'
+alias    'gcut'='git branch'
+alias  'gclone'='git clone'
+alias   'gcomm'='git commit --branch --no-status -m'
+alias   'ginit'='git init'
+alias    'glog'='_glog 12'
+alias   'gloga'='_glog 100'
+alias 'gbranch'='git branch'
+alias   'gpush'='git push'
+alias   'gundo'='gcd --'
+alias     'grm'='git rm'
+alias   'gstat'='git status -sb --ignored --column'
+alias    'ga:s'='gadd : && gstat'
 ## GnuPG
 alias        'gpg1'="$(which gpg)"
 alias         'gpg'='gpg2'
