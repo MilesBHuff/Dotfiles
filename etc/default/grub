@@ -25,22 +25,22 @@ GRUB_DISABLE_RECOVERY=false
 
 ## Boot flags
 ## -----------------------------------------------------------------------------
-## Used for all non-recovery Linux boots
-GRUB_CMDLINE_LINUX_DEFAULT="quiet splash loglevel=3 rd.udev.log_priority=3 vt.global_cursor_default=0"
 ## Used for all Linux boots
-GRUB_CMDLINE_LINUX=""
+GRUB_CMDLINE_LINUX="loglevel=3 rd.udev.log_priority=3 apparmor=1 security=apparmor"
+## Used for all non-recovery Linux boots
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash vt.global_cursor_default=0"
 
 ## Graphics
 ## -----------------------------------------------------------------------------
-GRUB_TERMINAL_INPUT=console
+GRUB_TERMINAL_INPUT=console,auto
 #GRUB_TERMINAL_OUTPUT=console
-GRUB_GFXMODE=auto
-GRUB_GFXPAYLOAD_LINUX=keep
+GRUB_GFXMODE=1920x1080,1280x1024,auto
+GRUB_GFXPAYLOAD_LINUX=keep,text,auto
 
 ## Appearance
 ## -----------------------------------------------------------------------------
 #GRUB_THEME="/path/to/gfxtheme"
 #GRUB_BACKGROUND="/path/to/wallpaper"
-#GRUB_COLOR_NORMAL="light-blue/black"
-#GRUB_COLOR_HIGHLIGHT="light-cyan/blue"
+GRUB_COLOR_NORMAL="light-gray/black"
+GRUB_COLOR_HIGHLIGHT="black/light-gray"
 #GRUB_INIT_TUNE="480 440 1"

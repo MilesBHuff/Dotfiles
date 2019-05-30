@@ -47,14 +47,14 @@
 
 ## RFC-compliance
 -A INPUT -p tcp -j REJECT --reject-with tcp-reset
--A INPUT -p udp -j REJECT --reject-with icmp-port-unreachable
+#-A INPUT -p udp -j REJECT --reject-with icmp-port-unreachable
 
 ## Reject unreachable traffic
--A INPUT -j REJECT --reject-with icmp-proto-unreachable
+#-A INPUT -j REJECT --reject-with icmp-proto-unreachable
 
 ## Reverse path filter
--t raw -A PREROUTING -m rpfilter -j ACCEPT
--t raw -A PREROUTING -j DROP
+#-t raw -A PREROUTING -m rpfilter -j ACCEPT
+#-t raw -A PREROUTING -j DROP
 
 
 ### TRAFFIC CHAIN
