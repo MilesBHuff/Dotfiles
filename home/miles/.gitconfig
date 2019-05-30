@@ -1,27 +1,35 @@
-## Copyright © by Miles Bradley Huff from 2017-2018 per the LGPL3 (the Third Lesser GNU Public License)
-[commit]
-#	gpgsign = true
-[core]
-#	autocrlf = true
-	checkStat = minimal
-	compression = -1
-	editor = nano
-	hideDotFiles = true
-	ignoreCase = false
-	looseCompression = 1
-	precomposeUnicode = true
-	quotePath = false
-	safecrlf = warn
-	sharedRepository = umask
-[gpg]
-	program = /usr/bin/gpg2
-[pack]
-	compression = 9
-[push]
-	default = simple
-[user]
-	email = MilesBHuff@Users.NoReply.Github.com
-	name = Miles B Huff
-	signingkey = 0x7BD3CF7F9CB1D54FC2BDDA09E37A04E55B745375
+## git
+## Copyright © by Miles Bradley Huff from 2017-2019 per the LGPL3 (the Third Lesser GNU Public License)
+
 [color]
-	ui = auto
+ui = auto
+
+[commit]
+# gpgsign = true
+
+[core]
+# autocrlf = true
+checkStat = minimal
+compression = -1
+editor = nano
+hideDotFiles = true
+ignoreCase = false
+looseCompression = 1
+precomposeUnicode = true
+quotePath = false
+safecrlf = warn
+sharedRepository = umask
+
+[gpg]
+# program = /usr/bin/gpg2
+
+[pack]
+compression = 9
+
+[push]
+default = simple
+
+[user]
+email = MilesBHuff@Users.NoReply.Github.com
+name = Miles B Huff
+signingkey = 0x7BD3CF7F9CB1D54FC2BDDA09E37A04E55B745375

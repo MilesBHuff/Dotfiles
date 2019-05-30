@@ -1,3 +1,4 @@
+#!/usr/bin/env ip6tables-restore
 ## As recommended by the Arch Wiki:  https://wiki.archlinux.org/index.php/Simple_stateful_firewall
 ## Copyright © by Miles Bradley Huff from 2016-2017 per the LGPL3 (the Third Lesser GNU Public License)
 

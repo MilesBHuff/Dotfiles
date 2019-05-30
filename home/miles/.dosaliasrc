@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 ## This file contains aliases and functions that mimic those of DOS.
 ## There is no reason for this file to exist, but #YOLO.  :p
-## Copyright © by Miles Bradley Huff from 2017 per the LGPL3 (the Third Lesser GNU Public License)
+## Copyright © by Miles Bradley Huff from 2017-2019 per the LGPL3 (the Third Lesser GNU Public License)
 
 function TRUENAME {
-	echo $(pwd)/$1
+	echo "$(pwd)/$1"
 }
 
 #alias   'APPEND'=''

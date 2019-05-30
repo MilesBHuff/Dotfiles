@@ -649,7 +649,7 @@ alias   'writeback'='chattr -j'  ## Normal behaviour.
 alias        'zero'='chattr +s'  ## Zero out this file upon deletion.
 
 ### Editors
-alias 'nano'='nano -FNOPSUwz$ -T 4'
+alias 'nano'='nano -FNPUwz$ -T 4' #-OS
 ## Sort/uniq/etc
 alias 'sort'="sort -bh --parallel=$(nproc)"
 #alias 'uniq'='uniq'
@@ -697,11 +697,15 @@ alias   'ginit'='git init'
 alias    'glog'='_glog 12'
 alias   'gloga'='_glog 100'
 alias 'gbranch'='git branch'
+alias   'gpull'='git pull'
 alias   'gpush'='git push'
 alias   'gundo'='gcd --'
 alias     'grm'='git rm'
 alias   'gstat'='git status -sb --ignored --column'
 alias    'ga:s'='gadd : && gstat'
+alias  'gunadd'='git reset'
+alias 'grevert'='git reset --hard'
+alias 'guncomm'='git reset HEAD~1'
 ## GnuPG
 alias        'gpg1'="$(which gpg)"
 alias         'gpg'='gpg2'
@@ -729,3 +733,7 @@ alias        'sut'='_sut'
 alias       'sysd'='sudo systemctl'
 alias    'sysinfo'='inxi -Fxzd'
 alias   'timidity'='timidity -aB 1,12 -E wpvseToz --noise-shaping=4 --output-stereo --output-signed'
+
+### Useful commands that are easy to forget about
+#lostfiles: prints a list of all files not belonging to an installed package (requires `lostfiles` on Arch)
+#pacfile: tells you to what package a file belongs (requires `pacutils` on Arch)

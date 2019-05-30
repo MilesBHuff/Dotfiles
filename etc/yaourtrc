@@ -19,7 +19,7 @@ SUDONOVERIF=1      # Avoid multiple sudo checks when timestamp_timeout=0
 #SUDOREDIRECT=1     # Define to 0 in case you use a fingerprint device
 
 # ABS
-#USE_GIT=0
+USE_GIT=1
 # If the package "abs" is installed, those var are parsed from abs.conf
 #REPOS=()           # REPOS available at $SYNCSERVER
 #SYNCSERVER=""
@@ -32,7 +32,7 @@ SUDONOVERIF=1      # Avoid multiple sudo checks when timestamp_timeout=0
 #AURSHOWDIFF=0
 AURUPGRADE=1
 #AURVOTE=1
-#AURUSEGIT=0
+AURUSEGIT=1
 
 # Build
 EXPORT=2           # Export to 1: EXPORTDIR or PKGDEST
@@ -56,6 +56,8 @@ BUILD_NOCONFIRM=1  # Only prompt for editing files
 #TERMINALTITLE=1
 
 # Command
+PACMAN="pacman"
+#PACMAN="pacmatic"
 #PACMAN="powerpill"
 MAKEPKG="makepkg --skippgpcheck"
 DIFFEDITCMD=""

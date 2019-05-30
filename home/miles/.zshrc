@@ -6,7 +6,7 @@
 ## The few parts from help-sites and such that I didn't actually write myself
 ## are sourced inline via comment.
 ##
-## Copyright (c) 2016-2018 under the Third Lesser GNU Public License (LGPL3)
+## Copyright (c) 2016-2019 under the Third Lesser GNU Public License (LGPL3)
 ## ^^ This, naturally, does not apply to lines that I did not write.
 
 
