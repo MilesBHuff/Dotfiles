@@ -1,0 +1,12 @@
+## udevadm
+## Disk schedulers
+## Copyright    by Miles Bradley Huff from 201? per the LGPL3 (the Third Lesser GNU Public License)
+
+## NVMes
+ACTION=="add|change", KERNEL=="nvme[0-9]*",                                        ATTR{queue/scheduler}="kyber"
+
+## SSDs and eMMCs
+ACTION=="add|change", KERNEL=="sd[a-z]|mmcblk[0-9]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="bfq"
+
+## HDDs
+ACTION=="add|change", KERNEL=="sd[a-z]",              ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq"

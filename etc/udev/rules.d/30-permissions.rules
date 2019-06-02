@@ -1,0 +1,6 @@
+## udevadm
+## Set device permissions
+
+## Optical drives
+SUBSYSTEMS=="ide",  KERNEL=="hd[a-z]",     ATTR{removable}=="1", ATTRS{media}=="cdrom*", GROUP="optical"
+SUBSYSTEMS=="scsi", KERNEL=="s[rg][0-9]*",                       ATTRS{type}=="5",       GROUP="optical"

@@ -1,0 +1,29 @@
+## udevadm trigger
+## man hdparm 8
+## HDD power management
+## Copyright    by Miles Bradley Huff from 201? per the LGPL3 (the Third Lesser GNU Public License)
+##TODO:  These need to be tested before uncommenting.
+
+## All
+#ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", RUN+="/usr/bin/env hdparm  -B 127        /dev/%k"  ## How much power-saving to do.  128 disables spin-down.  255 disables power-saving.
+#ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", RUN+="/usr/bin/env hdparm  -D 1          /dev/%k"  ## Whether to automatically work around drive defects.
+#ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", RUN+="/usr/bin/env hdparm  -M 128        /dev/%k"  ## Whether to limit drive noise.  0 for off, 128 for quiet, 254 for fast.
+#ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", RUN+="/usr/bin/env hdparm  -R 0          /dev/%k"  ## Whether to check that writes wrote things correctly.  Overkill when used with a journalling filesystem.
+##ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", RUN+="/usr/bin/env hdparm  -s 1          /dev/%k"  ## Reduces power usage, but dangerous on old hardware.
+#ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", RUN+="/usr/bin/env hdparm  -S 150        /dev/%k"  ## How long to wait before spinning down.  1-240 are multiples of 5 seconds;  higher values vary, see documentation.
+##ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", RUN+="/usr/bin/env hdparm  -u 1          /dev/%k"  ## Avoids serial port overrun errors.  Very rarely incompatible with IDE lookahead.
+#ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", RUN+="/usr/bin/env hdparm  -W 1          /dev/%k"  ## Whether to allow the drive to cache writes.
+
+## IDE
+#ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", SUBSYSTEMS=="ide", RUN+="/usr/bin/env hdparm  -A 1          /dev/%k"  ## Whether IDE lookahead should be enabled.
+#ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", SUBSYSTEMS=="ide", RUN+="/usr/bin/env hdparm  -c 3          /dev/%k"  ## Whether to support 32-bit I/O support.  3 for compatibility.
+
+## WD
+##ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", RUN+="/usr/bin/env hdparm  -J 300        /dev/%k"  ## How long to wait before parking the drive head. Valid values are 8-12, and 30-300 in 30-second intervals.  Implementation is somewhat hacky.
+
+## USB enclosures
+##ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", RUN+="/usr/bin/env hdparm --prefer-ata12 /dev/%k"  ## Better compatibility with some USB drive enclosures.
+
+## All
+#ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", RUN+="/usr/bin/env hdparm -K 1           /dev/%k"  ## Whether the drive should save certain settings across reboots.
+##ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", RUN+="/usr/bin/env hdparm --dco-freeze   /dev/%k"  ## Prevent any further settings-changes until reboot.

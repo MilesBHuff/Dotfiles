@@ -26,12 +26,12 @@ USE_GIT=1
 
 # AUR
 #AURURL="https://aur.archlinux.org"
-#AURCOMMENT=5
+AURCOMMENT=4
 #AURDEVELONLY=0
-#AURSEARCH=1
+AURSEARCH=1
 #AURSHOWDIFF=0
 AURUPGRADE=1
-#AURVOTE=1
+AURVOTE=0
 AURUSEGIT=1
 
 # Build
@@ -49,17 +49,18 @@ BUILD_NOCONFIRM=1  # Only prompt for editing files
 #NOENTER=1
 
 # Output
-#USECOLOR=1
-#USEPAGER=0
-#DETAILUPGRADE=1
-#SHOWORPHANS=1
-#TERMINALTITLE=1
+USECOLOR=1
+USEPAGER=0
+DETAILUPGRADE=1
+SHOWORPHANS=1
+TERMINALTITLE=1
 
 # Command
 PACMAN="pacman"
 #PACMAN="pacmatic"
 #PACMAN="powerpill"
-MAKEPKG="makepkg --skippgpcheck"
+#MAKEPKG="makepkg --skippgpcheck"
+MAKEPKG="makepkg -Csc"
 DIFFEDITCMD=""
 
 # pacdiffviewer
