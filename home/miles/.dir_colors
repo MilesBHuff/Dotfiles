@@ -1,11 +1,16 @@
 #!/usr/bin/env dircolors
 ## man dir_colors 5
 ## Copyright    by Miles Bradley Huff from 2017-2019 per the LGPL3 (the Third Lesser GNU Public License)
+## Different foreground colors are used for different categories of files.
+## "Black" backgrounds are used for risky permissions.  No other backgrounds should be used.
+## Emboldening is used only for special situations.
+## Underlining is used only for extra-special situations.
+#NOTE:  Non-color text-effects won't work in the Windows command prompt.  They should only be used for non-NTFS-friendly things.
 
 ## Slackware-only
-color    tty
-eightbit yes
-options  -bCFhNvX --color --group-directories-first --time-style=long-iso
+#color    tty
+#eightbit yes
+#options  -bCFhNvX --color --group-directories-first --time-style=long-iso
 
 ## Escape characters
 #leftcode  \e[
@@ -30,73 +35,78 @@ other_writable          34;40 #ow
 sticky_other_writable 4;34;40 #tw
 sticky                4;34    #st
 
-## Links (cyan, which is a kind of blue (like directories), and also not very perceptually saturated (like normal files))
+## Colors from links (cyan, which is a kind of blue (like directories), and also not very perceptually saturated (like normal files))
 multihardlink 4 #mh
 link         36 #ln
 orphan       31 #or
-missing      31 #mi
+missing    1;31 #mi
 
-## Special files (yellow, because they're special)
+## Colors for directional "files" (yellow, because they're special)
 door 4;33 #do
-sock   33 #so
-fifo 1;33 #pi
+sock 1;33 #so
+fifo   33 #pi
 
-## Devices (purple, which is close to the blue of directories)
-chr    35 #cd
-blk  1;35 #bd
+## Colors for devices (purple, which is close to the blue of directories)
+chr 1;35 #cd
+blk   35 #bd
 
-## Colors for archives etc (bold purple, like block devices)
-.iso 1;35
-.tar 1;35
-.cab 1;35
+## Colors for files that act like directional "files" (yellow, like directional "files")
+.swap 1;33
+.swp  1;33
+.tmp    33
 
-## Colors for compressed archives (purple, like char devices)
-.7z   35
-.bz   35
-.bz2  35
-.gz   35
-.lrz  35
-.lz   35
-.lz4  35
-.lzh  35
-.lzma 35
-.lzo  35
-.rz   35
-.rar  35
-.t7z  35
-.taz  35
-.tbz  35
-.tbz2 35
-.tgz  35
-.tlz  35
-.txz  35
-.tz   35
-.tzo  35
-.tzst 35
-.war  35
-.wim  35
-.xz   35
-.z    35
-.zip  35
-.zst  35
+## Colors for uncompressed archives (purple, like block devices)
+.iso 35
+.tar 35
+.cab 35
+
+## Colors for compressed archives (bold purple, like char devices)
+.7z   1;35
+.bz   1;35
+.bz2  1;35
+.gz   1;35
+.lrz  1;35
+.lz   1;35
+.lz4  1;35
+.lzh  1;35
+.lzma 1;35
+.lzo  1;35
+.rz   1;35
+.rar  1;35
+.t7z  1;35
+.taz  1;35
+.tbz  1;35
+.tbz2 1;35
+.tgz  1;35
+.tlz  1;35
+.txz  1;35
+.tz   1;35
+.tzo  1;35
+.tzst 1;35
+.war  1;35
+.wim  1;35
+.xz   1;35
+.z    1;35
+.zip  1;35
+.zst  1;35
 
 #TODO:  Sort these file extensions into 'archives' or 'compressed'.
-.ace  35
-.alz  35
-.arc  35
-.arj  35
-.cpio 35
-.deb  35
-.dwm  35
-.dz   35
-.ear  35
-.esd  35
-.lha  35
-.jar  35
-.rpm  35
-.sar  35
-.swm  35
-.zoo  35
+.ace  1;35
+.alz  1;35
+.arc  1;35
+.arj  1;35
+.cpio 1;35
+.deb  1;35
+.dwm  1;35
+.dz   1;35
+.ear  1;35
+.esd  1;35
+.lha  1;35
+.jar  1;35
+.rpm  1;35
+.sar  1;35
+.swm  1;35
+.zoo  1;35
 
 ## Colors for other file extensions
 #TODO
