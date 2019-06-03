@@ -1,0 +1,102 @@
+#!/usr/bin/env dircolors
+## man dir_colors 5
+## Copyright    by Miles Bradley Huff from 2017-2019 per the LGPL3 (the Third Lesser GNU Public License)
+
+## Slackware-only
+color    tty
+eightbit yes
+options  -bCFhNvX --color --group-directories-first --time-style=long-iso
+
+## Escape characters
+#leftcode  \e[
+#rightcode m
+#endcode
+
+## Default colors
+*     0
+reset 0 #rs
+
+## Colors for normal files (white) (risky perms are highlighted)
+normal     0 #no
+file       0 #fi
+suid      40 #su
+sgid      40 #sg
+capability 4 #ca ## Literally no idea what this does
+exec       1 #ex
+
+## Colors for directories (blue, like URLs) (risky perms are highlighted)
+dir                     34    #di
+other_writable          34;40 #ow
+sticky_other_writable 4;34;40 #tw
+sticky                4;34    #st
+
+## Links (cyan, which is a kind of blue (like directories), and also not very perceptually saturated (like normal files))
+multihardlink 4 #mh
+link         36 #ln
+orphan       31 #or
+missing      31 #mi
+
+## Special files (yellow, because they're special)
+door 4;33 #do
+sock   33 #so
+fifo 1;33 #pi
+
+## Devices (purple, which is close to the blue of directories)
+chr    35 #cd
+blk  1;35 #bd
+
+## Colors for archives etc (bold purple, like block devices)
+.iso 1;35
+.tar 1;35
+.cab 1;35
+
+## Colors for compressed archives (purple, like char devices)
+.7z   35
+.bz   35
+.bz2  35
+.gz   35
+.lrz  35
+.lz   35
+.lz4  35
+.lzh  35
+.lzma 35
+.lzo  35
+.rz   35
+.rar  35
+.t7z  35
+.taz  35
+.tbz  35
+.tbz2 35
+.tgz  35
+.tlz  35
+.txz  35
+.tz   35
+.tzo  35
+.tzst 35
+.war  35
+.wim  35
+.xz   35
+.z    35
+.zip  35
+.zst  35
+
+#TODO:  Sort these file extensions into 'archives' or 'compressed'.
+.ace  35
+.alz  35
+.arc  35
+.arj  35
+.cpio 35
+.deb  35
+.dwm  35
+.dz   35
+.ear  35
+.esd  35
+.lha  35
+.jar  35
+.rpm  35
+.sar  35
+.swm  35
+.zoo  35
+
+## Colors for other file extensions
+#TODO
