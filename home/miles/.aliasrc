@@ -596,10 +596,10 @@ alias  'cpf'='cp -f'  ## Clobbering cp
 alias  'cpl'='cp -d'  ## Preserve symlinks
 alias 'cpup'='cp -u'  ## Only replace outdated files
 ## ln
-alias 'lnh'='ln -iv' ## Hard links
-alias 'lns'='lnh -s' ## Symbolic links
-alias 'lnr'='lns -r' ## Relative links
-alias  'ln'='lns'    ## Default
+alias  'ln'='ln -iv' ## Default
+alias 'lnh'='ln'     ## Hard links
+alias 'lns'='ln -s'  ## Symbolic links
+alias 'lnr'='ln -r'  ## Relative links
 ## mv
 alias   'mv'='mv -v'  ## mv defaults
 alias  'mvi'='mv -i'  ## Interactive move
@@ -655,18 +655,18 @@ alias 'sort'="sort -bh --parallel=$(nproc)"
 #alias 'uniq'='uniq'
 alias 'trim'="sed -e 's/^[ \t]*//'"
 ## Wrappers
-alias  'editalias'="$VISUAL $HOME/.aliasrc"
-alias   'editbash'="$VISUAL $HOME/.bashrc"
-              FILE="$HOME/.pam_environment"
-alias    'editenv'="$VISUAL $FILE && _sut $FILE"
-              FILE='/etc/environment'
-alias 'editenvsys'="_intellisu $VISUAL $FILE && _intellisu _sut $FILE"
-              FILE='/etc/locale.conf'
-alias  'editlcsys'="_intellisu $VISUAL $FILE && _intellisu _sut $FILE"
-              FILE=
-alias   'editprof'="$VISUAL $HOME/.profile"
+          DOTFILES="HOME/.local/src/dotfiles"
+               ETC="$HOME/.local/etc"
+alias  'editalias'="$VISUAL $DOTFILES/.aliasrc"
+alias   'editbash'="$VISUAL $DOTFILES/.bashrc"
+alias    'editenv'="$VISUAL $ETC/.pam_environment"
+alias 'editnetenv'="$VISUAL $DOTFILES/.pam_environment"
+alias 'editenvsys'="_intellisu $VISUAL /etc/environment"
+alias    'editenv'="$VISUAL $DOTFILES/.i18n"
+alias  'editlcsys'="_intellisu $VISUAL /etc/locale.conf"
+alias   'editprof'="$VISUAL $DOTFILES/.profile"
 alias     'editwm'="$VISUAL $HOME/.config/awesome/rc.lua"
-alias    'editzsh'="$VISUAL $HOME/.zshrc"
+alias    'editzsh'="$VISUAL $DOTFILES/.zshrc"
 
 ## Package management
 alias    'pkgcc'='_pkgcc'
