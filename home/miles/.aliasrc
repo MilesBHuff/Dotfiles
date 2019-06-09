@@ -384,6 +384,7 @@ function _pkgug {
 	    if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
 	        echo "\e[34;1m::\e[0;1m Updating virus-definition database...\e[0m"
 	        _intellisu freshclam
+			_intellisu clamav-unofficial-sigs.sh
 	        echo "\e[34;1m::\e[0;1m Done.\e[0m"
 	    fi
 	fi
@@ -483,7 +484,7 @@ function _rkhunter {
 }
 ## Alias for clamscan
 function _clamscan {
-	_intellisu clamscan -aoirzl '/var/log/clamav/clamscan.log' --bell --enable-stats $*
+	_intellisu clamscan -aoirzl '/var/log/clamav/clamscan.log' --bell $* #--enable-stats
 }
 ## Scan for security threats
 function _scansys {
