@@ -8,7 +8,7 @@ Names
 --------------------------------------------------------------------------------
 | After careful consideration, it has been decided that hostnames should be
   random linguistic strings.  This is for the following reasons:
-  
+
 - Locations and location IDs are not static, and so cannot be used.
 - Roles are not static, and so cannot be used.
 - The same installation can be moved between several different computers, so
