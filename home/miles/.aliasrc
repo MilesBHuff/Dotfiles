@@ -484,7 +484,8 @@ function _rkhunter {
 }
 ## Alias for clamscan
 function _clamscan {
-	_intellisu clamscan -aoirzl '/var/log/clamav/clamscan.log' --bell $* #--enable-stats
+	#_intellisu clamscan -aoirzl '/var/log/clamav/clamscan.log' --bell $* #--enable-stats
+	_intellisu clamdscan --multiscan --fdpass $* | _intellisu tee '/var/log/clamav/manualscan.log'
 }
 ## Scan for security threats
 function _scansys {

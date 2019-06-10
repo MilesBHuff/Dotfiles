@@ -1,4 +1,4 @@
-#!/usr/bin/env
+#!/hint/env
 ## man pam_env.conf 5
 ## Copyright    by Miles Bradley Huff from 201?-2019 per the LGPL3 (the Third Lesser GNU Public License)
 ## User environment
@@ -21,10 +21,10 @@ BROWSER=elinks
 ## -----------------------------------------------------------------------------
 
 ## Paths
-DIRSTACKFILE=@{HOME}/.cache/dirstack
-HISTFILE=@{HOME}/.sh_history
-PROJECTDIR=@{HOME}/.local/src
-WINEPREFIX=@{HOME}/.wine
+DIRSTACKFILE=${HOME}/.cache/dirstack
+HISTFILE=${HOME}/.sh_history
+PROJECTDIR=${HOME}/.local/src
+WINEPREFIX=${HOME}/.wine
 
 ## History
 DIRSTACKSIZE=12

@@ -1,5 +1,11 @@
+## Xorg conf file
+## Copyright    by Miles Bradley Huff from 201?-2019 per the LGPL3 (the Third Lesser GNU Public License)
+
+## Input
 URxvt.inputMethod: ibus
 URxvt.preeditType: OverTheSpot
+
+## Fonts
 Xft.antialias: 1
 Xft.autohint: 1
 Xft.dpi: 96
@@ -8,6 +14,7 @@ Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
 Xft.rgba: rgb
 
+## Terminal colors
 *background: #585858
 *foreground: #dbdbdb
 *color0: #585858

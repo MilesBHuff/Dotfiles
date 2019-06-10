@@ -1,4 +1,4 @@
-#!/usr/bin/env
+#!/hint/env
 ## Same as /etc/locale.conf
 ## Copyright © by Miles Bradley Huff from 2016-2019 per the LGPL3 (the Third Lesser GNU Public License)
 COUNTRY=US
