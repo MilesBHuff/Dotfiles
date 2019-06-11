@@ -21,10 +21,10 @@ BROWSER=elinks
 ## -----------------------------------------------------------------------------
 
 ## Paths
-DIRSTACKFILE=${HOME}/.cache/dirstack
-HISTFILE=${HOME}/.sh_history
-PROJECTDIR=${HOME}/.local/src
-WINEPREFIX=${HOME}/.wine
+DIRSTACKFILE=~/.cache/dirstack
+HISTFILE=~/.sh_history
+PROJECTDIR=~/.local/src
+WINEPREFIX=~/.wine
 
 ## History
 DIRSTACKSIZE=12

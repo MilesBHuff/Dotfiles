@@ -372,7 +372,9 @@ function _pkgug {
 		read -r INPUT
 		if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
 			echo "\e[34;1m::\e[0;1m Generating init images...\e[0m"
-			_intellisu mkinitcpio -p $(ls -A /etc/mkinitcpio.d)
+			for F in $(ls -A /etc/mkinitcpio.d); do
+				_intellisu mkinitcpio -p $(echo "$F" | sed 's/\.preset//')
+			done
 			echo "\e[34;1m::\e[0;1m Done.\e[0m"
 		fi
 	fi
