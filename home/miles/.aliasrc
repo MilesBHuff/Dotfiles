@@ -608,10 +608,13 @@ alias  'mvi'='mv -i'  ## Interactive move
 alias  'mvf'='mv -f'  ## Clobbering move
 alias 'mvup'='mv -u'  ## Only replace outdated files
 ## rm
-alias  'rm'='rm -dIrv'  ## Interactive rm
-# alias  'rm'='rm_trash'  ## Recycling rm
-alias 'rmi'='rm -dirv'  ## OCD interactive rm
-alias 'rmf'='rm -dfrv'  ## Merciless rm
+# alias  'rm'='rm_trash' ## Recycling rm
+alias   'rm'='rm -dIv'  ## Interactive rm
+alias  'rmi'='rm -div'  ## OCD interactive rm
+alias  'rmf'='rm -dfv'  ## Merciless rm
+alias  'rmr'='rm -dIvr' ## Interactive recursive rm
+alias 'rmri'='rm -divr' ## OCD interactive recursive rm
+alias 'rmrf'='rm -dfvr' ## Merciless recursive rm
 ## *dir
 alias 'mkdir'='mkdir -pv'
 alias    'md'='mkdir'
@@ -709,9 +712,14 @@ alias  'gunadd'='git reset'
 alias 'grevert'='git reset --hard'
 alias 'guncomm'='git reset HEAD~1'
 ## GnuPG
-alias        'gpg1'="$(which gpg)"
-alias         'gpg'='gpg2'
-alias 'fingerprint'='gpg --fingerprint'
+alias       'gpg1'="$(which gpg)"
+alias        'gpg'='gpg2'
+alias   'gpg-edit'='gpg2 --edit-key'
+alias   'gpg-list'='gpg2 --list-keys'
+alias 'gpg-finger'='gpg2 --fingerprint'
+alias  'gpg-fresh'='gpg2 --refresh'
+alias   'gpg-recv'='gpg2 --recv-keys'
+alias   'gpg-send'='gpg2 --send-keys'
 ## udevinfo/udevadm (for cross-distro compatibility)
 [[ -f /usr/bin/udevadm  ]] && [[ ! -f /usr/bin/udevinfo ]] && alias 'udevinfo'='udevadm'
 [[ -f /usr/bin/udevinfo ]] && [[ ! -f /usr/bin/udevadm  ]] && alias  'udevadm'='udevinfo'
