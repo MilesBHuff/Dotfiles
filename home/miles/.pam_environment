@@ -21,6 +21,7 @@ BROWSER=elinks
 ## -----------------------------------------------------------------------------
 
 ## Paths
+ANDROID_HOME=/opt/android-sdk
 DIRSTACKFILE=~/.cache/dirstack
 HISTFILE=~/.sh_history
 PROJECTDIR=~/.local/src
@@ -44,6 +45,14 @@ LS_COLORS=*=0:rs=0:no=0:fi=0:su=40:sg=40:ca=4:ex=1:di=34:ow=34;40:tw=4;34;40:st=
 ## Misc
 MOZ_USE_XINPUT2=1
 WATCHFMT=%n from %M has %a tty%l at %T %W
+
+## Proxies
+NO_PROXY=localhost,127.0.0.1
+ALL_PROXY=
+FTP_PROXY=
+HTTP_PROXY=
+HTTPS_PROXY=
+
 
 ## Deprecated
 GREP_OPTIONS=
