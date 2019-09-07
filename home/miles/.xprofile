@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+## Copyright (C) by Miles Bradley Huff from 2019 per the LGPL3 (the Third Lesser GNU Public License)
+## Remember:  This file needs to be compatible with POSIX sh!
+##
+## Note that this should only be environment variables for Xorg apps;
+## all other user environment variables should go into ~/.pam_environment, ~/.i18n, or ~/.profile.
+
+## Preferred applications
+## -----------------------------------------------------------------------------
+BROWSER=firefox
+VISUAL=code
+
+export BROWSER \
+       VISUAL  \
+
+## Settings
+## -----------------------------------------------------------------------------
+MOZ_USE_XINPUT2=1
+
+export MOZ_USE_XINPUT2 \
