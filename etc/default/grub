@@ -1,46 +1,53 @@
-#!/usr/bin/env
+#!/bin/sh
 ## grub-mkconfig -o /boot/grub/grub.cfg
-## Copyright © by Miles Bradley Huff from 2019 per the LGPL3 (the Third Lesser GNU Public License)
+## Copyright (C) by Miles Bradley Huff from 2019 per the LGPL3 (the Third Lesser GNU Public License)
 
 ## Features
 ## -----------------------------------------------------------------------------
 ## Preload both GPT and MBR modules so that they are not missed
-GRUB_PRELOAD_MODULES="part_gpt part_msdos"
+GRUB_PRELOAD_MODULES='part_gpt part_msdos'
 ## Uncomment to enable support for dm-crypt
-#GRUB_ENABLE_CRYPTODISK=y
+#GRUB_ENABLE_CRYPTODISK='y'
 
 ## Timeouts
 ## -----------------------------------------------------------------------------
 GRUB_DEFAULT=0
 GRUB_TIMEOUT=0
 GRUB_HIDDEN_TIMEOUT=1
-GRUB_HIDDEN_TIMEOUT_QUIET=false
+GRUB_HIDDEN_TIMEOUT_QUIET='false'
+GRUB_RECORDFAIL_TIMEOUT=${GRUB_HIDDEN_TIMEOUT}
 
 ## Targets
 ## -----------------------------------------------------------------------------
-GRUB_DISTRIBUTOR="Arch"
-GRUB_DISABLE_RECOVERY=false
-#GRUB_DEFAULT=saved
-#GRUB_SAVEDEFAULT=true
+GRUB_DISTRIBUTOR='Arch'
+GRUB_DISABLE_RECOVERY='false'
+#GRUB_DEFAULT='saved'
+#GRUB_SAVEDEFAULT='true'
 
 ## Boot flags
 ## -----------------------------------------------------------------------------
-## Used for all Linux boots
-GRUB_CMDLINE_LINUX="loglevel=3 rd.udev.log_priority=3 apparmor=1 security=apparmor"
+_DISPLAY='vga=current i915.fastboot=1'
+_LOGGING='loglevel=4 rd.udev.log_priority=4 rd.systemd.show_status=auto'
+_PRETTY='splash quiet vt.global_cursor_default=0'
+_SECURITY='apparmor=1 security=apparmor'
+
+## Used for all Linux boots, including recovery
+GRUB_CMDLINE_LINUX="${_DISPLAY} ${_LOGGING} ${_SECURITY}"
 ## Used for all non-recovery Linux boots
-GRUB_CMDLINE_LINUX_DEFAULT="quiet splash vt.global_cursor_default=0"
+GRUB_CMDLINE_LINUX_DEFAULT="${_PRETTY}"
 
 ## Graphics
 ## -----------------------------------------------------------------------------
-GRUB_TERMINAL_INPUT=console,auto
-#GRUB_TERMINAL_OUTPUT=console
-GRUB_GFXMODE=1920x1080,1280x1024,auto
-GRUB_GFXPAYLOAD_LINUX=keep,text,auto
+GRUB_TERMINAL_INPUT='console,auto'
+#GRUB_TERMINAL_OUTPUT='console'
+GRUB_GFXMODE='1920x1080,1280x1024,auto'
+GRUB_GFXPAYLOAD_LINUX='keep,text,auto'
 
 ## Appearance
 ## -----------------------------------------------------------------------------
-#GRUB_THEME="/path/to/gfxtheme"
-#GRUB_BACKGROUND="/path/to/wallpaper"
-GRUB_COLOR_NORMAL="light-gray/black"
-GRUB_COLOR_HIGHLIGHT="black/light-gray"
-#GRUB_INIT_TUNE="480 440 1"
+#_THEMEPATH='/boot/grub/themes'
+#GRUB_THEME="${_THEMEPATH}/gfxtheme"
+#GRUB_BACKGROUND="${_THEMEPATH}/wallpaper"
+GRUB_COLOR_NORMAL='white/black'
+GRUB_COLOR_HIGHLIGHT='black/white'
+#GRUB_INIT_TUNE='480 440 1'
