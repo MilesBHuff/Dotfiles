@@ -26,7 +26,8 @@ GRUB_DISABLE_RECOVERY='false'
 
 ## Boot flags
 ## -----------------------------------------------------------------------------
-_DISPLAY='vga=current i915.fastboot=1'
+## i915 options go in /etc/modprobe.d/i915.conf
+_DISPLAY='vga=current'
 _LOGGING='loglevel=4 rd.udev.log_priority=4 rd.systemd.show_status=auto'
 _PRETTY='splash quiet vt.global_cursor_default=0'
 _SECURITY='apparmor=1 security=apparmor'
