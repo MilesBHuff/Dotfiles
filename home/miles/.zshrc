@@ -1,7 +1,8 @@
 #!/usr/bin/env zsh
+## #############################################################################
 
-
-#### COPYRIGHT -----------------------------------------------------------------
+## Copyright
+## =============================================================================
 ## Written from scratch by Miles Bradley Huff
 ## The few parts from help-sites and such that I didn't actually write myself
 ## are sourced inline via comment.
@@ -9,8 +10,8 @@
 ## Copyright (c) 2016-2019 under the Third Lesser GNU Public License (LGPL3)
 ## ^^ This, naturally, does not apply to lines that I did not write.
 
-
-#### TABLE OF CONTENTS ---------------------------------------------------------
+## Table of contents
+## =============================================================================
 ## Copyright
 ## Table of contents
 ## Style-guide
@@ -24,61 +25,34 @@
 ## Functions & aliases
 ## Finalization
 
+## Initialization
+## =============================================================================
 
-#### STYLE-GUIDE ---------------------------------------------------------------
-## The number of hashtags indicates the type of comment.
-## Lv4 :  #### TITLE (THESE CAPITALIZE EVERY LETTER AND HAVE DASHES EXTENDING TO
-##                    THE 80-CHAR LIMIT) ---------------------------------------
-## Lv3 :  ### Section (These Capitalize Every Word)
-## Lv2a:  ## Comment (These use sentence-case.)
-## Lv2b:  #EXAMPLE:  Another type of Lv2 comment uses a keyword after a single
-##                   hashtag.  If desired, a comment may follow;  but this
-##                   comment must be preceded by ':  '.
-## Lv1 :  # echo "A single hashtag is used for to comment-out code."
-##
-## Lv4 comments have two lines before them
-## Lv3 comments have one line before them, unless the line immediately above
-##     is a Lv4 comment.
-## Lv2* & Lv1 comments have no lines before them
-##
-## Except for Lv2b comments, a space must go in-between the hashtag(s) and the
-## comment.
-##
-## The ordering between, but not within, blocks headed by Lv4 and Lv3 comments
-## is important.
-## The ordering between blocks headed by Lv2* and Lv1 comments is unimportant.
-##
-## Unless otherwise specified (via Lv2b comment), the ordering within a block,
-## regardless of level, is unimportant.
-## The ordering of unimportant elements should be done alphabetically,
-## unless there is reason to do otherwise.
-##
-## Where possible, lines should not be longer than 80 characters.
-## Lines should not end with blank space.
-## There should be exactly one blank line at the end of this file.
-
-
-#### INITIALIZATION ------------------------------------------------------------
-### Switches
+## Switches
+## -----------------------------------------------------------------------------
 LOAD_BAR=false  ## Useful for finding bottlenecks.
 PLUGINS=false   ## Useful when Antigen's broken.
 
-### Loading-bar
+## Loading-bar
+## -----------------------------------------------------------------------------
 [[ $LOAD_BAR == true ]] && echo '_______________'
 
-### Autoloads
+## Autoloads
+## -----------------------------------------------------------------------------
 #TODO
 autoload -Uz chpwd_recent_dirs\
              zkbd             \
              zmv
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
-### Zmodloads
+## Zmodloads
+## -----------------------------------------------------------------------------
 #TODO
 #zmodload zsh/terminfo
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
-### Load Plugin-Manager
+## Load Plugin-Manager
+## -----------------------------------------------------------------------------
 #NOTE:  Order important!
 if [[ $PLUGINS == true ]]; then
 	source /usr/share/zsh/scripts/antigen/antigen.zsh
@@ -86,7 +60,8 @@ if [[ $PLUGINS == true ]]; then
 fi
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
-### Prompt
+## Prompt
+## -----------------------------------------------------------------------------
 ## Yes, this needs to be its own section.  This is because, though my prompt be
 ## rather simple;  there be many a complex manner of configuring one's prompt in
 ## zsh, and I wished to support these such manners fairly explicitly.
@@ -101,16 +76,17 @@ $([[ ! "$(hostname)" == "$NORMAL_HOSTNAME" ]] || [[ ! "$(whoami)" == "$NORMAL_US
 unsetopt all_export
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
-### Inits
+## Inits
+## -----------------------------------------------------------------------------
 #NOTE:  Order important!
 #colors
 #compinit
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
-
-#### EARLY PLUGINS -------------------------------------------------------------
-## Order wasn't important here, so I did them alphabetically, with Oh-My-ZSH
-## plugins first, since Oh-My-ZSH is Antigen's default repo.
+## Early plugins
+## =============================================================================
+## Order wasn't important here, so I did them alphabetically,
+## with Oh-My-ZSH plugins first, since Oh-My-ZSH is Antigen's default repo.
 if [[ $PLUGINS == true ]]; then
 	source /usr/share/doc/pkgfile/command-not-found.zsh
 	antigen-bundle colemak                    #NOTE:  Remove this line if you don't use the Colemak layout.
@@ -121,9 +97,11 @@ if [[ $PLUGINS == true ]]; then
 fi
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
+## Keybinds
+## =============================================================================
 
-#### KEYBINDS ------------------------------------------------------------------
-### Set up the keymap
+## Set up the keymap
+## -----------------------------------------------------------------------------
 ## Load a saved keymap...
 if [[ -f "${ZDOTDIR:-$HOME}"/.zkbd/"$TERM-$VENDOR-$OSTYPE" ]]; then  ## I got this line from the manpage.
 	source "${ZDOTDIR:-$HOME}"/.zkbd/"$TERM-$VENDOR-$OSTYPE"
@@ -146,25 +124,27 @@ function ctrl {
 }
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
-### Widget-declaration
+## Widget-declaration
+## -----------------------------------------------------------------------------
 ## You can use zle to create a widget doing any command.
 
-### General binding
+## General binding
+## -----------------------------------------------------------------------------
 ## Special keys
-[[ -n ${key[Backspace]} ]] && bindkey        "${key[Backspace]}"  'backward-delete-char'
-[[ -n ${key[Delete]}    ]] && bindkey        "${key[Delete]}"     'delete-char'
 [[ -n ${key[Down]}      ]] && bindkey        "${key[Down]}"       'history-search-forward'
-[[ -n ${key[End]}       ]] && bindkey        "${key[End]}"        'end-of-line'
-[[ -n ${key[F1]}        ]] && bindkey        "${key[F1]}"         'run-help'
-[[ -n ${key[Home]}      ]] && bindkey        "${key[Home]}"       'beginning-of-line'
-[[ -n ${key[Insert]}    ]] && bindkey        "${key[Insert]}"     'overwrite-mode'
-[[ -n ${key[Left]}      ]] && bindkey        "${key[Left]}"       'backward-char'
-[[ -n ${key[PageDown]}  ]] && bindkey        "${key[PageDown]}"   'end-of-buffer-or-history'
-[[ -n ${key[PageUp]}    ]] && bindkey        "${key[PageUp]}"     'beginning-of-buffer-or-history'
-[[ -n ${key[Right]}     ]] && bindkey        "${key[Right]}"      'forward-char'
 [[ -n ${key[Up]}        ]] && bindkey        "${key[Up]}"         'history-search-backward'
+[[ -n ${key[Right]}     ]] && bindkey        "${key[Right]}"      'forward-char'
+[[ -n ${key[Left]}      ]] && bindkey        "${key[Left]}"       'backward-char'
+[[ -n ${key[Delete]}    ]] && bindkey        "${key[Delete]}"     'delete-char'
+[[ -n ${key[Backspace]} ]] && bindkey        "${key[Backspace]}"  'backward-delete-char'
+[[ -n ${key[Home]}      ]] && bindkey        "${key[Home]}"       'beginning-of-line'
+[[ -n ${key[End]}       ]] && bindkey        "${key[End]}"        'end-of-line'
+[[ -n ${key[PageUp]}    ]] && bindkey        "${key[PageUp]}"     'beginning-of-buffer-or-history'
+[[ -n ${key[PageDown]}  ]] && bindkey        "${key[PageDown]}"   'end-of-buffer-or-history'
+[[ -n ${key[Insert]}    ]] && bindkey        "${key[Insert]}"     'overwrite-mode'
+[[ -n ${key[F1]}        ]] && bindkey        "${key[F1]}"         'run-help'
 ## Modified special keys
-[[ -n ${key[Backspace]} ]] && bindkey "$(ctrl ${key[Backspace]})" 'backward-kill-word'  ## Actually impossible to get to work.  :\
+[[ -n ${key[Backspace]} ]] && bindkey "$(ctrl ${key[Backspace]})" 'backward-kill-word' ## Doesn't actually work
 [[ -n ${key[Delete]}    ]] && bindkey "$(ctrl ${key[Delete]})"    'kill-word'
 [[ -n ${key[Down]}      ]] && bindkey "$(ctrl ${key[Down]})"      'down-line-or-history'
 [[ -n ${key[Left]}      ]] && bindkey "$(ctrl ${key[Left]})"      'backward-word'
@@ -175,26 +155,26 @@ function ctrl {
                               bindkey "^a"                        'get-line'
                               bindkey "^x"                        'push-line'
                               bindkey "^y"                        'redo'
-                              bindkey "^z"                        'undo'  ## Impossible to get Ctrl+Shift+Z to be backspace.  :(
+                              bindkey "^z"                        'undo'
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
-### Plugin-dependent binding
+## Plugin-dependent binding
+## -----------------------------------------------------------------------------
 if [[ $PLUGINS == true ]]; then
 	[[ -n ${key[Down]} ]] && bindkey "${key[Down]}" 'history-substring-search-down'
 	[[ -n ${key[Up]}   ]] && bindkey "${key[Up]}"   'history-substring-search-up'
 fi
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
-
-#### COMPLETION ----------------------------------------------------------------
+## Completion
+## =============================================================================
 #TODO
-## From the Arch Linux Wiki:
-zstyle ':chpwd:*'      recent-dirs-file "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/chpwd-recent-dirs"
-zstyle ':completion:*' rehash           true
+zstyle ':chpwd:*'      recent-dirs-file "$XDG_CACHE_HOME/zsh/chpwd-recent-dirs" ## From the Arch Linux Wiki
+zstyle ':completion:*' rehash           true ## From the Arch Linux Wiki
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
-
-#### LATE PLUGINS --------------------------------------------------------------
+## Late plugins
+## =============================================================================
 #NOTE:  Order important!
 if [[ $PLUGINS == true ]]; then
 	antigen-bundle zsh-users/zsh-syntax-highlighting
@@ -202,25 +182,26 @@ if [[ $PLUGINS == true ]]; then
 fi
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
-
-#### SESSION-VARIABLES ---------------------------------------------------------
+## Session variables
+## =============================================================================
 setopt all_export
 	#TODO
 unsetopt all_export
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
-
-#### OPTIONS -------------------------------------------------------------------
+## Options
+## =============================================================================
 ## Although it's possible to format this in many ways, I'm doing it as follows:
-## o  All lowercase
-## o  Underscores between words
-## o  'no_' instead of 'unsetopt'
+## -  All lowercase
+## -  Underscores between words
+## -  'no_' instead of 'unsetopt'
 #NOTE:  The order between Lv3 blocks here doesn't matter.  The order used
 ##      for them is the same as used in their manpage.
 ## See the man page for zshoptions(1) for more an explanation of what the things
 ## in this section's subsections do.
 
-### Changing Directories
+## Changing Directories
+## -----------------------------------------------------------------------------
 setopt               \
     auto_cd          \
     auto_pushd       \
@@ -233,7 +214,8 @@ setopt               \
     pushd_silent     \
     pushd_to_home
 
-### Completion
+## Completion
+## -----------------------------------------------------------------------------
 ## You should probably disable menu_complete if you aren't using ie Oh-My-Zsh.
 setopt                \
     always_last_prompt\
@@ -257,7 +239,8 @@ setopt                \
     menu_complete     \
  no_rec_exact
 
-### Expansion And Globbing
+## Expansion And Globbing
+## -----------------------------------------------------------------------------
 ## Glob Modes:
 ##   0. Compliance
 ##   1. Normal
@@ -339,7 +322,8 @@ case $GLOB_MODE in
 esac
 unset GLOB_MODE
 
-### History
+## History
+## -----------------------------------------------------------------------------
 setopt                     \
     hist_append            \
  no_hist_expand            \
@@ -362,14 +346,16 @@ setopt                     \
  no_inc_append_history     \
  no_share_history
 
-### Initialization
+## Initialization
+## -----------------------------------------------------------------------------
 setopt           \
  no_all_export   \
     global_export\
  no_global_rcs   \
     rcs
 
-### Input/Output
+## Input/Output
+## -----------------------------------------------------------------------------
 setopt                   \
     aliases              \
     clobber              \
@@ -392,7 +378,8 @@ setopt                   \
     short_loops          \
  no_sun_keyboard_hack
 
-### Job-Control
+## Job-Control
+## -----------------------------------------------------------------------------
 setopt            \
  no_auto_continue \
     auto_resume   \
@@ -403,7 +390,8 @@ setopt            \
  no_notify        \
  no_posix_jobs
 
-### Prompting
+## Prompting
+## -----------------------------------------------------------------------------
 setopt               \
     prompt_bang      \
     prompt_cr        \
@@ -412,7 +400,8 @@ setopt               \
     prompt_vars      \
  no_transient_rprompt
 
-### Scripts And Functions
+## Scripts And Functions
+## -----------------------------------------------------------------------------
 setopt              \
  no_c_bases         \
     c_precedences   \
@@ -432,7 +421,8 @@ setopt              \
  no_verbose         \
  no_xtrace
 
-### Shell-Emulation
+## Shell-Emulation
+## -----------------------------------------------------------------------------
 setopt                \
  no_bash_rematch      \
  no_bsd_echo          \
@@ -456,11 +446,13 @@ setopt                \
     sh_word_split     \
     traps_async
 
-### Shell-State
+## Shell-State
+## -----------------------------------------------------------------------------
 setopt        \
  no_restricted
 
-### Zle
+## Zle
+## -----------------------------------------------------------------------------
 setopt             \
  no_beep           \
     combining_chars\
@@ -468,9 +460,11 @@ setopt             \
  no_overstrike     \
     zle
 
+## -----------------------------------------------------------------------------
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
-#### FUNCTIONS & ALIASES -------------------------------------------------------
+## Functions & aliases
+## =============================================================================
 ## It's a good idea to store your aliases in their own file, so that you can
 ## source them from multiple shells.
 [[ -f "$HOME/.aliasrc"    ]] && source "$HOME/.aliasrc"
@@ -478,18 +472,21 @@ setopt             \
 [[ $PLUGINS == true ]] && alias 'reload'='src' ## Reload zsh configuration.  A more sensible name for the function in the zsh_reload plugin.
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
+## Finalization
+## =============================================================================
 
-
-#### FINALIZATION --------------------------------------------------------------
-### Activate Plugins
+## Activate Plugins
+## -----------------------------------------------------------------------------
 [[ $PLUGINS  == true ]] && antigen-apply
 [[ $LOAD_BAR == true ]] && echo -n '█'
 
 ## Cleanup
+## -----------------------------------------------------------------------------
 unset LOAD_BAR\
       PLUGINS
 
-### Make The Display Pretty
+## Make The Display Pretty
+## -----------------------------------------------------------------------------
 #NOTE:  Order important!
 clear && echo
 #if [[ "$(pwd)" == "$HOME" ]]; then
