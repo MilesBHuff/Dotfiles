@@ -72,7 +72,7 @@ elif [[ ! -z "$(which 'zypper')" ]] && [[ "$(which 'zypper')" != *'not found'* ]
 fi
 ## Tidy up system
 function _pkgcc {
-	echo "\e[34;1m::\e[0;1m Cleaning package manager...\e[0m"
+	echo "\e[37;1m::\e[0;1m Cleaning package manager...\e[0m"
 	case "$PKGMGR" in
 		'pacman' )
 			#[ -f /var/cache/pacman/pkg/*.aria2 ] && _intellisu rm -fv /var/cache/pacman/pkg/*.aria2
@@ -93,22 +93,22 @@ function _pkgcc {
 			(>&2 echo "\e[31;1m[ERROR]\e[0;1m Unknown package manager!\e[0m")
 		;;
 	esac
-	echo "\e[34;1m::\e[0;1m Done.\e[0m"
+	echo "\e[37;1m::\e[0;1m Done.\e[0m"
 }
 ## Install package(s)
 function _pkgin {
 	## If there's no pkgug lockfile or its modification date is more than a day ago, upgrade system first.
 	if [[ ! -f '/var/lib/pkgug.lock' ]] || [[ 86400 -lt $(expr $(date +'%s') - $(stat -c %Y '/var/lib/pkgug.lock')) ]]; then
-		echo "\e[34;1m::\e[0;1m A system upgrade is required before installing.\e[0m"
+		echo "\e[37;1m::\e[0;1m A system upgrade is required before installing.\e[0m"
 		_pkgug
 	fi
 	case "$PKGMGR" in
 		'pacman' )
-			#if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
-			#	yaourt -a $*
-			#else
+			if [[ ! -z "$(which 'yay')" ]] && [[ "$(which 'yay')" != *'not found'* ]]; then
+				yay -S $*
+			else
 				_intellisu pacman -S $*
-			#fi
+			fi
 		;;
 		'apt' )
 #			_intellisu apt-get install $*
@@ -129,16 +129,16 @@ function _pkgin {
 function _pkgindep {
 	## If there's no pkgug lockfile or its modification date is more than a day ago, upgrade system first.
 	if [[ ! -f '/var/lib/pkgug.lock' ]] || [[ 86400 -lt $(expr $(date +'%s') - $(stat -c %Y '/var/lib/pkgug.lock')) ]]; then
-		echo "\e[34;1m::\e[0;1m A system upgrade is required before installing.\e[0m"
+		echo "\e[37;1m::\e[0;1m A system upgrade is required before installing.\e[0m"
 		_pkgug
 	fi
 	case "$PKGMGR" in
 		'pacman' )
-			#if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
-			#	yaourt --asdeps $*
-			#else
+			if [[ ! -z "$(which 'yay')" ]] && [[ "$(which 'yay')" != *'not found'* ]]; then
+				yay -S --asdeps $*
+			else
 				_intellisu pacman -S --asdeps $*
-			#fi
+			fi
 		;;
 		'apt' )
 			#TODO
@@ -179,7 +179,7 @@ function _pkgpu {
 function _pkgri {
 	## If there's no pkgug lockfile or its modification date is more than a day ago, upgrade system first.
 	if [[ ! -f '/run/pkgug.lock' ]] || [[ 86400 -lt $(expr $(date +'%s') - $(stat -c %Y '/run/pkgug.lock')) ]]; then
-		echo "\e[34;1m::\e[0;1m A system upgrade is required before installing.\e[0m"
+		echo "\e[37;1m::\e[0;1m A system upgrade is required before installing.\e[0m"
 		_pkgug
 	fi
 	case "$PKGMGR" in
@@ -205,8 +205,8 @@ function _pkgri {
 function _pkgrm {
 	case "$PKGMGR" in
 		'pacman' )
-			if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
-				yaourt -R $*
+			if [[ ! -z "$(which 'yay')" ]] && [[ "$(which 'yay')" != *'not found'* ]]; then
+				yay -R $*
 			else
 				_intellisu pacman -R $*
 			fi
@@ -230,8 +230,8 @@ function _pkgrm {
 function _pkgru {
 	case "$PKGMGR" in
 		'pacman' )
-			if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
-				yaourt -Qdt $*
+			if [[ ! -z "$(which 'yay')" ]] && [[ "$(which 'yay')" != *'not found'* ]]; then
+				yay -Qdt $*
 			else
 				_intellisu pacman -Qdt $*
 			fi
@@ -255,10 +255,10 @@ function _pkgru {
 function _pkgse {
 	case "$PKGMGR" in
 		'pacman' )
-			if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
-				yaourt -a $*
+			if [[ ! -z "$(which 'yay')" ]] && [[ "$(which 'yay')" != *'not found'* ]]; then
+				yay -Ss $*
 			else
-				echo -n '' #TODO
+				pacman -Ss $*
 			fi
 		;;
 		'apt' )
@@ -283,16 +283,16 @@ function _pkgug {
 	if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
 		## If there's no pkgup lockfile or its modification date is more than a day ago, update repos first.
 		if [[ ! -f '/var/lib/pkgup.lock' ]] || [[ 86400 -lt $(expr $(date +'%s') - $(stat -c %Y '/var/lib/pkgup.lock')) ]]; then
-			echo "\e[34;1m::\e[0;1m A repo update is required before upgrading.\e[0m"
+			echo "\e[37;1m::\e[0;1m A repo update is required before upgrading.\e[0m"
 			_pkgup
 		fi
-		echo "\e[34;1m::\e[0;1m Upgrading system...\e[0m"
+		echo "\e[37;1m::\e[0;1m Upgrading system...\e[0m"
 #		LC_OLD="$LC_ALL"
 #		export LC_ALL='C'
 		case "$PKGMGR" in
 			'pacman' )
-				if [[ ! -z "$(which 'yaourt')" ]] && [[ "$(which 'yaourt')" != *'not found'* ]]; then
-					yaourt -Suua $*
+				if [[ ! -z "$(which 'yay')" ]] && [[ "$(which 'yay')" != *'not found'* ]]; then
+					yay -Suu $*
 				else
 					_intellisu pacman -Suu $*
 				fi
@@ -314,7 +314,7 @@ function _pkgug {
 		esac
 		_intellisu touch '/var/lib/pkgug.lock'
 #		export LC_ALL="$LC_OLD"
-		echo "\e[34;1m::\e[0;1m Done.\e[0m"
+		echo "\e[37;1m::\e[0;1m Done.\e[0m"
 	fi
 
 	## Upgrade shell plugins
@@ -322,7 +322,7 @@ function _pkgug {
 		echo -n '   Upgrade shell plugins?  [Y/n] '
 		read -r INPUT
 		if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
-			echo "\e[34;1m::\e[0;1m Upgrading Antigen plugins...\e[0m"
+			echo "\e[37;1m::\e[0;1m Upgrading Antigen plugins...\e[0m"
 			if [[ ! -d "$HOME/.antigen/repos" ]]; then
 				[[ ! -d "$HOME/.antigen" ]] && mkdir "$HOME/.antigen"
 				mkdir "$HOME/.antigen/repos"
@@ -334,7 +334,7 @@ function _pkgug {
 				done
 			fi
 			#antigen-update
-			echo "\e[34;1m::\e[0;1m Done.\e[0m"
+			echo "\e[37;1m::\e[0;1m Done.\e[0m"
 		fi
 	fi
 
@@ -346,15 +346,15 @@ function _pkgug {
 		read -r INPUT
 		if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
 			if [[ ! -z "$(which 'pip2')" ]] && [[ "$(which 'pip2')" != *'not found'* ]]; then
-				echo "\e[34;1m::\e[0;1m Upgrading Python2 plugins...\e[0m"
+				echo "\e[37;1m::\e[0;1m Upgrading Python2 plugins...\e[0m"
 				_intellisu pip2 install --upgrade pip
 			fi
 			if [[ ! -z "$(which 'pip3')" ]] && [[ "$(which 'pip3')" != *'not found'* ]]; then
-				echo "\e[34;1m::\e[0;1m Upgrading Python3 plugins...\e[0m"
+				echo "\e[37;1m::\e[0;1m Upgrading Python3 plugins...\e[0m"
 				_intellisu pip3 install --upgrade pip
 			fi
 			if [[ ! -z "$(which 'npm' )" ]]; then
-				echo "\e[34;1m::\e[0;1m Upgrading npm plugins...\e[0m"
+				echo "\e[37;1m::\e[0;1m Upgrading npm plugins...\e[0m"
 				_intellisu npm i -g npm
 				_intellisu npm up -g
 #				_intellisu npm audit fix -g
@@ -362,7 +362,7 @@ function _pkgug {
 				_intellisu chmod -R og+w /usr/lib/node_modules
 				_intellisu chmod -R  a+r /usr/lib/node_modules
 			fi
-			echo "\e[34;1m::\e[0;1m Done.\e[0m"
+			echo "\e[37;1m::\e[0;1m Done.\e[0m"
 		fi
 	fi
 
@@ -371,11 +371,11 @@ function _pkgug {
 		echo -n '   Generate new init images?  [Y/n] '
 		read -r INPUT
 		if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
-			echo "\e[34;1m::\e[0;1m Generating init images...\e[0m"
+			echo "\e[37;1m::\e[0;1m Generating init images...\e[0m"
 			for F in $(ls -A /etc/mkinitcpio.d); do
 				_intellisu mkinitcpio -p $(echo "$F" | sed 's/\.preset//')
 			done
-			echo "\e[34;1m::\e[0;1m Done.\e[0m"
+			echo "\e[37;1m::\e[0;1m Done.\e[0m"
 		fi
 	fi
 
@@ -384,10 +384,10 @@ function _pkgug {
 	    echo -n '   Update virus-definition database?  [Y/n] '
 	    read -r INPUT
 	    if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
-	        echo "\e[34;1m::\e[0;1m Updating virus-definition database...\e[0m"
+	        echo "\e[37;1m::\e[0;1m Updating virus-definition database...\e[0m"
 	        _intellisu freshclam
 			_intellisu clamav-unofficial-sigs.sh
-	        echo "\e[34;1m::\e[0;1m Done.\e[0m"
+	        echo "\e[37;1m::\e[0;1m Done.\e[0m"
 	    fi
 	fi
 }
@@ -400,7 +400,7 @@ function _pkgup {
 			'pacman' )
 				## Refresh mirrors
 				if [[ ! -z "$(which 'reflector')" ]] && [[ "$(which 'reflector')" != *'not found'* ]]; then
-					echo "\e[34;1m::\e[0;1m Refreshing mirrors...\e[0m"
+					echo "\e[37;1m::\e[0;1m Refreshing mirrors...\e[0m"
 					TMP_MIRRORLIST='/tmp/mirrorlist' #TODO: Randomize the filename in order to protect against attacks.
 					[[ -f $TMP_MIRRORLIST ]] && rm -f $TMP_MIRRORLIST
 					reflector -c US --threads $(nproc) --sort score > $TMP_MIRRORLIST #NOTE: Make sure you set it to use your country!
@@ -408,10 +408,10 @@ function _pkgup {
 					## Remove unneeded pacnews and such
 					[[ -f /etc/pacman.d/mirrorlist.pacnew  ]] && _intellisu rm -f /etc/pacman.d/mirrorlist.pacnew
 					[[ -f /etc/pacman.d/mirrorlist.pacsave ]] && _intellisu rm -f /etc/pacman.d/mirrorlist.pacsave
-					echo "\e[34;1m::\e[0;1m Done.\e[0m"
+					echo "\e[37;1m::\e[0;1m Done.\e[0m"
 				fi
 				## Update repos
-				echo "\e[34;1m::\e[0;1m Updating repository database...\e[0m"
+				echo "\e[37;1m::\e[0;1m Updating repository database...\e[0m"
 				if [[ ! -z "$(which 'pacmatic')" ]] && [[ "$(which 'pacmatic')" != *'not found'* ]]; then
 					EXE="_intellisu pacmatic -Sy $*"
 				else
@@ -421,7 +421,7 @@ function _pkgup {
 				unset EXE
 			;;
 			'apt' )
-				echo "\e[34;1m::\e[0;1m Updating repository database...\e[0m"
+				echo "\e[37;1m::\e[0;1m Updating repository database...\e[0m"
 #				_intellisu apt-get update $*
 				apt update $*
 			;;
@@ -436,7 +436,7 @@ function _pkgup {
 			;;
 		esac
 		_intellisu touch '/var/lib/pkgup.lock'
-		echo "\e[34;1m::\e[0;1m Done.\e[0m"
+		echo "\e[37;1m::\e[0;1m Done.\e[0m"
 	fi
 
     ## Update PGP database
@@ -444,13 +444,13 @@ function _pkgup {
 		echo -n '   Update PGP database?  [Y/n] '
 		read -r INPUT
 		if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
-			echo "\e[34;1m::\e[0;1m Updating PGP database...\e[0m"
+			echo "\e[37;1m::\e[0;1m Updating PGP database...\e[0m"
 			if [[ ! -z "$(which 'gpg2')" ]] && [[ "$(which 'gpg2')" != *'not found'* ]]; then
 				gpg2 --refresh
 			else
 				gpg --refresh
 			fi
-			echo "\e[34;1m::\e[0;1m Done.\e[0m"
+			echo "\e[37;1m::\e[0;1m Done.\e[0m"
 		fi
 	fi
 
@@ -459,9 +459,9 @@ function _pkgup {
 		echo -n '   Update Pipelight plugins database?  [Y/n] '
 		read -r INPUT
 		if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
-			echo "\e[34;1m::\e[0;1m Updating Pipelight plugins database...\e[0m"
+			echo "\e[37;1m::\e[0;1m Updating Pipelight plugins database...\e[0m"
 			_intellisu pipelight-plugin --update --accept --create-mozilla-plugins
-			echo "\e[34;1m::\e[0;1m Done.\e[0m"
+			echo "\e[37;1m::\e[0;1m Done.\e[0m"
 		fi
 	fi
 }
@@ -491,13 +491,13 @@ function _clamscan {
 }
 ## Scan for security threats
 function _scansys {
-	echo "\e[34;1m::\e[0;1m Checking for rootkits...\e[0m"
+	echo "\e[37;1m::\e[0;1m Checking for rootkits...\e[0m"
 	_rkhunter
-	echo "\e[34;1m::\e[0;1m Done.\e[0m"
+	echo "\e[37;1m::\e[0;1m Done.\e[0m"
 
-	echo "\e[34;1m::\e[0;1m Checking for viruses...\e[0m"
+	echo "\e[37;1m::\e[0;1m Checking for viruses...\e[0m"
 	_clamscan '/'
-	echo "\e[34;1m::\e[0;1m Done.\e[0m]\n"
+	echo "\e[37;1m::\e[0;1m Done.\e[0m]\n"
 }
 
 ### Miscellanious
