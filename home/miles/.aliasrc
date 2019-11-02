@@ -411,7 +411,7 @@ function _pkgup {
 					echo "\e[37;1m::\e[0;1m Done.\e[0m"
 				fi
 				## Update repos
-				echo "\e[37;1m::\e[0;1m Updating repository database...\e[0m"
+				#echo "\e[37;1m::\e[0;1m Updating repository database...\e[0m"
 				if [[ ! -z "$(which 'pacmatic')" ]] && [[ "$(which 'pacmatic')" != *'not found'* ]]; then
 					EXE="_intellisu pacmatic -Sy $*"
 				else
