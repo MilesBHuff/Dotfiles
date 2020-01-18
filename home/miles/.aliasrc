@@ -286,7 +286,7 @@ function _pkgug {
 			echo "\e[37;1m::\e[0;1m A repo update is required before upgrading.\e[0m"
 			_pkgup
 		fi
-		echo "\e[37;1m::\e[0;1m Upgrading system...\e[0m"
+#		echo "\e[37;1m::\e[0;1m Upgrading system...\e[0m"
 #		LC_OLD="$LC_ALL"
 #		export LC_ALL='C'
 		case "$PKGMGR" in

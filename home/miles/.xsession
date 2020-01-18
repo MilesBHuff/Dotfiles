@@ -12,9 +12,11 @@ nm-applet &
 blueman-applet &
 pasystray &
 system-config-printer-applet &
+xfce4-power-manager &
 qjoypad &
 redshift-gtk &
 
 ## Apps
-#franz &
-#discord &
+~/.local/bin/start-minimized.py 'franz' 'Franz' &
+~/.local/bin/start-closed.py 'discord' 'Activity - Discord' &
+steam %U -silent &
