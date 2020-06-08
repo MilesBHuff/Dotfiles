@@ -401,9 +401,13 @@ function _pkgup {
 				## Refresh mirrors
 				if [[ ! -z "$(which 'reflector')" ]] && [[ "$(which 'reflector')" != *'not found'* ]]; then
 					echo "\e[37;1m::\e[0;1m Refreshing mirrors...\e[0m"
-					TMP_MIRRORLIST='/tmp/mirrorlist' #TODO: Randomize the filename in order to protect against attacks.
+					TMP_MIRRORLIST="/tmp/$RANDOM$RANDOM"
 					[[ -f $TMP_MIRRORLIST ]] && rm -f $TMP_MIRRORLIST
-					reflector -c US --threads $(nproc) --sort score > $TMP_MIRRORLIST #NOTE: Make sure you set it to use your country!
+					if [[ ! -z "$COUNTRY" ]]; then
+						reflector -c "$COUNTRY" --threads $(nproc) --sort score > $TMP_MIRRORLIST
+					else
+						reflector --threads $(nproc) --sort score > $TMP_MIRRORLIST
+					fi
 					_intellisu mv -f $TMP_MIRRORLIST /etc/pacman.d/mirrorlist
 					## Remove unneeded pacnews and such
 					[[ -f /etc/pacman.d/mirrorlist.pacnew  ]] && _intellisu rm -f /etc/pacman.d/mirrorlist.pacnew
