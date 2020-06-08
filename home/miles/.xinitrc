@@ -12,6 +12,7 @@
 
 ## Environment variables
 ## -----------------------------------------------------------------------------
+USE_XSESSION=true
 if [ -z $DE ]; then
 	DE=xfce
 	export DE
