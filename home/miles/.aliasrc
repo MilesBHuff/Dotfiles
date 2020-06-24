@@ -717,8 +717,9 @@ alias     'grm'='git rm'
 alias   'gstat'='git status -sb --column'
 alias    'ga:s'='gadd : && gstat'
 alias  'gunadd'='git reset'
-alias 'grevert'='git reset --hard'
+alias  'greset'='git reset --hard'
 alias 'guncomm'='git reset HEAD~1'
+alias 'grevert'='git revert'
 alias  'gclean'='git gc && git repack -Ad && git prune'
 ## GnuPG
 alias       'gpg1'="$(which gpg)"
