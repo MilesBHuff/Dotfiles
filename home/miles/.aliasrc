@@ -231,10 +231,12 @@ function _pkgru {
 	case "$PKGMGR" in
 		'pacman' )
 			if [[ ! -z "$(which 'yay')" ]] && [[ "$(which 'yay')" != *'not found'* ]]; then
-				yay -Qdt $*
+				OUTPUT=$(yay -Qdt $*)
 			else
-				_intellisu pacman -Qdt $*
+				OUTPUT=$(_intellisu pacman -Qdt $*)
 			fi
+			echo "$OUTPUT" && echo
+			_pkgrm $(echo "$OUTPUT" | sed 's/( .*)?\n/ /g')
 		;;
 		'apt' )
 #			_intellisu apt-get autoremove $*
