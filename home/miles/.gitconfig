@@ -21,6 +21,9 @@ sharedRepository = umask
 [pack]
 compression = 9
 
+[pull]
+rebase = true
+
 [push]
 default = simple
 
