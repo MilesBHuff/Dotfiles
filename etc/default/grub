@@ -27,13 +27,17 @@ GRUB_DISABLE_RECOVERY='false'
 ## Boot flags
 ## -----------------------------------------------------------------------------
 ## i915 options go in /etc/modprobe.d/i915.conf
+_BIOS='iomem=relaxed'
+_BUGS='net.ifnames=0'
 _DISPLAY='vga=current'
 _LOGGING='loglevel=4 rd.udev.log_priority=4 rd.systemd.show_status=auto'
 _PRETTY='splash quiet vt.global_cursor_default=0'
 _SECURITY='apparmor=1 security=apparmor'
+_SYSTEM='resume=/swap'
+_ZSWAP='zswap.enabled=1 zswap.compressor=zstd zswap.max_pool_percent=25'
 
 ## Used for all Linux boots, including recovery
-GRUB_CMDLINE_LINUX="${_DISPLAY} ${_LOGGING} ${_SECURITY}"
+GRUB_CMDLINE_LINUX="${_BIOS} ${_BUGS} ${_DISPLAY} ${_LOGGING} ${_SECURITY} ${_SYSTEM} ${_ZSWAP}"
 ## Used for all non-recovery Linux boots
 GRUB_CMDLINE_LINUX_DEFAULT="${_PRETTY}"
 
