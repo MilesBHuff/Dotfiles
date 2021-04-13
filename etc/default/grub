@@ -1,6 +1,6 @@
 #!/bin/sh
 ## grub-mkconfig -o /boot/grub/grub.cfg
-## Copyright (C) by Miles Bradley Huff from 2019 per the LGPL3 (the Third Lesser GNU Public License)
+## Copyright (C) by Miles Bradley Huff from 2019-2021 per the LGPL3 (the Third Lesser GNU Public License)
 
 ## Features
 ## -----------------------------------------------------------------------------
