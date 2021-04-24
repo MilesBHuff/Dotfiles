@@ -1,4 +1,4 @@
-#!/bin sh
+#!/bin/sh
 ## This script is a convenient means by which to manage your fontconfigs.
 ## Copyright © by Miles Bradley Huff from 2016-2019 per the LGPL3 (the Third Lesser GNU Public License)
 
