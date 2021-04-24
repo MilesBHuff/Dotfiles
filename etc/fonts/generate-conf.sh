@@ -50,9 +50,9 @@ if [ -d $DIR_IN ]; then
 	echo ':: Done.'
 fi
 
-DIR_IN='/etc/fonts/conf.avail.infinality'
+DIR_IN='/etc/fonts/infinality.avail'
 if [ -d $DIR_IN ]; then
-	echo ':: Creating symlinks from conf.avail.infinality...'
+	echo ':: Creating symlinks from infinality.avail...'
 
 	## General Settings
 	symlink_conf "82-no-embedded-bitmaps"
@@ -82,9 +82,9 @@ if [ -d $DIR_IN ]; then
 	echo ':: Done.'
 fi
 
-DIR_IN='/etc/fonts/conf.avail.custom'
+DIR_IN='/etc/fonts/custom.avail'
 if [ -d $DIR_IN ]; then
-	echo ':: Creating symlinks from conf.avail.custom...'
+	echo ':: Creating symlinks from custom.avail...'
 	ln -sv "$DIR_IN/"* "$DIR_OUT/"
 	echo ':: Done.'
 fi
