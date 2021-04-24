@@ -1,6 +1,6 @@
 #!/bin/sh
 ## This script is a convenient means by which to manage your fontconfigs.
-## Copyright © by Miles Bradley Huff from 2016-2019 per the LGPL3 (the Third Lesser GNU Public License)
+## Copyright © by Miles Bradley Huff from 2016-2021 per the LGPL3 (the Third Lesser GNU Public License)
 
 DIR_OUT='/etc/fonts/conf.d'
 if [ -d $DIR_OUT ]; then
@@ -12,43 +12,40 @@ else
 	exit 1
 fi
 
-DIR_IN='/etc/fonts/conf.avail'
+symlink_conf() {
+	CONF="$DIR_IN/$1.conf" && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
+}
+
+DIR_IN='/usr/share/fontconfig/conf.avail'
 if [ -d $DIR_IN ]; then
 	echo ':: Creating symlinks from conf.avail...'
 
 	## General Settings
-	CONF="$DIR_IN/10-autohint.conf"          && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
-	CONF="$DIR_IN/10-hinting-slight.conf"    && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
-	CONF="$DIR_IN/10-sub-pixel-rgb.conf"     && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
-	CONF="$DIR_IN/11-lcdfilter-default.conf" && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
-	CONF="$DIR_IN/70-yes-bitmaps.conf"       && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
-	CONF="$DIR_IN/90-synthetic.conf"         && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"  ## Generate fake italic and bold styles for fonts without them.
-	#CONF="$DIR_IN/.conf" && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
+	symlink_conf "10-autohint"
+	symlink_conf "10-hinting-slight"
+	symlink_conf "10-sub-pixel-rgb"
+	symlink_conf "11-lcdfilter-default"
+	symlink_conf "70-yes-bitmaps"
+	symlink_conf "90-synthetic" ## Generate fake italic and bold styles for fonts without them.
 
 	## Font-Specific Settings
-	CONF="$DIR_IN/20-unhint-small-dejavu-sans.conf"      && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
-	CONF="$DIR_IN/20-unhint-small-dejavu-sans-mono.conf" && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
-	CONF="$DIR_IN/20-unhint-small-dejavu-serif.conf"     && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
-	CONF="$DIR_IN/20-unhint-small-vera.conf"             && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
-	CONF="$DIR_IN/31-cantarell.conf"                     && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
-	CONF="$DIR_IN/80-delicious.conf"                     && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
-	CONF="$DIR_IN/81-ubuntu.conf"                        && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
-	#CONF="$DIR_IN/.conf" && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
+	symlink_conf "20-unhint-small-*"
+	symlink_conf "31-cantarell"
+	symlink_conf "80-delicious"
+	symlink_conf "81-ubuntu"
 
 	## Replacement-Settings
-	CONF="$DIR_IN/29-replace-bitmap-fonts.conf" && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"  ## Misleading name.  Just replaces, ie, Times with Times New Roman.
-	CONF="$DIR_IN/30-metric-aliases.conf"       && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"  ## Replace missing fonts with comparably metricked ones.
-	CONF="$DIR_IN/40-nonlatin.conf"             && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
-	CONF="$DIR_IN/49-sans-serif.conf"           && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
-	CONF="$DIR_IN/57-dejavu-sans.conf"          && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
-	CONF="$DIR_IN/57-dejavu-sans-mono.conf"     && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
-	CONF="$DIR_IN/57-dejavu-serif.conf"         && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
-	#CONF="$DIR_IN/.conf" && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
+	symlink_conf "29-replace-bitmap-fonts" ## Misleading name.  Just replaces, ie, "Times" with "Times New Roman".
+	symlink_conf "30-metric-aliases"       ## Replace missing fonts with comparably metricked ones.
+	symlink_conf "30-win32-aliases"
+	symlink_conf "49-sans-serif"           ## Sets fonts with no generic family to sans-serif.
+	symlink_conf "40-nonlatin"
+	symlink_conf "45-latin"
 
 	## Additional Configurations
-	CONF="$DIR_IN/50-user.conf"  && [ -f $CONF ] && ln -sv $CONF $DIR_OUT/
-	CONF="$DIR_IN/51-local.conf" && [ -f $CONF ] && ln -sv $CONF $DIR_OUT/
-	#CONF="$DIR_IN/.conf" && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
+	symlink_conf "50-user"
+	symlink_conf "51-local"
+	symlink_conf "35-lang-normalize" ## Makes sure all dialects are processed as belonging to their respective languages.
 
 	echo ':: Done.'
 fi
@@ -58,32 +55,29 @@ if [ -d $DIR_IN ]; then
 	echo ':: Creating symlinks from conf.avail.infinality...'
 
 	## General Settings
-	CONF="$DIR_IN/82-no-embedded-bitmaps.conf" && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
-	CONF="$DIR_IN/82-no-force-autohint.conf"   && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
-	CONF="$DIR_IN/82-no-ttf-as-bitmap.conf"    && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
-	CONF="$DIR_IN/94-no-synthetic.conf"        && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"  ## Prevents synthetic functions from applying to bitmap-fonts.
-	#CONF="$DIR_IN/.conf" && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
+	symlink_conf "82-no-embedded-bitmaps"
+	symlink_conf "82-no-force-autohint"
+	symlink_conf "82-no-ttf-as-bitmap"
+	symlink_conf "94-no-synthetic" ## Prevents synthetic functions from applying to bitmap-fonts.
 
 	## Font-Specific Settings
-	CONF="$DIR_IN/67-override-aliases.conf"              && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"  ## Fixes some fonts whose family-names might vary.
-	CONF="$DIR_IN/68-override.conf"                      && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"  ## Contains some font-specific rendering-settings.
-	CONF="$DIR_IN/90-non-tt-fonts.conf"                  && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"  ## Autohints fonts known to lack hinting.
-	CONF="$DIR_IN/90-tt-fonts-microsoft.conf"            && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"  ## Disables autohinting for Microsoft fonts known to have hinting.
-	CONF="$DIR_IN/90-tt-fonts-misc.conf"                 && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"  ## Same as above, but handles non-Microsoft fonts.
-	CONF="$DIR_IN/92-selective-rendering-microsoft.conf" && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"  ## Contains variable font-specific rendering-instructions for certain Microsoft-fonts.
-	CONF="$DIR_IN/92-selective-rendering-misc.conf"      && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"  ## Same as above, but handles non-Microsoft fonts.
-	#CONF="$DIR_IN/.conf" && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
+	symlink_conf "67-override-aliases"              ## Fixes some fonts whose family-names might vary.
+	symlink_conf "68-override"                      ## Contains some font-specific rendering-settings.
+	symlink_conf "90-non-tt-fonts"                  ## Autohints fonts known to lack hinting.
+	symlink_conf "90-tt-fonts-microsoft"            ## Disables autohinting for Microsoft fonts known to have hinting.
+	symlink_conf "90-tt-fonts-misc"                 ## Same as above, but handles non-Microsoft fonts.
+	symlink_conf "92-selective-rendering-microsoft" ## Contains variable font-specific rendering-instructions for certain Microsoft-fonts.
+	symlink_conf "92-selective-rendering-misc"      ## Same as above, but handles non-Microsoft fonts.
 
 	## Replacement-Settings
-	CONF="$DIR_IN/40-non-latin-microsoft.conf" && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"  ## This just assigns default families to Microsoft fonts, so that comparable fonts will be rendered if they're missing.
-	CONF="$DIR_IN/40-non-latin-misc.conf"      && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"  ## Same as above, but handles non-Microsoft fonts.
-	CONF="$DIR_IN/45-latin-microsoft.conf"     && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"  ## Same as above, but handles Microsoft Latin fonts.
-	CONF="$DIR_IN/45-latin-misc.conf"          && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"  ## Same as above, but handles non-Microsoft fonts.
-	#CONF="$DIR_IN/.conf" && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
+	symlink_conf "40-non-latin-microsoft" ## This just assigns default families to Microsoft fonts, so that comparable fonts will be rendered if they're missing.
+	symlink_conf "40-non-latin-misc"      ## Same as above, but handles non-Microsoft fonts.
+	symlink_conf "45-latin-microsoft"     ## Same as above, but handles Microsoft Latin fonts.
+	symlink_conf "45-latin-misc"          ## Same as above, but handles non-Microsoft fonts.
 
 	## From Infinality's Font-Presets
 	DIR_IN="$DIR_IN/combi"
-	CONF="$DIR_IN/37-repl-global-combi.conf" && [ -f "$CONF" ] && ln -sv "$CONF" "$DIR_OUT/"
+	symlink_conf "37-repl-global-combi"
 
 	echo ':: Done.'
 fi
@@ -94,6 +88,7 @@ if [ -d $DIR_IN ]; then
 	ln -sv "$DIR_IN/"* "$DIR_OUT/"
 	echo ':: Done.'
 fi
+
 ## Cleanup
 unset CONF    \
       DIR_IN  \
