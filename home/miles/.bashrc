@@ -5,7 +5,7 @@
 [[ $- != *i* ]] && return  ## If not running interactively, don't do anything
 
 ## VARIABLES
-PS1='\n\e[36m\u\e[0m@\e[33m\H\e[0m:\e[34m\w\e[0m/\e[35m\$\e[0m '
+PS1='\n\e[36m\u\e[0m@\e[33m\H\e[0m:\e[34m\w\e[0m/ \e[35m\n\$\e[0m '
 
 ## FUNCTIONS & ALIASES
 source "$HOME/.aliasrc"
