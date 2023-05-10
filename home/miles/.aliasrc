@@ -720,6 +720,8 @@ alias  'greset'='git reset --hard'
 alias 'guncomm'='git reset HEAD~1'
 alias 'grevert'='git revert'
 alias  'gclean'='git gc && git repack -Ad && git prune'
+alias 'grebase'='git rebase -i --committer-date-is-author-date'
+
 ## GnuPG
 alias       'gpg1'="$(which gpg)"
 alias        'gpg'='gpg2'
