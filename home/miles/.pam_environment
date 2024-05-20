@@ -5,38 +5,19 @@
 ## Variables that require shell capabilities should go in ~/.profile
 ## Variables that affect Xorg apps should go in ~/.xprofile
 
-## Preferred applications
+## Paths
 ## -----------------------------------------------------------------------------
 
-## Pager
-MANPAGER=less
-PAGER=less
-
-## Editor
-EDITOR=nano
-VISUAL=nano
-
-## Other
-BROWSER=elinks
-#SHELL=/usr/bin/zsh
+## Core
 PATH="${PATH}:${HOME}/.cargo/bin"
+LD_LIBRARY_PATH=/usr/lib64:/usr/lib:/usr/local/lib64:/usr/local/lib
 
-## Settings
+## Periphery
+#ANDROID_HOME=/opt/android-sdk
+PROJECTDIR="${HOME}/Development"
+
+## Miscellany
 ## -----------------------------------------------------------------------------
-
-## Colors
-USE_COLOR=true
-GREP_COLORS=*=0:sl=0:cx=0:mt=7;1:ms=7;1:mc=7;1:fn=94:ln=95:bn=91:se=0
-## Generate by running `.dir_colors`:
-LS_COLORS=*=0:rs=0:no=0:fi=0:su=40:sg=40:ca=4:ex=1:di=34:ow=34;40:tw=4;34;40:st=4;34:mh=4:ln=36:or=31:mi=1;31:do=4;33:so=1;33:pi=33:cd=1;35:bd=35:*.swap=1;33:*.swp=1;33:*.tmp=33:*.iso=35:*.tar=35:*.cab=35:*.7z=1;35:*.bz=1;35:*.bz2=1;35:*.gz=1;35:*.lrz=1;35:*.lz=1;35:*.lz4=1;35:*.lzh=1;35:*.lzma=1;35:*.lzo=1;35:*.rz=1;35:*.rar=1;35:*.t7z=1;35:*.taz=1;35:*.tbz=1;35:*.tbz2=1;35:*.tgz=1;35:*.tlz=1;35:*.txz=1;35:*.tz=1;35:*.tzo=1;35:*.tzst=1;35:*.war=1;35:*.wim=1;35:*.xz=1;35:*.z=1;35:*.zip=1;35:*.zst=1;35:*.ace=1;35:*.alz=1;35:*.arc=1;35:*.arj=1;35:*.cpio=1;35:*.deb=1;35:*.dwm=1;35:*.dz=1;35:*.ear=1;35:*.esd=1;35:*.lha=1;35:*.jar=1;35:*.rpm=1;35:*.sar=1;35:*.swm=1;35:*.zoo=1;35
-
-## History
-#HISTFILE="{HOME}/.sh_history"
-#HISTFILESIZE=2048
-#HISTSIZE=2048
-#SAVEHIST=2048
-#DIRSTACKFILE="{HOME}/.cache/dirstack"
-#DIRSTACKSIZE=12
 
 ## Wine
 #WINEPREFIX="{HOME}/.PlayOnLinux/wineprefix/wine64"
@@ -50,21 +31,6 @@ FTP_PROXY=
 HTTP_PROXY=
 HTTPS_PROXY=
 
-## Misc paths
-#ANDROID_HOME=/opt/android-sdk
-PROJECTDIR="${HOME}/Development"
-
-## Makes some apps use the KDE file dialog.
-GTK_USE_PORTAL=1
-
-## Add local libs to library path.
-LD_LIBRARY_PATH=/usr/lib64:/usr/lib:/usr/local/lib64:/usr/local/lib
-
-## Deprecated
-GREP_OPTIONS=
-
 ## Other
-## -----------------------------------------------------------------------------
+TEMP="/tmp/${USER}"
 GPGKEY=
-NORMAL_HOSTNAME=localhost
-NORMAL_USERNAME=user
