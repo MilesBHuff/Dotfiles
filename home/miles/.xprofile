@@ -5,17 +5,9 @@
 ## Note that this should only be environment variables for Xorg apps;
 ## all other user environment variables should go into ~/.pam_environment, ~/.i18n, or ~/.profile.
 
-## Backends
-export \
-    GDK_BACKEND=x11 \
-    QT_QPA_PLATFORM=xcb \
-
-## Preferred applications
-export \
-    BROWSER=firefox \
-    VISUAL=code \
+## Import display profile.
+FILE="${HOME}/.dprofile" && [ -f "$FILE" ] && . "$FILE"
 
 ## Firefox
 export \
-    MOZ_ENABLE_WAYLAND=0 \
     MOZ_USE_XINPUT2=1 \
