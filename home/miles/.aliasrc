@@ -549,7 +549,7 @@ alias     'sudo'='_intellisu'
 ### Filesystem navigation
 #NOTE:  ORDER MATTERS!
 ## grep
-alias          'grep'='grep -EIisTu --color=always'
+alias          'grep'='grep -EIisT --color=always'
 alias             'g'='grep'
 alias   'search-full'='grep -Rl'
 alias 'search-full-v'='grep -Rns'
@@ -660,7 +660,7 @@ alias   'writeback'='chattr -j'  ## Normal behaviour.
 alias        'zero'='chattr +s'  ## Zero out this file upon deletion.
 
 ### Editors
-alias 'nano'='nano -FNPUwz$ -T 4' #-OS
+alias 'nano'='nano -FNPUw$ -T 4' #-OS
 ## Sort/uniq/etc
 alias 'sort'="sort -bh --parallel=$(nproc)"
 #alias 'uniq'='uniq'
