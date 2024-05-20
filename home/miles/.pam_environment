@@ -19,6 +19,7 @@ VISUAL=nano
 ## Other
 BROWSER=elinks
 #SHELL=/usr/bin/zsh
+PATH="${PATH}:${HOME}/.cargo/bin"
 
 ## Settings
 ## -----------------------------------------------------------------------------
@@ -52,6 +53,9 @@ HTTPS_PROXY=
 ## Misc paths
 #ANDROID_HOME=/opt/android-sdk
 PROJECTDIR="${HOME}/Development"
+
+## Add local libs to library path.
+LD_LIBRARY_PATH=/usr/lib64:/usr/lib:/usr/local/lib64:/usr/local/lib
 
 ## Deprecated
 GREP_OPTIONS=
