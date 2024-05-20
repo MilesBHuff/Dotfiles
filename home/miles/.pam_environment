@@ -54,6 +54,9 @@ HTTPS_PROXY=
 #ANDROID_HOME=/opt/android-sdk
 PROJECTDIR="${HOME}/Development"
 
+## Makes some apps use the KDE file dialog.
+GTK_USE_PORTAL=1
+
 ## Add local libs to library path.
 LD_LIBRARY_PATH=/usr/lib64:/usr/lib:/usr/local/lib64:/usr/local/lib
 
