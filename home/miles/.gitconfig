@@ -30,7 +30,7 @@ renormalize = true
 compression = 9
 
 [pull]
-rebase = merges
+# rebase = merges
 
 [push]
 default = simple
