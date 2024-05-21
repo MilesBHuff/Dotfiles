@@ -1,5 +1,5 @@
 ## Configuration file for GNU nano
-## Copyright    by Miles Bradley Huff from 201?-2019 per the LGPL3 (the Third Lesser GNU Public License)
+## Copyright (C) by Miles Bradley Huff from 201?-2024 per the LGPL3 (the Third Lesser GNU Public License)
 #include ~/.nano/syntax/*
 set historylog
 #set justifytrim
@@ -8,6 +8,6 @@ set locking
 set multibuffer
 set nohelp
 set quickblank
-set smooth
+#set smooth
 set softwrap
 set tabsize 4
