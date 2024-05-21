@@ -2,7 +2,7 @@
 ## Copyright (C) by Miles Bradley Huff from 201?-2019 per the LGPL3 (the Third Lesser GNU Public License)
 
 ## Input
-URxvt.inputMethod: ibus
+#URxvt.inputMethod: ibus
 URxvt.preeditType: OverTheSpot
 
 ## Fonts
