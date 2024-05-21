@@ -1,25 +1,11 @@
 #!/usr/bin/env sh
 ## Copyright (C) by Miles Bradley Huff from 2016-2024 per the LGPL3 (the Third Lesser GNU Public License)
 ## Remember:  This file needs to be compatible with POSIX sh!
-
-## About
-## =============================================================================
-## By the time this script is executed, the following files have already been interpreted, and in this order:
-## 1) /etc/environment           (doesn't support variable expansion)
-## 2) /etc/security/pam_env.conf (uses pam_env syntax)
-## 3) /etc/profile               (this calls all scripts in /etc/profile.d)
-## 4) /etc/locale.conf           (localization) (also: /etc/default/locale, /etc/sysconfig/i18n)
-## 5) ~/.i18n                    (localization)
-## 6) ~/.pam_environment         (uses pam_env syntax)
+##
+## This file contains environment variables and settings that are relevant only for shell use.
 
 ## Environment variables
 ## =============================================================================
-## Note that this should only be environment variables that require shell capabilities;
-## all other user environment variables should go into ~/.pam_environment or ~/.i18n.
-
-## Stuff that would go into `~/.pam_environment` if it were possible to put them there.
-## -----------------------------------------------------------------------------
-export JOBS=`nproc`
 
 ## Preferred Applications
 ## -----------------------------------------------------------------------------
@@ -66,7 +52,25 @@ export GREP_OPTIONS=
 ## Other
 export WATCHFMT="%n from %M has %a tty%l at %T %W"
 
-## Additional settings
+## Stuff that belongs somewhere like `~/.config/environment.d/envvars.conf`, but due to technical limitations can't be put there
+## -----------------------------------------------------------------------------
+export JOBS=$(nproc)
+
+## Core
+export PATH="${PATH}:${HOME}/.cargo/bin"
+export LD_LIBRARY_PATH=/usr/lib64:/usr/lib:/usr/local/lib64:/usr/local/lib
+
+## Periphery
+# export ANDROID_HOME=/opt/android-sdk
+export PROJECTDIR="${HOME}/Development"
+
+## Wine
+# export WINEPREFIX="{HOME}/.PlayOnLinux/wineprefix/wine64"
+
+## Other
+# export TEMP="/tmp/${USER}"
+
+## Non-variable environment settings
 ## =============================================================================
 ## Create new dirs/files with 751/640 perms
 umask 066 #5026

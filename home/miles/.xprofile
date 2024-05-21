@@ -1,13 +1,14 @@
 #!/usr/bin/env sh
-## Copyright (C) by Miles Bradley Huff from 2019-2024 per the LGPL3 (the Third Lesser GNU Public License)
+## Copyright (C) by Miles Bradley Huff from 2024 per the LGPL3 (the Third Lesser GNU Public License)
 ## Remember:  This file needs to be compatible with POSIX sh!
 ##
-## Note that this should only be environment variables for Xorg apps;
-## all other user environment variables should go into ~/.pam_environment, ~/.i18n, or ~/.profile.
+## Environment variables for Xorg apps.
 
-## Import display profile.
+## Apply Xresources
+FILE="$HOME/.Xresources"
+[ -f "$FILE" ] && xrdb -merge "$FILE"
+unset FILE
+
+## Apply settings specific to Xorg sessions
+[ -z "$XDG_SESSION_TYPE" ] && export XDG_SESSION_TYPE=x11 ## `.dprofile` needs to have `XDG_SESSION_TYPE` in order to work right.  If `.xinitrc` is being sourced, it's because we're using X11;  so we should be safe to assign that here.
 FILE="${HOME}/.dprofile" && [ -f "$FILE" ] && . "$FILE"
-
-## Firefox
-export \
-    MOZ_USE_XINPUT2=1 \

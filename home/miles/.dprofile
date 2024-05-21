@@ -2,14 +2,12 @@
 ## Copyright (C) by Miles Bradley Huff from 2024 per the LGPL3 (the Third Lesser GNU Public License)
 ## Remember:  This file needs to be compatible with POSIX sh!
 ##
-## This file is referenced by `~/.xprofile` and `~/.config/plasma-workspace/plasma-profile.sh`.
-## This file should only contain environment variables related to specifying the display server,
-## or which are common to all display servers.
+## This file contains environment variables related to graphical sessions.
 
-## Common Settings
+## Common
 ## =============================================================================
 
-## Preferred applications
+## Preferred GUI applications
 export \
     BROWSER=firefox \
     VISUAL=codium \
@@ -17,12 +15,12 @@ export \
 ## Backends
 ## =============================================================================
 
-## Enabled by default
+## Defaults
 export \
     MOZ_ENABLE_WAYLAND=0 \
 
-## Enabled only for certain display servers
-case "$XGG_SESSION_TYPE" in
+## Settings specific to certain display servers
+case "$XDG_SESSION_TYPE" in
 
     'wayland')
         export \
@@ -35,6 +33,13 @@ case "$XGG_SESSION_TYPE" in
         export \
             GDK_BACKEND=x11 \
             QT_QPA_PLATFORM=xcb \
+            MOZ_USE_XINPUT2=1 \
+        ;;
+
+    '') ## No session set
+        ;;
+
+    *) ## Unsupported session type
         ;;
 
 esac
