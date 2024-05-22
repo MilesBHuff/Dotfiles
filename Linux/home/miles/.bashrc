@@ -30,15 +30,15 @@ function prompt-command {
 	# local IS_NORM_HOST=
 	# [[ $(hostname) == "$NORMAL_HOSTNAME" ]] && IS_NORM_HOST=1
 
-	PS1+='\[\e[36m\]\u' ## Username, cyan
+	PS1+='\[\e[1;32m\]\u' ## Username, bold green; to match dircolors
 	PS1+='\[\e[0m\]@' ## @-sign, white
-	PS1+='\[\e[33m\]\H' ## Hostname, yellow
+	PS1+='\[\e[1;35m\]\H' ## Hostname, bold magenta; to match dircolors
 	PS1+='\[\e[0m\]:' ## Colon, white
 
 	if [[ $(pwd) != '/' ]]; then
 		PS1+='\[\e[34m\]\w' ## Path (skipping root), blue; to match dircolors
 	fi
-	PS1+='\[\e[0m\]/' ## Trailing slash, white; to match dircolors
+	PS1+='\[\e[0m\]/' ## Trailing slash, white; to match dircolors and ls alias
 	PS1+=' ' ## Trailing space before commands; makes the second line optional.
 
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -70,7 +70,7 @@ function prompt-command {
 
 		PS1+='\[\e[37m\](' ## Opening parenthesis, grey
 		if [[ ! -z "$VCS_BRANCH" ]]; then
-			PS1+='\[\e[32m\]'"$VCS_BRANCH" ## VCS branch, green
+			PS1+='\[\e[36m\]'"$VCS_BRANCH" ## VCS branch, cyan
 		fi; if [[ "$VCS_DIRTY" -eq 1 ]]; then
 			PS1+='\[\e[0m\]*' ## Asterisk for dirty repos, white
 		fi
@@ -84,7 +84,7 @@ function prompt-command {
 	if [[ $EUID -eq 0 ]]; then
 		PS1+='\[\e[1;31m\]' ## Root user, bold red
 	else
-		PS1+='\[\e[35m\]' ## Normal user, purple
+		PS1+='\[\e[1;33m\]' ## Normal user, bold yellow; to match dircolors
 	fi
 	PS1+='\$' ## Whether elevated
 	PS1+='\[\e[0m\] ' ## Trailing space, white; before commands

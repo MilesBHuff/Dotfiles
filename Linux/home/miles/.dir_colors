@@ -1,112 +1,167 @@
 #!/usr/bin/env dircolors
 ## man dir_colors 5
-## Copyright    by Miles Bradley Huff from 2017-2019 per the LGPL3 (the Third Lesser GNU Public License)
-## Different foreground colors are used for different categories of files.
-## "Black" backgrounds are used for risky permissions.  No other backgrounds should be used.
-## Emboldening is used only for special situations.
-## Underlining is used only for extra-special situations.
+## Explanation of terminal formatting codes here: https://stackoverflow.com/a/33206814/7004802
+##
+## Copyright (C) by Miles Bradley Huff from 2017-2024 per the LGPL3 (the Third Lesser GNU Public License)
+##
+## Key:
+## * White for uncategorized files (shouldn't be any).
+## * Default for normal files (italic for tempfiles).
+## * Red for things that require attention.
+## * Yellow for special I/O files (character devices in bold).
+## * Green for executables (special capabilties in bold).
+## * Cyan for symbolic links.
+## * Blue for directories.
+## * Magenta for block devices (bold), disk images, and archives (italic).
+## * Black highlighter for directories that others (non-user, non-group) can write to.
+## * Inverted colors for things that have the suid or sgid bits set.
+## * Underlining for hardlinks in files and the sticky bit in directories.
+## * Strikethroughs for things that are broken.
+## * Bold generally means something is special.
+## * Italic generally means something isn't perfectly topical.
+## * Faint for things that aren't very important
+##
 #NOTE:  Non-color text-effects won't work in the Windows command prompt.  They should only be used for non-NTFS-friendly things.
+#WARN:  TTYs lack support for bold and italic text.
+
+## Meta
+################################################################################
 
 ## Slackware-only
-#color    tty
-#eightbit yes
-#options  -bCFhNvX --color --group-directories-first --time-style=long-iso
+# color    tty
+# eightbit yes
+# options  -bCFhNvX --color --group-directories-first --time-style=long-iso
 
 ## Escape characters
-#leftcode  \e[
-#rightcode m
-#endcode
+# leftcode  \e[
+# rightcode m
+# endcode
 
-## Default colors
+## Defaults
 *     0
 reset 0 #rs
 
-## Colors for normal files (white) (risky perms are highlighted)
-normal     0 #no
-file       0 #fi
-suid      40 #su
-sgid      40 #sg
-capability 4 #ca ## Literally no idea what this does
-exec       1 #ex
+## Regular files
+################################################################################
 
-## Colors for directories (blue, like URLs) (risky perms are highlighted)
+## Normal files (white)
+normal 37 #no ## A different shade of white, to help unhandled files stand out.
+file   39 #fi ## The normal shade of white
+
+## Cache and temp files (faint, because they aren't usually meant to be treated as normal files)
+.001  2
+.002  2
+.003  2
+.004  2
+.005  2
+.006  2
+.007  2
+.008  2
+.009  2
+.swap 2
+.swp  2
+.part 2
+.tmp  2
+
+## Disk images (magenta, like block devices, since these are images of block devices, and many can even be mounted)
+.b5t   35
+.b6t   35
+.ccd   35
+.dmg   35
+.dsk   35
+.hc    35
+.img   35
+.iso   35
+.mdf   35
+.mds   35
+.nrg   35
+.tc    35
+.toast 35
+.vdi   35
+.vhd   35
+.vhdx  35
+.vmdk  35
+.udf   35
+
+## Archives and compressed files (italic magenta, since in some sense they're kinda like pseudo-mountable files)
+.7z   3;35
+.7zip 3;35
+.ace  3;35
+.alz  3;35
+.arc  3;35
+.arj  3;35
+.bz   3;35
+.bz2  3;35
+.cab  3;35
+.cpio 3;35
+.deb  3;35
+.dz   3;35
+.ear  3;35
+.esd  3;35
+.gz   3;35
+.jar  3;35
+.lha  3;35
+.lrz  3;35
+.lz   3;35
+.lz4  3;35
+.lzh  3;35
+.lzma 3;35
+.lzo  3;35
+.rar  3;35
+.rpm  3;35
+.rz   3;35
+.sar  3;35
+.swm  3;35
+.t7z  3;35
+.tar  3;35
+.taz  3;35
+.tbz  3;35
+.tbz2 3;35
+.tgz  3;35
+.tlz  3;35
+.txz  3;35
+.tz   3;35
+.tzo  3;35
+.tzst 3;35
+.war  3;35
+.wim  3;35
+.xz   3;35
+.z    3;35
+.zip  3;35
+.zoo  3;35
+.zst  3;35
+
+## Other file extensions
+#TODO
+
+## Special files
+################################################################################
+
+## Executable files (green, because that's what upstream uses)
+exec         32 #ex ## Overrides file-specific colors
+capability 1;32 #ca ## Special permissions (bold)
+
+## Directional "files" (yellow, because they're special)
+door 3;33 #do
+sock 3;33 #so
+fifo   33 #pi
+
+## Block devices (bold, because they're a special use-case for other colors)
+chr 1;33 #cd ## yellow, like the directional files
+blk 1;35 #bd ## magenta, which contains the blue of directories
+
+## Directories (blue, like URLs) (risky perms are highlighted)
 dir                     34    #di
 other_writable          34;40 #ow
 sticky_other_writable 4;34;40 #tw
 sticky                4;34    #st
 
-## Colors from links (cyan, which is a kind of blue (like directories), and also not very perceptually saturated (like normal files))
-multihardlink 4 #mh
-link         36 #ln
-orphan       31 #or
-missing    1;31 #mi
+## Links
+link         36 #ln ## cyan, which is a kind of blue (like directories), and also not very perceptually saturated (like normal files)
+orphan     9;36 #or ## struck-through because it's invalid, and red to draw attention to it.
+missing  2;9;39 #mi ## struck-through and faint because it doesn't exist.
+multihardlink 4 #mh ## Underlined, since this effect combines with all others and is unused elsewhere for hard-linkable files
 
-## Colors for directional "files" (yellow, because they're special)
-door 4;33 #do
-sock 1;33 #so
-fifo   33 #pi
-
-## Colors for devices (purple, which is close to the blue of directories)
-chr 1;35 #cd
-blk   35 #bd
-
-## Colors for files that act like directional "files" (yellow, like directional "files")
-.swap 1;33
-.swp  1;33
-.tmp    33
-
-## Colors for uncompressed archives (purple, like block devices)
-.iso 35
-.tar 35
-.cab 35
-
-## Colors for compressed archives (bold purple, like char devices)
-.7z   1;35
-.bz   1;35
-.bz2  1;35
-.gz   1;35
-.lrz  1;35
-.lz   1;35
-.lz4  1;35
-.lzh  1;35
-.lzma 1;35
-.lzo  1;35
-.rz   1;35
-.rar  1;35
-.t7z  1;35
-.taz  1;35
-.tbz  1;35
-.tbz2 1;35
-.tgz  1;35
-.tlz  1;35
-.txz  1;35
-.tz   1;35
-.tzo  1;35
-.tzst 1;35
-.war  1;35
-.wim  1;35
-.xz   1;35
-.z    1;35
-.zip  1;35
-.zst  1;35
-
-#TODO:  Sort these file extensions into 'archives' or 'compressed'.
-.ace  1;35
-.alz  1;35
-.arc  1;35
-.arj  1;35
-.cpio 1;35
-.deb  1;35
-.dwm  1;35
-.dz   1;35
-.ear  1;35
-.esd  1;35
-.lha  1;35
-.jar  1;35
-.rpm  1;35
-.sar  1;35
-.swm  1;35
-.zoo  1;35
-
-## Colors for other file extensions
-#TODO
+## Special file permissions (inverted colors, so that they can apply over all other effects)
+sgid 7 #sg
+suid 7 #su
