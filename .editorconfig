@@ -23,3 +23,8 @@ charset = utf-8
 [{*.md, *.rst}]
 indent_style = space
 indent_size = 2
+
+## Files that are for Windows
+## -----------------------------------------------------------------------------
+[{ProgramData/**}]
+end_of_line = crlf
