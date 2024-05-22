@@ -1,0 +1,4 @@
+#!/hint/gitconfig
+## Copyright (C) by Miles Bradley Huff from 201?-2024 per the LGPL3 (the Third Lesser GNU Public License)
+[core]
+autocrlf=false ## Handled by .gitattributes

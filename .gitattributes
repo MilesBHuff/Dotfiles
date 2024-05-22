@@ -1,0 +1,4 @@
+#!/hint/gitattributes
+## Copyright (C) by Miles Bradley Huff from 201?-2024 per the LGPL3 (the Third Lesser GNU Public License)
+#NOTE: Run `git add : --renormalize` after editing this file.
+* text=auto eol=lf

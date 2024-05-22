@@ -1,14 +1,25 @@
 #!/hint/editorconfig
-## Copyright © by Miles Bradley Huff from 2017-2019 per the LGPL3 (the Third Lesser GNU Public License)
+## Copyright (C) by Miles Bradley Huff from 2017-2023 per the LGPL3 (the Third Lesser GNU Public License)
 root=true
-[*]
-             charset = utf-8
-         end_of_line = lf
-insert_final_newline = true
-        indent_size  = 4
-        indent_style = tab
 
-## Files that use 2-space indents semantically
-[*.rst,*.md]
-indent_size  = 2
+## Defaults
+## -----------------------------------------------------------------------------
+[*]
+
+## Tabulation
 indent_style = space
+indent_size  = 4
+
+## Lines
+end_of_line = lf
+insert_final_newline = true
+max_line_length = off
+
+## Other
+charset = utf-8
+
+## Files that require 2-space indents
+## -----------------------------------------------------------------------------
+[{*.md, *.rst}]
+indent_style = space
+indent_size = 2
