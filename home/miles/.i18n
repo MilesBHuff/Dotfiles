@@ -1,4 +1,4 @@
-#!/usr/bin/env
+#!/hint/env
 ## Same as /etc/locale.conf
 ## Copyright (C) by Miles Bradley Huff from 2016-2020 per the LGPL3 (the Third Lesser GNU Public License)
 ## If your distro lacks C.UTF-8, run this command to cheese it:  localedef -i POSIX -c -f UTF-8 C.UTF-8
