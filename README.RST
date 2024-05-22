@@ -20,10 +20,10 @@ License
 | Copyright © from 2015-2024 by `Miles Bradley Huff`_
 
 - Code is licensed under the terms of the Lesser Affero General Public License
-  (v3.0 or later).
+  (v3.0 or later): "LAGPL-3.0-or-later" for short.
 
-- Non-code is licensed under the terms of the Creative Commons Attribution-ShareAlike 4.0 (CC
-  BY-SA 4) license.
+- Non-code is licensed under the terms of the Creative Commons
+  Attribution-ShareAlike 4.0 license: "CC BY-SA 4" for short.
 
 | (The terms of both licences may be found in ``LICENSE.TXT``.)
 
