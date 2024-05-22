@@ -6,18 +6,23 @@ About
 | A repository containing many of my personal configs, for both GNU/Linux and
   Windows; but primarily focused on the former.
 
-| There may eventually be considerable overlap between this repository, and my
-  [Optimality Theme](https://github.com/MilesBHuff/Optimality) repository.
-  Generally speaking, the latter is going to be a subset of the former, and will
-  contain only a minimal amount of settings -- those that are necessary to for
-  the Optimality theme to work.
+| Note that, out of necessity, there is some overlap between this repository and
+  that of my theme, [Optimality](https://github.com/MilesBHuff/Optimality).
+  Generally speaking, though, I try to separate concerns between the two repos,
+  with this one focusing on non-theme configs, and the latter focusing on theme
+  configs.
 
 License
 --------------------------------------------------------------------------------
-* Code is licensed under the Third Lesser GNU Public License (LGPL3) license.
-* Non-code is licensed under Creative Commons Attribution-ShareAlike 4.0 (CC
-  BY-SA 4).
+Copyright © from 2015-2024 by [Miles Bradley Huff](https://GitHub.com/MilesBHuff)
+* Code is licensed under the terms of the Lesser Affero General Public License
+  (v3.0 or later).
+* Non-code is licensed under the terms of the Creative Commons Attribution-ShareAlike 4.0 (CC
+  BY-SA 4) license.
+| The terms of both licenes may be found in `LICENSE.TXT`.
 
+Disclaimer
+--------------------------------------------------------------------------------
 | As much as possible, I have tried to create all these files myself. Files (and
   bits of files) that I did not make myself, *should* be indicated as such;
   these such bits may have a different license than below; the only files for
