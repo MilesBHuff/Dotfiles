@@ -18,7 +18,7 @@ alias 'search-full-v'='grep -Rns'
 alias      'histgrep'='cat "$HISTFILE" | grep'
 alias          'hist'='histgrep'
 ## ls
-alias     'ls'='_ls' && unalias _ls
+alias     'ls'='_ls'
 alias    'lsg'='ls  -x | grep'
 alias    'lsa'='ls  -A'
 alias   'lsag'='lsa -x | grep'
