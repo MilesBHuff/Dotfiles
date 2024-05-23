@@ -9,13 +9,7 @@
 ################################################################################
 ## FUNCTIONS
 
-function _import {
-	declare -a PLUGINS=("$@")
-	for PLUGIN in "${PLUGINS[@]}"; do
-		[[ -r "$PLUGIN" ]] && source "$PLUGIN"
-	done
-	unset PLUGINS
-}
+function _import { [[ -r "$1" ]] && source "$1"; }
 _import "$HOME/.functionrc"
 
 ################################################################################
@@ -139,9 +133,8 @@ PS2='\[\e[37m\]> \[\e[0m\]'
 ################################################################################
 ## FUNCTIONS, ALIASES, ETC
 
-_import \
-	'/usr/share/bash-completion/bash_completion' \
-	"$HOME/.aliasrc" \
+_import '/usr/share/bash-completion/bash_completion'
+_import "HOME/.aliasrc"
 
 ################################################################################
 ## OPTIONS

@@ -3,7 +3,6 @@
 ##
 ## This file executes only on login bash shells.
 
-declare FILE
-FILE='.profile' && [[ -r "$FILE" ]] && source "$FILE" ## Source the global login shell config.
-FILE='.bashrc'  && [[ -r "$FILE" ]] && source "$FILE" ## Source the non-login bash config
-unset FILE
+function _import { [[ -r "$1" ]] && source "$1"; }
+_import "$HOME/.profile" ## Source the global login shell config.
+_import "$HOME/.bashrc"  ## Source the non-login bash config
