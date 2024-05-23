@@ -4,6 +4,6 @@
 ## This file executes only on login bash shells.
 
 declare FILE
-FILE='.profile' && [[ -f "$FILE" ]] && source "$FILE" ## Source the global login shell config.
-FILE='.bashrc'  && [[ -f "$FILE" ]] && source "$FILE" ## Source the non-login bash config
+FILE='.profile' && [[ -r "$FILE" ]] && source "$FILE" ## Source the global login shell config.
+FILE='.bashrc'  && [[ -r "$FILE" ]] && source "$FILE" ## Source the non-login bash config
 unset FILE
