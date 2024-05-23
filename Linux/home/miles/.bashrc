@@ -35,9 +35,20 @@ function prompt-command {
 	PS1+='\[\e[1;35m\]\H' ## Hostname, bold magenta; to match dircolors
 	PS1+='\[\e[0m\]:' ## Colon, white
 
-	if [[ $(pwd) != '/' ]]; then
-		PS1+='\[\e[34m\]\w' ## Path (skipping root), blue; to match dircolors
+	## Path (skipping root, to avoid a double slash)
+	declare PWD=$(pwd)
+	if [[ "$PWD" != '/' ]]; then
+		local -i MODE='0'$(stat -c '%a' "$PWD")
+		PS1+='\[\e[' ## Start
+		(( (MODE & 02000) != 00 || (MODE & 04000) != 00 )) && PS1+='7;' ## inverted if SUID/SGID; to match dircolors
+		(( (MODE & 01000) != 00 )) && PS1+='4;' ## underlined if sticky; to match dircolors
+		PS1+='34' ## blue; to match dircolors
+		(( (MODE & 02) != 00 )) && PS1+=';40' ## black-highlighted if other-writeable; to match dircolors
+		PS1+='m\]' ## End
+		PS1+='\w' ## While we could just append `$PWD`, I assume `\w` has special handling for special characters, while `$PWD` definitely doesn't.
+		unset STAT
 	fi
+	unset PWD
 	PS1+='\[\e[0m\]/' ## Trailing slash, white; to match dircolors and ls alias
 	PS1+=' ' ## Trailing space before commands; makes the second line optional.
 
