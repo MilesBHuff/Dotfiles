@@ -4,7 +4,6 @@
 ## zsh.
 ## Copyright (C) by Miles Bradley Huff from 2016-2020 per the LGPL3 (the Third Lesser GNU Public License)
 
-
 #### FUNCTIONS -----------------------------------------------------------------
 ## All functions start with '_'.
 ## Even though this '_' could be removed (thus eliminating the need for several
@@ -15,10 +14,12 @@
 function _noerr {
 	"$@" 2>/dev/null
 }
+## Create a common definition for `ls`
+alias _ls='ls -bCFhNvX --color --group-directories-first --time-style=long-iso'
 ## Print the contents of the directories you visit
 function _cdls {
 	cd -L "$1"
-	ls -bCFNvX --color --group-directories-first
+	_ls
 }
 ## Access a program's helptext.
 function _help {
@@ -562,7 +563,7 @@ alias 'search-full-v'='grep -Rns'
 alias      'histgrep'='cat "$HISTFILE" | grep'
 alias          'hist'='histgrep'
 ## ls
-alias     'ls'='ls -bCFhNvX --color --group-directories-first --time-style=long-iso'
+alias     'ls'='_ls' && unalias _ls
 alias    'lsg'='ls  -x | grep'
 alias    'lsa'='ls  -A'
 alias   'lsag'='lsa -x | grep'
