@@ -3,11 +3,25 @@
 
 ################################################################################
 ## PRELIMINARY
+
 [[ $- != *i* ]] && return  ## If not running interactively, don't do anything
 
 ################################################################################
+## FUNCTIONS
+
+function _import {
+	declare -a PLUGINS=("$@")
+	for PLUGIN in "${PLUGINS[@]}"; do
+		[[ -r "$PLUGIN" ]] && source "$PLUGIN"
+	done
+	unset PLUGINS
+}
+_import "$HOME/.functionrc"
+
+################################################################################
 ## PROMPT
-function prompt-command {
+
+function _prompt_command {
 	local -i EXIT_CODE="$?"
 	PS1='' ## Reset default prompt
 	#NOTE: Color codes have to wrapped in escaped brackets or they will mess up line spacing.
@@ -102,7 +116,7 @@ function prompt-command {
 }
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-PROMPT_COMMAND='prompt-command'
+PROMPT_COMMAND='_prompt_command'
 PS2='\[\e[37m\]> \[\e[0m\]'
 
 ################################################################################
@@ -125,15 +139,9 @@ PS2='\[\e[37m\]> \[\e[0m\]'
 ################################################################################
 ## FUNCTIONS, ALIASES, ETC
 
-declare -a PLUGINS=(
-	'/usr/share/bash-completion/bash_completion'
-	"$HOME/.aliasrc"
-)
-
-for PLUGIN in "${PLUGINS[@]}"; do
-	[[ -r "$PLUGIN" ]] && source "$PLUGIN"
-done
-unset PLUGINS
+_import \
+	'/usr/share/bash-completion/bash_completion' \
+	"$HOME/.aliasrc" \
 
 ################################################################################
 ## OPTIONS
