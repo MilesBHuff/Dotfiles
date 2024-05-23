@@ -11,6 +11,11 @@
 ## alias lines), the extra alias lines help to codify the functions in-use.
 
 ### Base
+## Suppress stderr
+function _noerr {
+	"$@" 2>/dev/null
+}
+## Print the contents of the directories you visit
 function _cdls {
 	cd -L "$1"
 	ls -bCFNvX --color --group-directories-first
@@ -60,13 +65,13 @@ function _sut {
 ### Package-management, etc.
 ## Non-function code (needed to ascertain the package manager
 if [[ ! "$(uname)" = MINGW* ]]; then ## If it looks like we're on Windows, avoid the package manager detection code -- Windows doesn't seem to like `which` very much.
-  if [[ ! -z "$(which 'pacman' 2>/dev/null)" ]]; then  ## pacman comes first because it's what I use.
+  if [[ ! -z "$(_noerr which 'pacman')" ]]; then  ## pacman comes first because it's what I use.
     PKGMGR='pacman'
-elif [[ ! -z "$(which 'apt'    2>/dev/null)" ]]; then  ## apt comes next because Debian-derivatives are EVERYWHERE
+elif [[ ! -z "$(_noerr which 'apt')"    ]]; then  ## apt comes next because Debian-derivatives are EVERYWHERE
     PKGMGR='apt'
-elif [[ ! -z "$(which 'yum'    2>/dev/null)" ]]; then  ## yum next because RHEL is widespread
+elif [[ ! -z "$(_noerr which 'yum')"    ]]; then  ## yum next because RHEL is widespread
     PKGMGR='yum'
-elif [[ ! -z "$(which 'zypper' 2>/dev/null)" ]]; then  ## then zypper, because OpenSuSE is less widespread than RHEL-ish distros, but still mainstream...ish.
+elif [[ ! -z "$(_noerr which 'zypper')" ]]; then  ## then zypper, because OpenSuSE is less widespread than RHEL-ish distros, but still mainstream...ish.
     PKGMGR='zypper'
   fi
 fi
@@ -77,7 +82,7 @@ function _pkgcc {
 		'pacman' )
 			#[ -f /var/cache/pacman/pkg/*.aria2 ] && _intellisu rm -fv /var/cache/pacman/pkg/*.aria2
 			_intellisu pacman -Sc
-			[[ ! -z "$(which 'pacman-optimize' 2>/dev/null)" ]] && _intellisu pacman-optimize
+			[[ ! -z "$(_noerr which 'pacman-optimize')" ]] && _intellisu pacman-optimize
 		;;
 		'apt' )
 #			_intellisu apt-get autoclean $*
@@ -104,7 +109,7 @@ function _pkgin {
 	fi
 	case "$PKGMGR" in
 		'pacman' )
-			if [[ ! -z "$(which 'yay' 2>/dev/null)" ]]; then
+			if [[ ! -z "$(_noerr which 'yay')" ]]; then
 				yay -S $*
 			else
 				_intellisu pacman -S $*
@@ -134,7 +139,7 @@ function _pkgindep {
 	fi
 	case "$PKGMGR" in
 		'pacman' )
-			if [[ ! -z "$(which 'yay' 2>/dev/null)" ]]; then
+			if [[ ! -z "$(_noerr which 'yay')" ]]; then
 				yay -S --asdeps $*
 			else
 				_intellisu pacman -S --asdeps $*
@@ -205,7 +210,7 @@ function _pkgri {
 function _pkgrm {
 	case "$PKGMGR" in
 		'pacman' )
-			if [[ ! -z "$(which 'yay' 2>/dev/null)" ]]; then
+			if [[ ! -z "$(_noerr which 'yay')" ]]; then
 				yay -R $*
 			else
 				_intellisu pacman -R $*
@@ -230,7 +235,7 @@ function _pkgrm {
 function _pkgru {
 	case "$PKGMGR" in
 		'pacman' )
-			if [[ ! -z "$(which 'yay' 2>/dev/null)" ]]; then
+			if [[ ! -z "$(_noerr which 'yay')" ]]; then
 				OUTPUT=$(yay -Qdt $*)
 			else
 				OUTPUT=$(_intellisu pacman -Qdt $*)
@@ -257,7 +262,7 @@ function _pkgru {
 function _pkgse {
 	case "$PKGMGR" in
 		'pacman' )
-			if [[ ! -z "$(which 'yay' 2>/dev/null)" ]]; then
+			if [[ ! -z "$(_noerr which 'yay')" ]]; then
 				yay -Ss $*
 			else
 				pacman -Ss $*
@@ -293,7 +298,7 @@ function _pkgug {
 #		export LC_ALL='C'
 		case "$PKGMGR" in
 			'pacman' )
-				if [[ ! -z "$(which 'yay' 2>/dev/null)" ]]; then
+				if [[ ! -z "$(_noerr which 'yay')" ]]; then
 					yay -Suu $*
 				else
 					_intellisu pacman -Suu $*
@@ -320,7 +325,7 @@ function _pkgug {
 	fi
 
 	## Upgrade shell plugins
-	if [[ ! -z "$(which 'antigen-update' 2>/dev/null)" ]]; then
+	if [[ ! -z "$(_noerr which 'antigen-update')" ]]; then
 		echo -n '   Upgrade shell plugins?  [Y/n] '
 		read -r INPUT
 		if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
@@ -341,21 +346,21 @@ function _pkgug {
 	fi
 
     ## Upgrade programming plugins
-	if ([[ ! -z "$(which 'pip2' 2>/dev/null)" ]]) \
-	|| ([[ ! -z "$(which 'pip3' 2>/dev/null)" ]]) \
-	|| ([[ ! -z "$(which 'npm' 2>/dev/null)" ]]); then
+	if ([[ ! -z "$(_noerr which 'pip2')" ]]) \
+	|| ([[ ! -z "$(_noerr which 'pip3')" ]]) \
+	|| ([[ ! -z "$(_noerr which 'npm')" ]]); then
 		echo -n '   Upgrade programming plugins?  [Y/n] '
 		read -r INPUT
 		if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
-			if [[ ! -z "$(which 'pip2' 2>/dev/null)" ]]; then
+			if [[ ! -z "$(_noerr which 'pip2')" ]]; then
 				echo "\e[37;1m::\e[0;1m Upgrading Python2 plugins...\e[0m"
 				_intellisu pip2 install --upgrade pip
 			fi
-			if [[ ! -z "$(which 'pip3' 2>/dev/null)" ]]; then
+			if [[ ! -z "$(_noerr which 'pip3')" ]]; then
 				echo "\e[37;1m::\e[0;1m Upgrading Python3 plugins...\e[0m"
 				_intellisu pip3 install --upgrade pip
 			fi
-			if [[ ! -z "$(which 'npm' 2>/dev/null)" ]]; then
+			if [[ ! -z "$(_noerr which 'npm')" ]]; then
 				echo "\e[37;1m::\e[0;1m Upgrading npm plugins...\e[0m"
 				_intellisu npm i -g npm
 				_intellisu npm up -g
@@ -369,7 +374,7 @@ function _pkgug {
 	fi
 
     ## Generate init images
-	if [[ ! -z "$(which 'mkinitcpio' 2>/dev/null)" ]]; then
+	if [[ ! -z "$(_noerr which 'mkinitcpio')" ]]; then
 		echo -n '   Generate new init images?  [Y/n] '
 		read -r INPUT
 		if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
@@ -380,7 +385,7 @@ function _pkgug {
 	fi
 
 	## Update virus-definition database
-	if [[ ! -z "$(which 'freshclam' 2>/dev/null)" ]]; then
+	if [[ ! -z "$(_noerr which 'freshclam')" ]]; then
 	    echo -n '   Update virus-definition database?  [Y/n] '
 	    read -r INPUT
 	    if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
@@ -399,7 +404,7 @@ function _pkgup {
 		case "$PKGMGR" in
 			'pacman' )
 				## Refresh mirrors
-				if [[ ! -z "$(which 'reflector' 2>/dev/null)" ]]; then
+				if [[ ! -z "$(_noerr which 'reflector')" ]]; then
 					echo "\e[37;1m::\e[0;1m Refreshing mirrors...\e[0m"
 					TMP_MIRRORLIST="/tmp/$RANDOM$RANDOM"
 					[[ -f $TMP_MIRRORLIST ]] && rm -f $TMP_MIRRORLIST
@@ -416,7 +421,7 @@ function _pkgup {
 				fi
 				## Update repos
 				#echo "\e[37;1m::\e[0;1m Updating repository database...\e[0m"
-				if [[ ! -z "$(which 'pacmatic' 2>/dev/null)" ]]; then
+				if [[ ! -z "$(_noerr which 'pacmatic')" ]]; then
 					EXE="_intellisu pacmatic -Sy $*"
 				else
 					EXE="_intellisu pacman -Sy $*"
@@ -444,12 +449,12 @@ function _pkgup {
 	fi
 
     ## Update PGP database
-	if [[ ! -z "$(which 'gpg2' 2>/dev/null)" ]]; then
+	if [[ ! -z "$(_noerr which 'gpg2')" ]]; then
 		echo -n '   Update PGP database?  [Y/n] '
 		read -r INPUT
 		if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
 			echo "\e[37;1m::\e[0;1m Updating PGP database...\e[0m"
-			if [[ ! -z "$(which 'gpg2' 2>/dev/null)" ]]; then
+			if [[ ! -z "$(_noerr which 'gpg2')" ]]; then
 				gpg2 --refresh
 			else
 				gpg --refresh
@@ -459,7 +464,7 @@ function _pkgup {
 	fi
 
     ## Update Pipelight plugins database
-	if [[ ! -z "$(which 'pipelight-plugin' 2>/dev/null)" ]]; then
+	if [[ ! -z "$(_noerr which 'pipelight-plugin')" ]]; then
 		echo -n '   Update Pipelight plugins database?  [Y/n] '
 		read -r INPUT
 		if [[ ! "$INPUT" =~ '[Nn]' ]] && [[ ! "$INPUT" =~ '[Nn][Oo]' ]]; then
@@ -545,6 +550,7 @@ function _glog {
 #### ALIASES --------------------------------------------------------------------
 ### High-importance
 alias     'sudo'='_intellisu'
+alias     'noerr'='_noerr'
 
 ### Filesystem navigation
 #NOTE:  ORDER MATTERS!
@@ -724,7 +730,7 @@ alias   'gstash'='git add : && git stash'
 alias 'gunstash'='git stash pop && git reset'
 
 ## GnuPG
-alias       'gpg1'="$(which gpg 2>/dev/null)"
+alias       'gpg1'="$(_noerr which gpg)"
 alias        'gpg'='gpg2'
 alias   'gpg-edit'='gpg2 --edit-key'
 alias   'gpg-list'='gpg2 --list-keys'
