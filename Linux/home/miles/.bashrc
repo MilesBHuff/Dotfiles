@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-## Copyright © by Miles Bradley Huff from 2016-2024 per the LGPL3 (the Third Lesser GNU Public License)
+## Copyright (C) by Miles Bradley Huff from 2016-2024 per the LGPL3 (the Third Lesser GNU Public License)
 
 ################################################################################
 ## PRELIMINARY
@@ -106,15 +106,38 @@ PROMPT_COMMAND='prompt-command'
 PS2='\[\e[37m\]> \[\e[0m\]'
 
 ################################################################################
-## FUNCTIONS & ALIASES
-source "$HOME/.aliasrc"
+## HOME PRETTIFICATION
+
+#if [[ "$(pwd)" == "$HOME" ]]; then
+#	## If the user has another home directory in the same directory with a name
+#	## equivalent to the user's username, except that at least the first letter
+#	## is capitalized;  then cd that directory to avoid ls spam.
+#	CAPS_USERNAME="$(tr '[:lower:]' '[:upper:]' <<< ${NORMAL_USERNAME:0:1})${NORMAL_USERNAME:1}"  ## Thanks, http://stackoverflow.com/a/12487465.
+#	if [[ -d "$HOME/../$CAPS_USERNAME" ]]; then
+#		cd "$HOME/../$CAPS_USERNAME"
+#	else
+#		ls
+#	fi
+#else
+#	ls
+#fi
 
 ################################################################################
-## COMPLETION
-[[ -r /usr/share/bash-completion/bash_completion ]] && . /usr/share/bash-completion/bash_completion
+## FUNCTIONS, ALIASES, ETC
+
+declare -a PLUGINS=(
+	'/usr/share/bash-completion/bash_completion'
+	"$HOME/.aliasrc"
+)
+
+for PLUGIN in "${PLUGINS[@]}"; do
+	[[ -r "$PLUGIN" ]] && source "$PLUGIN"
+done
+unset PLUGINS
 
 ################################################################################
 ## OPTIONS
+
 shopt -s                \
 	autocd              \
 	cdable_vars         \
@@ -136,7 +159,8 @@ shopt -s                \
 	progcomp            \
 	promptvars          \
 	sourcepath          \
-	xpg_echo
+	xpg_echo            \
+
 shopt -u                   \
 	cdspell                \
 	checkjobs              \
@@ -150,22 +174,12 @@ shopt -u                   \
 	mailwarn               \
 	no_empty_cmd_completion\
 	nocaseglob             \
-	shift_verbose
+	shift_verbose          \
+
 set -o ignoreeof
 
 ################################################################################
 ## FINALIZATION
-clear && echo
-#if [[ "$(pwd)" == "$HOME" ]]; then
-#	## If the user has another home directory in the same directory with a name
-#	## equivalent to the user's username, except that at least the first letter
-#	## is capitalized;  then cd that directory to avoid ls spam.
-#	CAPS_USERNAME="$(tr '[:lower:]' '[:upper:]' <<< ${NORMAL_USERNAME:0:1})${NORMAL_USERNAME:1}"  ## Thanks, http://stackoverflow.com/a/12487465.
-#	if [[ -d "$HOME/../$CAPS_USERNAME" ]]; then
-#		cd "$HOME/../$CAPS_USERNAME"
-#	else
-#		ls
-#	fi
-#else
-#	ls
-#fi
+
+clear
+echo
