@@ -47,7 +47,7 @@ function _prompt_command {
 	if [[ "$PWD" != '/' ]]; then
 		PS1+=$(_ls -d $(pwd)) ## Path; matches dircolors
 	else
-		PS1+='\[\e[0m\]/' ## Trailing slash, white; matches vibe of `_ls`
+		PS1+='\[\e[0m\]/' ## Trailing slash, white; matches vibe of `ls -F` better than it itself does
 	fi
 	PS1+=' ' ## Trailing space before commands; makes the second line optional.
 
