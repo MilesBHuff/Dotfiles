@@ -78,13 +78,13 @@ function _prompt_command {
 		}
 		local VCS_DIRTY=$(vcs-get-dirty; echo "$?")
 
-		PS1+='\[\e[37m\](' ## Opening parenthesis, grey
+		PS1+='\[\e[2m\](' ## Opening parenthesis, faint
 		if [[ ! -z "$VCS_BRANCH" ]]; then
 			PS1+='\[\e[36m\]'"$VCS_BRANCH" ## VCS branch, cyan
 		fi; if [[ "$VCS_DIRTY" -eq 1 ]]; then
 			PS1+='\[\e[0m\]*' ## Asterisk for dirty repos, white
 		fi
-		PS1+='\[\e[37m\])' ## Closing parenthesis, grey
+		PS1+='\[\e[2m\])' ## Closing parenthesis, faint
 		PS1+='\[\e[0m\] ' ## Trailing space before commands; makes the second line optional.
 	fi
 
