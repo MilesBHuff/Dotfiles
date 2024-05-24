@@ -1,4 +1,4 @@
-## Copyright (C) by Miles Bradley Huff from 2017-2020 per the LGPL3 (the Third Lesser GNU Public License)
+## Copyright (C) by Miles Bradley Huff from 2017-2024 per the LGPL3 (the Third Lesser GNU Public License)
 
 [init]
 defaultBranch = main
@@ -36,9 +36,9 @@ compression = 9
 default = simple
 
 [user]
-email = MilesBHuff@Users.NoReply.Github.com
 name = Miles B Huff
-#signingkey = 0x7BD3CF7F9CB1D54FC2BDDA09E37A04E55B745375
+email = MilesBHuff@Users.NoReply.Github.com
+# signingkey = 
 
 [color]
 ui = auto
