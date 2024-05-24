@@ -1,7 +1,10 @@
 ## Copyright (C) by Miles Bradley Huff from 2017-2024 per the LGPL3 (the Third Lesser GNU Public License)
 
-[init]
-defaultBranch = main
+[advice]
+detachedHead = false
+
+[color]
+ui = auto
 
 [commit]
 #gpgsign = true
@@ -22,6 +25,9 @@ sharedRepository = umask
 [gpg]
 #program = /usr/bin/gpg2
 
+[init]
+defaultBranch = main
+
 [merge]
 directoryRenames = true
 renormalize = true
@@ -39,9 +45,3 @@ default = simple
 name = Miles B Huff
 email = MilesBHuff@Users.NoReply.Github.com
 # signingkey = 
-
-[color]
-ui = auto
-
-[advice]
-detachedHead = false
