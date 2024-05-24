@@ -3,7 +3,7 @@
 ##
 ## This file contains functions as used by different shells.
 ## The code in this script must be capable of being run in at least both bash and `zsh`.
-## 
+##
 ## All functions start with '_'.  If you want to use them on the commandline, create an alias for them in `.aliasrc`.
 
 ### Base
