@@ -12,7 +12,9 @@ function _noerr {
 	"$@" 2>/dev/null
 }
 ## Create a common definition for `ls`
-alias '_ls'='ls -bCFhNvX --color --group-directories-first --time-style=long-iso'
+function _ls {
+	ls -bCFhNvX --color --group-directories-first --time-style=long-iso "$@"
+}
 ## Print the contents of the directories you visit
 function _cdls {
 	cd -L "$1"
