@@ -45,7 +45,7 @@ function _prompt_command {
 
 	## Path: If root, print a slash; else, `ls`.
 	if [[ "$PWD" != '/' ]]; then
-		PS1+=$(_ls -d $(pwd)) ## Path; matches dircolors
+		PS1+=$(_ls -d "$(pwd)") ## Path; matches dircolors
 	else
 		PS1+='\[\e[0m\]/' ## Trailing slash, white; matches vibe of `ls -F` better than it itself does
 	fi
