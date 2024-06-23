@@ -9,8 +9,8 @@
 
 ## Preferred GUI applications
 export \
-    BROWSER=firefox \
-    VISUAL=codium \
+    BROWSER='firefox' \
+    VISUAL='codium' \
 
 ## Backends
 ## =============================================================================
@@ -24,15 +24,15 @@ case "$XDG_SESSION_TYPE" in
 
     'wayland')
         export \
-            GDK_BACKEND=wayland \
-            QT_QPA_PLATFORM=wayland \
+            GDK_BACKEND='wayland' \
+            QT_QPA_PLATFORM='wayland' \
             MOZ_ENABLE_WAYLAND=1 \
         ;;
 
     'x11')
         export \
-            GDK_BACKEND=x11 \
-            QT_QPA_PLATFORM=xcb \
+            GDK_BACKEND='x11' \
+            QT_QPA_PLATFORM='xcb' \
             MOZ_USE_XINPUT2=1 \
         ;;
 
