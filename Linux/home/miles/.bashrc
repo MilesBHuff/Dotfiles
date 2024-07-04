@@ -43,12 +43,17 @@ function _prompt_command {
 	PS1+='\[\e[1;35m\]\H' ## Hostname, bold magenta; to match dircolors
 	PS1+='\[\e[0m\]:' ## Colon, white
 
-	## Path: If root, print a slash; else, `ls`.
-	if [[ "$PWD" != '/' ]]; then
-		PS1+=$(_ls -d "$(pwd)") ## Path; matches dircolors
+	CWD=$(pwd)
+	## Path: If root, print a slash; else, `ls`; if fail, print struck-through.
+	if [[ "$CWD" == '/' ]]; then
+		PS1+='\[\e[0m\]/' ## Trailing slash, white.  (Matches vibe of `ls -F` better than it itself does.)
 	else
-		PS1+='\[\e[0m\]/' ## Trailing slash, white; matches vibe of `ls -F` better than it itself does
+		LS_OUT=$(_ls -d "$CWD") ## Path; matches dircolors
+		[[ -z "$LS_OUT" ]] && LS_OUT='\[\e[2;9;34m\]'"$CWD"'\[\e[0m\]/' ## If `ls` fails to print the current working directory (ie, it no longer exists or we have lost permissions to access it), print according to `.dir_colors`:  blue, faint, struck-through.
+		PS1+="$LS_OUT"
+		unset LS_OUT
 	fi
+	unset CWD
 	PS1+=' ' ## Trailing space before commands; makes the second line optional.
 
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
