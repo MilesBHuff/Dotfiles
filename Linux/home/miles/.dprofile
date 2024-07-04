@@ -24,16 +24,22 @@ case "$XDG_SESSION_TYPE" in
 
     'wayland')
         export \
+            ELECTRON_OZONE_PLATFORM_HINT='wayland' \
             GDK_BACKEND='wayland' \
             QT_QPA_PLATFORM='wayland' \
             MOZ_ENABLE_WAYLAND=1 \
+            SDL_VIDEODRIVER='wayland' \
+            SDL_VIDEODRIVER='wayland,x11' \
         ;;
 
     'x11')
         export \
+            ELECTRON_OZONE_PLATFORM_HINT='x11' \
             GDK_BACKEND='x11' \
             QT_QPA_PLATFORM='xcb' \
             MOZ_USE_XINPUT2=1 \
+            SDL_VIDEODRIVER='x11' \
+            SDL_VIDEODRIVER='x11' \
         ;;
 
     '') ## No session set
