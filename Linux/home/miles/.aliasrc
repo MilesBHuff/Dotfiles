@@ -200,8 +200,8 @@ alias   'gpg-send'='gpg2 --send-keys'
 [[ -f /usr/bin/udevinfo ]] && [[ ! -f /usr/bin/udevadm  ]] && alias  'udevadm'='udevinfo'
 
 ## Audio manipulation
-alias 'merge-oga'='sox -m *.oga $(basename "$PWD").oga norm -1' #TODO: Generalize for other file extensions
-alias 'merge-ogg'='sox -m *.ogg $(basename "$PWD").ogg norm -1' #TODO: Generalize for other file extensions
+alias 'merge-oga'='sox -m -n *.oga $(basename "$PWD").oga norm -1' #TODO: Generalize for other file extensions
+alias 'merge-ogg'='sox -m -n *.ogg $(basename "$PWD").ogg norm -1' #TODO: Generalize for other file extensions
 alias 'normalize'='sox norm -1'
 alias   'oga2ogg'='find . -maxdepth 1 -name "*.oga" -exec bash -c '\''mv "$0" "${0%.oga}.ogg"'\'' {} \;'
 alias   'ogg2oga'='find . -maxdepth 1 -name "*.ogg" -exec bash -c '\''mv "$0" "${0%.ogg}.oga"'\'' {} \;'
