@@ -199,6 +199,14 @@ alias   'gpg-send'='gpg2 --send-keys'
 [[ -f /usr/bin/udevadm  ]] && [[ ! -f /usr/bin/udevinfo ]] && alias 'udevinfo'='udevadm'
 [[ -f /usr/bin/udevinfo ]] && [[ ! -f /usr/bin/udevadm  ]] && alias  'udevadm'='udevinfo'
 
+## Audio manipulation
+alias 'merge-oga'='sox -m *.oga $(basename "$PWD").oga norm -1' #TODO: Generalize for other file extensions
+alias 'merge-ogg'='sox -m *.ogg $(basename "$PWD").ogg norm -1' #TODO: Generalize for other file extensions
+alias 'normalize'='sox norm -1'
+alias   'oga2ogg'='find . -maxdepth 1 -name "*.oga" -exec bash -c '\''mv "$0" "${0%.oga}.ogg"'\'' {} \;'
+alias   'ogg2oga'='find . -maxdepth 1 -name "*.ogg" -exec bash -c '\''mv "$0" "${0%.ogg}.oga"'\'' {} \;'
+alias    'reflac'="mkdir -p recompressed && find . -maxdepth 1 -name '*.flac' -type f -print0 | xargs -0 -n 1 -P $(nproc) -I {} flac -8 \"{}\" -o 'recompressed/{}'"
+
 ### Other
 alias     'archey'='cl && archey3'
 alias     'catnum'='cat -ns'
@@ -212,7 +220,6 @@ alias    'jourctl'='_intellisu journalctl -emo short --all --no-hostname'
 alias   'killwine'='for EACH in $(top -bn 1 | /bin/grep .exe | sed "s/.*\ //gm"); do pkill -9 "$EACH"; done'
 alias      'lsblk'='lsblk -a -o NAME,LABEL,FSTYPE,MOUNTPOINT'
 alias  'lsblkloop'='local -i i=0; while true; do i=$i+1 && echo "$i" && lsblk && echo && sleep 1; done'
-alias     'reflac'='mkdir -p recompressed && find . -name "*.flac" -type f -maxdepth 1 -print0 | xargs -0 -n 1 -P $(nproc) -I {} flac -8 "{}" -o "recompressed/{}"'
 alias    'replace'='_replace'
 alias   'rkhunter'='_rkhunter'
 alias    'scansys'='_scansys'
