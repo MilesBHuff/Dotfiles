@@ -1,3 +1,6 @@
+## man 5 hosts
+## Copyright (C) by Miles Bradley Huff from 2024 per the LGPL3 (the Third Lesser GNU Public License)
+
 ## Localhost Aliases
 127.0.0.1       localhost      localhost.localdomain      loopback
 127.0.0.1  ipv4-localhost ipv4-localhost.localdomain ipv4-loopback
