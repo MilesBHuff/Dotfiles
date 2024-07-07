@@ -1,5 +1,10 @@
-127.0.0.1   localhost  localhost.localdomain
-127.0.0.1   localhost4 localhost4.localdomain4
-::1         localhost  localhost.localdomain
-::1         localhost6 localhost6.localdomain6
-#127.0.1.1   PUT YOUR HOSTNAME HERE
+## Localhost Aliases
+127.0.0.1       localhost     localhost.localdomain     loopback
+127.0.0.1   ip4-localhost ip4-localhost.localdomain ip4-loopback
+::1             localhost     localhost.localdomain     loopback
+::1         ip6-localhost ip6-localhost.localdomain ip6-loopback
+ff02::1     ip6-allnodes
+ff02::2     ip6-allrouters
+
+## Hostname
+# 127.0.1.1   /etc/hostname
