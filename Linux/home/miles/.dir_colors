@@ -48,6 +48,10 @@ reset 0 #rs
 normal 37 #no ## A different shade of white, to help unhandled files stand out.
 file   39 #fi ## The normal shade of white
 
+## Backups and outdated files (faint, because they are usually meant to be ignored)
+.bak  2
+.old  2
+
 ## Cache and temp files (faint, because they aren't usually meant to be treated as normal files)
 .001  2
 .002  2
