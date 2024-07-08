@@ -206,6 +206,7 @@ alias 'normalize'='sox norm -1'
 alias   'oga2ogg'='find . -maxdepth 1 -name "*.oga" -exec bash -c '\''mv "$0" "${0%.oga}.ogg"'\'' {} \;'
 alias   'ogg2oga'='find . -maxdepth 1 -name "*.ogg" -exec bash -c '\''mv "$0" "${0%.ogg}.oga"'\'' {} \;'
 alias    'reflac'="mkdir -p recompressed && find . -maxdepth 1 -name '*.flac' -type f -print0 | xargs -0 -n 1 -P $(nproc) -I {} flac -8 \"{}\" -o 'recompressed/{}'"
+alias  'wav2flac'='mkdir -p converted && find . -maxdepth 1 -name '\''*.wav'\'' -type f -print0 | xargs -0 -n 1 -P 16 -I {} flac -8 "{}" -o '\''converted/{}'\'''
 
 ### Other
 alias     'archey'='cl && archey3'
