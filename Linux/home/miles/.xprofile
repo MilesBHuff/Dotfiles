@@ -2,13 +2,17 @@
 ## Copyright (C) by Miles Bradley Huff from 2024 per the LGPL3 (the Third Lesser GNU Public License)
 ## Remember:  This file needs to be compatible with POSIX sh!
 ##
-## Environment variables for Xorg apps.
+## Environment variables for Xorg Display Managers.
 
-## Apply Xresources
-FILE="$HOME/.Xresources"
-[ -f "$FILE" ] && xrdb -merge "$FILE"
-unset FILE
+## Load `~/.Xresources` if we haven't alredy
+if [ -n "$SOURCED_XINITRC" ]; then #FIXME: This check is insufficient to avoid duplicate merging under any display managers that load `~/.Xresources`.
+    FILE="$HOME/.Xresources"
+    [ -f "$FILE" ] && xrdb -merge "$FILE"
+    unset FILE
+fi
 
 ## Apply settings specific to Xorg sessions
 [ -z "$XDG_SESSION_TYPE" ] && export XDG_SESSION_TYPE=x11 ## `.dprofile` needs to have `XDG_SESSION_TYPE` in order to work right.  If `.xinitrc` is being sourced, it's because we're using X11;  so we should be safe to assign that here.
-FILE="${HOME}/.dprofile" && [ -f "$FILE" ] && . "$FILE"
+FILE="${HOME}/.dprofile"
+[ -x "$FILE" ] && . "$FILE"
+unset FILE

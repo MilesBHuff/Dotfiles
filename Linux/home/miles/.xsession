@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 ## Copyright (C) by Miles Bradley Huff from 2017-2020 per the LGPL3 (the Third Lesser GNU Public License)
+#TODO: `source` `~/.xsessionrc` if `/etc/X11/xinit/xinitrc` does not (ie, on non-Debian-based distros)
 
 ## Start a DE/WM/etc
 [ -n "$1" ] && [ -x "$1" ] && exec "$1" ## If a valid command was passed, execute it as the DE/WM/etc
