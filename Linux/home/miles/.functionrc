@@ -544,3 +544,7 @@ function _glog {
 	## Return to the starting directory
 	cd "$START_DIR"
 }
+## DD
+function _ddio {
+    _intellisu dd if="$1" of="$2" bs=64K status=progress conv=noerror,sync iflag=fullblock
+}
